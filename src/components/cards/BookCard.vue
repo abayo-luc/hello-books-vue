@@ -1,0 +1,67 @@
+<template >
+  <div class="book-card">
+    <img :src="book.url" class="book-cover" />
+    <div class="content">
+      <h2 class="rating">6.8</h2>
+      <h3 class="book-title">{{book.title}}</h3>
+      <p class="author">Joanne Ramos</p>
+      <div class="category">
+        <p>Biograpy</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'BookCard',
+  props: {
+    book: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.book-card {
+  display: flex;
+  flex-direction: row;
+  width: 33.33%;
+  .content {
+    flex-direction: column;
+    align-self: center;
+    margin: 0px 5px;
+    .rating {
+      color: rgb(215, 222, 224);
+      margin-bottom: 5px;
+    }
+    h3.book-title {
+      font-size: 16px;
+      margin-bottom: 5px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    p.author {
+      font-size: 12px;
+      color: rgb(171, 171, 180);
+    }
+    .category {
+      padding: 3px;
+      margin: 5px 0px;
+      width: 70%;
+      font-size: 11px;
+      background-color: rgba(93, 207, 212, 0.2);
+      text-align: center;
+      border-radius: 15px;
+    }
+  }
+  img.book-cover {
+    height: 8em;
+    border-radius: 5px;
+  }
+}
+</style>

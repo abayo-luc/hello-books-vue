@@ -1,18 +1,56 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <DashCards />
+    <div class="content">
+      <div class="all-books">
+        <books-row v-for="(row, index) in rows" :key="index" :books="row" />
+      </div>
+      <div class="right-reading-list">
+        <reading-list />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import axios from 'axios';
+import DashCards from '../components/DashCards.vue';
+import BooksRow from '../components/BooksRow.vue';
+import { D3transform } from '../utils/data';
+import ReadingList from '../components/ReadingList.vue';
 
 export default {
   name: 'home',
   components: {
-    HelloWorld,
+    DashCards,
+    BooksRow,
+    ReadingList,
+  },
+  data() {
+    return {
+      rows: [],
+    };
+  },
+  created() {
+    axios
+      .get('https://jsonplaceholder.typicode.com/photos?_limit=18')
+      .then((res) => {
+        this.rows = [...D3transform(res.data)];
+      })
+      .catch(err => console.log(err.data));
   },
 };
 </script>
+<style lang="scss" scoped>
+.content {
+  margin-top: 5em;
+  display: flex;
+  flex-direction: row;
+  .all-books {
+    width: 80%;
+  }
+  .right-reading-list {
+    width: 20%;
+  }
+}
+</style>
