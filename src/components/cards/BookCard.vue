@@ -6,7 +6,7 @@
       <h3 class="book-title">{{book.title}}</h3>
       <p class="author">Joanne Ramos</p>
       <div class="category">
-        <p>Biograpy</p>
+        <p>Novel</p>
       </div>
     </div>
   </div>
@@ -60,6 +60,10 @@ export default {
     }
   }
   img.book-cover {
+    height: 8em;
+    border-radius: 5px;
+  }
+  img[lazy="loading"] {
     height: 8em;
     border-radius: 5px;
   }
