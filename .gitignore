@@ -23,4 +23,4 @@ yarn-error.log*
 *.sln
 *.sw?
 coverage
-./tests/**/__snapshots__/
+tests/**/__snapshots__
