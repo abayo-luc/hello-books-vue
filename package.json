@@ -9,7 +9,8 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "cy:run": "cypress run --record --key 033b81bc-38ec-461b-a6c3-2f6d9ef6e377",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "dev": "npm run serve"
   },
   "dependencies": {
     "axios": "^0.19.0",

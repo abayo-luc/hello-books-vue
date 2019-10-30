@@ -1,14 +1,16 @@
 <template>
   <div class="home">
-    <DashCards />
-    <div class="content">
-      <div class="all-books">
-        <books-row v-for="(row, index) in rows" :key="index" :books="row" />
+    <component :is="layout">
+      <DashCards />
+      <div class="content">
+        <div class="all-books">
+          <books-row v-for="(row, index) in rows" :key="index" :books="row" />
+        </div>
+        <div class="right-reading-list">
+          <reading-list />
+        </div>
       </div>
-      <div class="right-reading-list">
-        <reading-list />
-      </div>
-    </div>
+    </component>
   </div>
 </template>
 
@@ -38,7 +40,12 @@ export default {
       .then((res) => {
         this.rows = [...D3transform(res.data)];
       })
-      .catch(err => this.error.push(err.message));
+      .catch(err => this.errors.push(err.message));
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout;
+    },
   },
 };
 </script>
