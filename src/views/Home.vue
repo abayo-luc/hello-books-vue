@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       rows: [],
+      errors: [],
     };
   },
   created() {
@@ -37,7 +38,7 @@ export default {
       .then((res) => {
         this.rows = [...D3transform(res.data)];
       })
-      .catch(err => console.log(err.data));
+      .catch(err => this.error.push(err.message));
   },
 };
 </script>

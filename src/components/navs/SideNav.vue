@@ -39,7 +39,20 @@ export default {
   created() {
     const currentPage = this.pages.find(page => page.path === this.$route.path);
     currentPage.active = true;
-    console.log(this.$route);
+  },
+  watch: {
+    $route(to, from) {
+      this.pages = this.pages.map((page) => {
+        switch (page.path) {
+          case to.path:
+            return { ...page, active: true };
+          case from.path:
+            return { ...page, active: false };
+          default:
+            return page;
+        }
+      });
+    },
   },
 };
 </script>
