@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReadingList.vue should render reading list 1`] = `
+<div class="reading-list">
+  <div class="reading-list-header">
+    <h3>My Current List</h3>
+  </div>
+  <div class="reading-list-card dark-card">
+    <div class="single-item"><img src="../../assets/icons/open-book.svg" class="icon">
+      <div class="book-details">
+        <p class="book-name">Things Falll Apart</p>
+        <p class="book-pages"><span>Page № :</span>1232
+        </p>
+      </div>
+    </div>
+    <div class="single-item"><img src="../../assets/icons/open-book.svg" class="icon">
+      <div class="book-details">
+        <p class="book-name">Things Falll Apart</p>
+        <p class="book-pages"><span>Page № :</span>1232
+        </p>
+      </div>
+    </div>
+    <div class="single-item"><img src="../../assets/icons/open-book.svg" class="icon">
+      <div class="book-details">
+        <p class="book-name">Things Falll Apart</p>
+        <p class="book-pages"><span>Page № :</span>1232
+        </p>
+      </div>
+    </div>
+    <div class="single-item"><img src="../../assets/icons/open-book.svg" class="icon">
+      <div class="book-details">
+        <p class="book-name">Things Falll Apart</p>
+        <p class="book-pages"><span>Page № :</span>1232
+        </p>
+      </div>
+    </div>
+    <div class="single-item"><img src="../../assets/icons/open-book.svg" class="icon">
+      <div class="book-details">
+        <p class="book-name">Things Falll Apart</p>
+        <p class="book-pages"><span>Page № :</span>1232
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

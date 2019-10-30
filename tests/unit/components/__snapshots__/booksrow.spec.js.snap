@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BookCard.vue should render book title 1`] = `
+<div class="row">
+  <div class="book-card"><img src="https://via.placeholder.com/600/92c952" class="book-cover">
+    <div class="content">
+      <h2 class="rating">6.8</h2>
+      <h3 class="book-title">Things Fall Apart</h3>
+      <p class="author">Joanne Ramos</p>
+      <div class="category">
+        <p>Novel</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
