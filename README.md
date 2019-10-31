@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/abayo-luc/hello-books-vue.svg?branch=develop)](https://travis-ci.com/abayo-luc/hello-books-vue) [![Coverage Status](https://coveralls.io/repos/github/abayo-luc/hello-books-vue/badge.svg?branch=ft-home-page-169425179)](https://coveralls.io/github/abayo-luc/hello-books-vue?branch=ft-home-page-169425179)
-
+[![Build Status](https://travis-ci.com/abayo-luc/hello-books-vue.svg?branch=develop)](https://travis-ci.com/abayo-luc/hello-books-vue) [![Coverage Status](https://coveralls.io/repos/github/abayo-luc/hello-books-vue/badge.svg?branch=develop)](https://coveralls.io/github/abayo-luc/hello-books-vue?branch=develop)
 # hello-books-vue
 
 ## Project setup
