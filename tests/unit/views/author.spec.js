@@ -5,7 +5,13 @@ import Authors from '../../../src/views/Authors.vue';
 
 describe('Authors.vue', () => {
   it('should match the snapshot', () => {
-    const wrapper = shallowMount(Authors);
+    const wrapper = shallowMount(Authors, {
+      mocks: {
+        $route: {
+          meta: 'main-layout',
+        },
+      },
+    });
     expect(wrapper).toMatchSnapshot();
   });
 });

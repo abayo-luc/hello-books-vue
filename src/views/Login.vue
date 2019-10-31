@@ -1,0 +1,256 @@
+<template>
+  <div class="login-page">
+    <div class="container row">
+      <div class="left-container">
+        <div class="left-content">
+          <brand />
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="container">
+          <div class="right-content">
+            <div class="only-sm">
+              <brand />
+            </div>
+            <div class="form-header">
+              <h3 class="main-title">
+                Welcome to
+                <span>HelloBooks</span>
+              </h3>
+              <p class="slogan">We make it easy for everyone to find what interst them to read!</p>
+            </div>
+            <form action method="post" class="login-form">
+              <input-icon type="email" name="email" iconName="email" placeholder="Email" />
+              <input-icon type="password" name="password" iconName="lock" placeholder="Password" />
+              <div class="extra-det row">
+                <div class="labeled-checkbox">
+                  <input type="checkbox" name="remember" />
+                  <span>Remember me</span>
+                </div>
+                <div class="link">
+                  <a href="#" class="auth-link">Forgot password?</a>
+                </div>
+              </div>
+              <div class="group-buttons">
+                <div class="col-45">
+                  <basic-button type="submit" title="Login" classes="default" />
+                </div>
+                <div class="col-45">
+                  <linked-button title="Signup" classes="basic" to="/signup" />
+                </div>
+              </div>
+            </form>
+            <div class="social-links">
+              <div class="link" v-for="(link, index) in links" :key="index">
+                <a :href="link.to">{{link.name}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import InputIcon from '../components/TextInputs/InputIcon.vue';
+import BasicButton from '../components/Buttons/BasicButton.vue';
+import Brand from '../components/Brand.vue';
+import LinkedButton from '../components/Buttons/LinkedButton.vue';
+
+export default {
+  name: 'login',
+  components: {
+    InputIcon,
+    BasicButton,
+    Brand,
+    LinkedButton,
+  },
+  data() {
+    return {
+      links: [
+        {
+          name: 'Facebook',
+          to: '#',
+        },
+        {
+          name: 'Twitter',
+          to: '#',
+        },
+        {
+          name: 'Linkden',
+          to: '#',
+        },
+        {
+          name: 'about',
+          to: '#',
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.login-page {
+  height: 100vh;
+  width: 100vw;
+  overflow: scroll;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.left-container {
+  background-color: #fff;
+  background-image: url("../assets/superdaman.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 50%;
+  background-color: #000;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+.left-content {
+  background-color: rgba(250, 250, 250, 0.3);
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+}
+.only-sm {
+  display: none;
+  @media (max-width: 1024px) {
+    display: block;
+  }
+}
+.right-container {
+  width: 50%;
+  height: 100%;
+  -webkit-box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
+  overflow: scroll;
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  @media (max-width: 320px) {
+    width: 100%;
+    .right-content {
+      width: 90%;
+    }
+  }
+  @media (min-width: 320px) and (max-width: 767px) {
+    background: url("../assets/superdaman.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    .container {
+      background-color: rgba(250, 250, 250, 0.8);
+    }
+    .right-content {
+      width: 80%;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 100%;
+    .right-content {
+      width: 60%;
+    }
+  }
+}
+.right-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 80%;
+  padding: 1rem 0px 15px 0px;
+  @media (max-width: 1024px) {
+    padding: 0;
+  }
+}
+.form-header {
+  margin-bottom: 25px;
+  h3.main-title {
+    font-size: 20px;
+    font-weight: 200;
+    margin: 15px 0px;
+    letter-spacing: 3px;
+    span {
+      color: rgb(93, 207, 212);
+    }
+  }
+  p.slogan {
+    font-size: 13px;
+    color: #666666;
+    width: 70%;
+    letter-spacing: 1px;
+    @media (max-width: 320px) {
+      width: 90%;
+    }
+  }
+  &::after {
+    content: " ";
+    display: block;
+    width: 30%;
+    margin-top: 5%;
+    border-bottom: 1.5px solid rgb(93, 207, 212);
+  }
+}
+
+.extra-det {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 5px;
+  font-size: 12px;
+  color: #666666;
+  align-items: center;
+  .labeled-checkbox {
+    display: flex;
+    align-items: center;
+    span {
+      margin-left: 5px;
+    }
+  }
+
+  a.auth-link {
+    text-decoration: none;
+    color: #666666;
+    &:hover {
+      font-style: italic;
+    }
+  }
+}
+.group-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 25px 0px;
+}
+.social-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #666666;
+    &:hover {
+      font-style: italic;
+    }
+  }
+}
+</style>

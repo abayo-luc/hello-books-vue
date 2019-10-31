@@ -1,27 +1,15 @@
 <template>
   <div id="app">
-    <TopNav />
-    <div class="main-container">
-      <SideNav />
-      <div class="container">
-        <router-view />
-      </div>
-    </div>
+    <router-view />
   </div>
 </template>
 <script>
-import TopNav from './components/navs/TopNav.vue';
-import SideNav from './components/navs/SideNav.vue';
-
 export default {
   name: 'app',
-  components: {
-    TopNav,
-    SideNav,
-  },
 };
 </script>
-<style lang="scss">
+<style lang="scss" >
+@import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,25 +18,6 @@ export default {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-}
-.main-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 4em;
-  .side-nav {
-    width: 15%;
-  }
-  .container {
-    width: 85%;
-    margin: 15px;
-    margin-top: 2em;
-  }
-  @media (min-width: 320px) and (max-width: 480px) {
-    margin: 15px;
-    .side-nav {
-      display: none;
-    }
-  }
 }
 .row {
   display: flex;
@@ -68,6 +37,15 @@ body {
   @media (min-width: 320px) and (max-width: 480px) {
     height: 10px;
     margin: 1px;
+  }
+}
+.col-45 {
+  width: 45%;
+}
+.sm-hide {
+  display: block;
+  @media (max-width: 1024px) {
+    display: none;
   }
 }
 </style>
