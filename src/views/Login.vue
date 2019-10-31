@@ -42,7 +42,7 @@
             </form>
             <div class="social-links">
               <div class="link" v-for="(link, index) in links" :key="index">
-                <a :href="link.to">{{link.name}}</a>
+                <a :href="link.to">{{ link.name }}</a>
               </div>
             </div>
           </div>
@@ -64,30 +64,30 @@ export default {
     InputIcon,
     BasicButton,
     Brand,
-    LinkedButton,
+    LinkedButton
   },
   data() {
     return {
       links: [
         {
           name: 'Facebook',
-          to: '#',
+          to: '#'
         },
         {
           name: 'Twitter',
-          to: '#',
+          to: '#'
         },
         {
           name: 'Linkden',
-          to: '#',
+          to: '#'
         },
         {
           name: 'about',
-          to: '#',
-        },
-      ],
+          to: '#'
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 

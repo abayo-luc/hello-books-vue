@@ -13,26 +13,26 @@ export default {
   props: {
     iconName: {
       type: String,
-      required: true,
+      required: true
     },
     placeholder: {
       type: String,
-      required: true,
+      required: true
     },
     name: {
       type: String,
-      required: false,
+      required: false
     },
     type: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      icon: Icons[this.iconName],
+      icon: Icons[this.iconName]
     };
-  },
+  }
 };
 </script>
 

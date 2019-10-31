@@ -1,5 +1,5 @@
 <template>
-  <button :type="type" class="btn" :class="getClass()">{{title}}</button>
+  <button :type="type" class="btn" :class="getClass()">{{ title }}</button>
 </template>
 
 <script>
@@ -8,25 +8,25 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     type: {
-      type: String,
+      type: String
     },
     classes: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   methods: {
     getClass() {
       return [this.classes.split(' ')];
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 button.btn,
 a.btn {
   width: 100%;
