@@ -1,9 +1,7 @@
 <template>
   <div class="top-nav">
-    <div class="brand">
-      <h1 class="brand-name">
-        <span>HelloBook</span>
-      </h1>
+    <div class="brand-holder">
+      <brand class="short-brand" />
     </div>
     <div class="search-input">
       <input type="text" name="search" placeholder="Search by name, genre, etc..." />
@@ -18,7 +16,16 @@
     </div>
   </div>
 </template>
+<script>
+import Brand from '../Brand.vue';
 
+export default {
+  name: 'TopNav',
+  components: {
+    Brand,
+  },
+};
+</script>
 <style lang="scss" scoped>
 .top-nav {
   display: flex;
@@ -36,12 +43,6 @@
   -moz-box-shadow: 0 8px 6px -6px #999;
   box-shadow: 0 8px 6px -6px #999;
   padding: 5px 10px;
-  .brand {
-    width: 30%;
-    justify-content: flex-start;
-    font-weight: bolder;
-    font-size: 0.8em;
-  }
   .search-input {
     width: 40%;
     justify-content: center;
@@ -58,17 +59,6 @@
     display: flex;
     flex-direction: row;
     padding: 0px;
-    .brand {
-      width: 10%;
-      font-size: 0.5em;
-      text-align: center;
-      span {
-        display: none;
-      }
-      h1::after {
-        content: "HB";
-      }
-    }
     .search-input {
       width: 65%;
       margin: 15px 0px;

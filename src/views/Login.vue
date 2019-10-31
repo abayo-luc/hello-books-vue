@@ -2,10 +2,15 @@
   <div class="login-page">
     <div class="container row">
       <div class="left-container">
-        <h1>HelloBooks</h1>
+        <div class="left-content">
+          <brand />
+        </div>
       </div>
       <div class="right-container">
         <div class="right-content">
+          <div class="only-sm">
+            <brand />
+          </div>
           <div class="form-header">
             <h3 class="main-title">
               Welcome to
@@ -34,12 +39,11 @@
               </div>
             </div>
           </form>
-          <!-- <div class="social-link">
-            <a href="#">Facebook</a>
-            <a href="#">Twitter</a>
-            <a href="#">Linkden</a>
-            <a href="#">About</a>
-          </div>-->
+          <div class="social-links">
+            <div class="link" v-for="(link, index) in links" :key="index">
+              <a :href="link.to">{{link.name}}</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,39 +53,81 @@
 <script>
 import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
+import Brand from '../components/Brand.vue';
 
 export default {
   name: 'login',
   components: {
     InputIcon,
     BasicButton,
+    Brand,
+  },
+  data() {
+    return {
+      links: [
+        {
+          name: 'Facebook',
+          to: '#',
+        },
+        {
+          name: 'Twitter',
+          to: '#',
+        },
+        {
+          name: 'Linkden',
+          to: '#',
+        },
+        {
+          name: 'about',
+          to: '#',
+        },
+      ],
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.login-page {
+  height: 100vh;
+  width: 100vw;
+  overflow: scroll;
+}
+
 .container {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%;
 }
 
-.login-page {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-}
 .left-container {
   background-color: #fff;
   background-image: url("../assets/superdaman.png");
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 100%;
   width: 50%;
+  background-color: #000;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
+.left-content {
+  background-color: rgba(250, 250, 250, 0.3);
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+}
+.only-sm {
+  display: none;
+  @media (max-width: 1024px) {
+    display: block;
+  }
 }
 .right-container {
   width: 50%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,14 +135,42 @@ export default {
   -webkit-box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
   -moz-box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
   box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
+  overflow: scroll;
+  @media (max-width: 320px) {
+    width: 100%;
+    .right-content {
+      width: 90%;
+    }
+  }
+  @media (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+    .right-content {
+      width: 80%;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    width: 100%;
+    .right-content {
+      width: 60%;
+    }
+  }
 }
-
+.right-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80%;
+  padding: 4rem 0px 15px 0px;
+  @media (max-width: 1024px) {
+    padding: 0;
+  }
+}
 .form-header {
   margin-bottom: 25px;
   h3.main-title {
     font-size: 20px;
     font-weight: 200;
-    margin: 25px 0px;
+    margin: 15px 0px;
     letter-spacing: 3px;
     span {
       color: rgb(93, 207, 212);
@@ -107,18 +181,17 @@ export default {
     color: #999;
     width: 70%;
     letter-spacing: 1px;
+    @media (max-width: 320px) {
+      width: 90%;
+    }
   }
   &::after {
     content: " ";
     display: block;
     width: 30%;
-    margin-top: 3rem;
+    margin-top: 5%;
     border-bottom: 1.5px solid rgb(93, 207, 212);
   }
-}
-
-.login-form {
-  margin-top: 4rem;
 }
 
 .extra-det {
@@ -152,7 +225,17 @@ export default {
   margin: 25px 0px;
 }
 .social-links {
-  align-self: flex-end;
-  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  div.link a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: rgb(93, 207, 212);
+    &:hover {
+      font-style: italic;
+    }
+  }
 }
 </style>

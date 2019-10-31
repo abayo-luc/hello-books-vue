@@ -37,7 +37,7 @@ export default {
     box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2);
   }
   .container {
-    height: 5em;
+    height: 8em;
     display: flex;
     padding: 15px;
     justify-content: flex-start;
