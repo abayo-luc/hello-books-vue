@@ -26,8 +26,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-button.btn {
+<style lang="scss" >
+button.btn,
+a.btn {
   width: 100%;
   box-shadow: 1px 5px 5px 0 rgba(0, 0, 0, 0.09);
   border: none;
@@ -38,6 +39,7 @@ button.btn {
   font-size: 16px;
   margin: 15px 2px;
   cursor: pointer;
+  text-decoration: none;
   border-radius: 5px;
   &.default {
     background-color: rgb(93, 207, 212);

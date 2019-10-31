@@ -1,9 +1,9 @@
 <template >
   <div class="dash-cards">
-    <DashCard title="New Books" img="new-books.jpg" />
-    <DashCard title="Top books of 2019" img="top.jpg" />
-    <DashCard title="Recomendations" img="recomendations.jpg" />
-    <DashCard title="Your reading list" img="reading.png" />
+    <DashCard title="New Books" shortTitle="New" img="new-books.jpg" />
+    <DashCard title="Tredning books" shortTitle="Trending" img="top.jpg" />
+    <DashCard title="Books for you" shortTitle="For u" img="recomendations.jpg" />
+    <DashCard title="My reading list" shortTitle="My list" img="reading.png" />
   </div>
 </template>
 
@@ -22,5 +22,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0px 15px;
 }
 </style>

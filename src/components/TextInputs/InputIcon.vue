@@ -21,7 +21,7 @@ export default {
     },
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     type: {
       type: String,
@@ -42,6 +42,7 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   border: 1px solid #ccc;
+  background-color: #ffff;
   padding: 0px 5px;
   border-radius: 5px;
   align-items: center;
@@ -56,6 +57,11 @@ export default {
     font-size: 14px;
     padding-left: 5px;
     width: 100%;
+    &:focus {
+      .input-icon & {
+        border: 1px solid #000;
+      }
+    }
   }
 }
 </style>

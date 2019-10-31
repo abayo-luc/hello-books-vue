@@ -3,8 +3,11 @@
     class="dash-card"
     :style="{backgroundImage: 'url(\'' + require('../../assets/' + img ) + '\')'}"
   >
-    <div class="container">
-      <p>{{title}}</p>
+    <div class="card-content">
+      <p class="title">
+        <span class="long">{{title}}</span>
+        <span class="short">{{shortTitle}}</span>
+      </p>
     </div>
   </div>
 </template>
@@ -20,6 +23,10 @@ export default {
       type: String,
       required: true,
     },
+    shortTitle: {
+      type: String,
+      required: true,
+    },
   },
 };
 </script>
@@ -32,20 +39,43 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
   &:hover {
     box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2);
   }
-  .container {
+  .card-content {
     height: 8em;
     display: flex;
     padding: 15px;
-    justify-content: flex-start;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.4);
     color: #fff;
-    p {
+    border-radius: 15px;
+    p.title {
       text-transform: capitalize;
       font-weight: 600;
+      span.long {
+        display: block;
+      }
+      span.short {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    .card-content {
+      height: 5em;
+      p.title {
+        span.long {
+          display: none;
+        }
+        span.short {
+          display: block;
+        }
+      }
     }
   }
 }

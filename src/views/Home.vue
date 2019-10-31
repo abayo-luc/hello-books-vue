@@ -4,9 +4,11 @@
       <DashCards />
       <div class="content">
         <div class="all-books">
-          <books-row v-for="(row, index) in rows" :key="index" :books="row" />
+          <div class="book-rows">
+            <book-card v-for="book in books" :key="book.id" :book="book" />
+          </div>
         </div>
-        <div class="right-reading-list">
+        <div class="right-reading-list sm-hide">
           <reading-list />
         </div>
       </div>
@@ -17,20 +19,19 @@
 <script>
 import axios from 'axios';
 import DashCards from '../components/DashCards.vue';
-import BooksRow from '../components/BooksRow.vue';
-import { D3transform } from '../utils/data';
+import BookCard from '../components/cards/BookCard.vue';
 import ReadingList from '../components/ReadingList.vue';
 
 export default {
   name: 'home',
   components: {
     DashCards,
-    BooksRow,
+    BookCard,
     ReadingList,
   },
   data() {
     return {
-      rows: [],
+      books: [],
       errors: [],
     };
   },
@@ -38,7 +39,7 @@ export default {
     axios
       .get('https://jsonplaceholder.typicode.com/photos?_limit=18')
       .then((res) => {
-        this.rows = [...D3transform(res.data)];
+        this.books = res.data;
       })
       .catch(err => this.errors.push(err.message));
   },
@@ -57,8 +58,25 @@ export default {
   .all-books {
     width: 80%;
   }
+  .book-rows {
+    display: -webkit-flex; /* Safari */
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
   .right-reading-list {
     width: 20%;
+  }
+  @media (max-width: 1024px) {
+    margin-top: 2rem;
+    .all-books {
+      width: 100%;
+    }
+    .right-reading-list {
+      display: none;
+    }
   }
 }
 </style>

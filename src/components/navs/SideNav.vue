@@ -64,6 +64,9 @@ export default {
     color: inherit;
     text-decoration: none;
   }
+  @media (max-width: 1024px) {
+    display: none;
+  }
 }
 .single-item {
   display: flex;

@@ -42,4 +42,10 @@ body {
 .col-45 {
   width: 45%;
 }
+.sm-hide {
+  display: block;
+  @media (max-width: 1024px) {
+    display: none;
+  }
+}
 </style>

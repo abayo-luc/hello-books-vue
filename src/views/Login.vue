@@ -7,41 +7,43 @@
         </div>
       </div>
       <div class="right-container">
-        <div class="right-content">
-          <div class="only-sm">
-            <brand />
-          </div>
-          <div class="form-header">
-            <h3 class="main-title">
-              Welcome to
-              <span>HelloBooks</span>
-            </h3>
-            <p class="slogan">We make it easy for everyone to find what interst them to read!</p>
-          </div>
-          <form action method="post" class="login-form">
-            <input-icon type="email" name="email" iconName="email" placeholder="Email" />
-            <input-icon type="password" name="password" iconName="lock" placeholder="Password" />
-            <div class="extra-det row">
-              <div class="labeled-checkbox">
-                <input type="checkbox" name="remember" />
-                <span>Remember me</span>
-              </div>
-              <div class="link">
-                <a href="#" class="auth-link">Forgot password?</a>
-              </div>
+        <div class="container">
+          <div class="right-content">
+            <div class="only-sm">
+              <brand />
             </div>
-            <div class="group-buttons">
-              <div class="col-45">
-                <basic-button type="submit" title="Login" classes="default" />
-              </div>
-              <div class="col-45">
-                <basic-button type="submit" title="Signup" classes="basic" />
-              </div>
+            <div class="form-header">
+              <h3 class="main-title">
+                Welcome to
+                <span>HelloBooks</span>
+              </h3>
+              <p class="slogan">We make it easy for everyone to find what interst them to read!</p>
             </div>
-          </form>
-          <div class="social-links">
-            <div class="link" v-for="(link, index) in links" :key="index">
-              <a :href="link.to">{{link.name}}</a>
+            <form action method="post" class="login-form">
+              <input-icon type="email" name="email" iconName="email" placeholder="Email" />
+              <input-icon type="password" name="password" iconName="lock" placeholder="Password" />
+              <div class="extra-det row">
+                <div class="labeled-checkbox">
+                  <input type="checkbox" name="remember" />
+                  <span>Remember me</span>
+                </div>
+                <div class="link">
+                  <a href="#" class="auth-link">Forgot password?</a>
+                </div>
+              </div>
+              <div class="group-buttons">
+                <div class="col-45">
+                  <basic-button type="submit" title="Login" classes="default" />
+                </div>
+                <div class="col-45">
+                  <linked-button title="Signup" classes="basic" to="/signup" />
+                </div>
+              </div>
+            </form>
+            <div class="social-links">
+              <div class="link" v-for="(link, index) in links" :key="index">
+                <a :href="link.to">{{link.name}}</a>
+              </div>
             </div>
           </div>
         </div>
@@ -54,6 +56,7 @@
 import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
 import Brand from '../components/Brand.vue';
+import LinkedButton from '../components/Buttons/LinkedButton.vue';
 
 export default {
   name: 'login',
@@ -61,6 +64,7 @@ export default {
     InputIcon,
     BasicButton,
     Brand,
+    LinkedButton,
   },
   data() {
     return {
@@ -128,14 +132,18 @@ export default {
 .right-container {
   width: 50%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   -webkit-box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
   -moz-box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
   box-shadow: -10px 0px 10px 1px rgba(0, 0, 0, 0.08);
   overflow: scroll;
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
   @media (max-width: 320px) {
     width: 100%;
     .right-content {
@@ -143,7 +151,14 @@ export default {
     }
   }
   @media (min-width: 320px) and (max-width: 767px) {
+    background: url("../assets/superdaman.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     width: 100%;
+    .container {
+      background-color: rgba(250, 250, 250, 0.8);
+    }
     .right-content {
       width: 80%;
     }
@@ -158,9 +173,9 @@ export default {
 .right-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 80%;
-  padding: 4rem 0px 15px 0px;
+  padding: 1rem 0px 15px 0px;
   @media (max-width: 1024px) {
     padding: 0;
   }
@@ -178,7 +193,7 @@ export default {
   }
   p.slogan {
     font-size: 13px;
-    color: #999;
+    color: #666666;
     width: 70%;
     letter-spacing: 1px;
     @media (max-width: 320px) {
@@ -199,7 +214,7 @@ export default {
   justify-content: space-between;
   margin: 15px 5px;
   font-size: 12px;
-  color: #999;
+  color: #666666;
   align-items: center;
   .labeled-checkbox {
     display: flex;
@@ -211,7 +226,7 @@ export default {
 
   a.auth-link {
     text-decoration: none;
-    color: #999;
+    color: #666666;
     &:hover {
       font-style: italic;
     }
@@ -229,10 +244,10 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  div.link a {
+  a {
     text-decoration: none;
     text-transform: capitalize;
-    color: rgb(93, 207, 212);
+    color: #666666;
     &:hover {
       font-style: italic;
     }

@@ -27,20 +27,25 @@ export default {
 .main-container {
   display: flex;
   flex-direction: row;
-  margin-top: 4em;
+  margin-top: 4rem;
   .side-nav {
     width: 15%;
   }
   .container {
     width: 85%;
-    margin: 15px;
     margin-top: 2em;
   }
-  @media (min-width: 320px) and (max-width: 480px) {
-    margin: 15px;
+  @media (max-width: 1024px) {
     .side-nav {
       display: none;
+      width: 0;
     }
+    .container {
+      width: 100%;
+    }
+  }
+  @media (min-width: 320px) and (max-width: 480px) {
+    margin-top: 3rem;
   }
 }
 </style>

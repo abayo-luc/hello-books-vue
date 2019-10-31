@@ -39,9 +39,9 @@ export default {
   background-color: #fff;
   z-index: 100;
   overflow: hidden;
-  -webkit-box-shadow: 0 8px 6px -6px #999;
-  -moz-box-shadow: 0 8px 6px -6px #999;
-  box-shadow: 0 8px 6px -6px #999;
+  -webkit-box-shadow: 0 8px 6px -6px #666666;
+  -moz-box-shadow: 0 8px 6px -6px #666666;
+  box-shadow: 0 8px 6px -6px #666666;
   padding: 5px 10px;
   .search-input {
     width: 40%;

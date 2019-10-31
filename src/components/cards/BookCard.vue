@@ -1,7 +1,7 @@
 <template >
   <div class="book-card">
     <img :src="book.url" class="book-cover" />
-    <div class="content">
+    <div class="book-content">
       <h2 class="rating">6.8</h2>
       <h3 class="book-title">{{book.title}}</h3>
       <p class="author">Joanne Ramos</p>
@@ -28,8 +28,11 @@ export default {
 .book-card {
   display: flex;
   flex-direction: row;
-  width: 33.33%;
-  .content {
+  width: 17rem;
+  margin: 15px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  .book-content {
     flex-direction: column;
     align-self: center;
     margin: 0px 5px;
@@ -60,12 +63,23 @@ export default {
     }
   }
   img.book-cover {
-    height: 8em;
+    height: 9em;
     border-radius: 5px;
   }
   img[lazy="loading"] {
-    height: 8em;
+    height: 10em;
     border-radius: 5px;
+  }
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    width: 9em;
+    align-items: center;
+    margin: 10px;
+    position: relative;
+    .book-content {
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 </style>
