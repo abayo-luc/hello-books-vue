@@ -51,7 +51,7 @@ export default {
   justify-content: flex-start;
   border: 1px solid #ccc;
   background-color: #ffff;
-  padding: 0px 5px;
+  padding-left: 5px;
   border-radius: 5px;
   align-items: center;
   width: 100%;
@@ -65,11 +65,6 @@ export default {
     font-size: 14px;
     padding-left: 5px;
     width: 100%;
-    &:focus {
-      .input-icon & {
-        border: 1px solid #000;
-      }
-    }
   }
 }
 </style>

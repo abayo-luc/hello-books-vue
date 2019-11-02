@@ -1,4 +1,4 @@
-const BACKEND_URL = 'https://hello-books-ch-heroku-d-djri62.herokuapp.com/api/v1';
+const BACKEND_URL = 'https://hello-book-dev.herokuapp.com/api/v1';
 const defaultOptions = {
   method: 'POST',
   headers: {

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <notifications group="foo" style="width: 300px; top: 5px; right: 0px;" />
     <router-view />
   </div>
 </template>
@@ -46,6 +47,16 @@ body {
   display: block;
   @media (max-width: 1024px) {
     display: none;
+  }
+}
+.danger {
+  color: #ff704d;
+}
+.vue-notification {
+  background-color: rgb(93, 207, 212);
+  &.error {
+    background-color: #ff704d;
+    color: #fff;
   }
 }
 </style>

@@ -3,7 +3,7 @@
     :type="type"
     class="btn"
     :class="getClass()"
-    :disabled="disabled ? true : false"
+    :disabled="disabled ? true: false"
   >{{ title }}</button>
 </template>
 
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     getClass() {
-      return [this.classes.split(' ')];
+      return [this.classes.split(' '), `${this.disabled ? 'disabled' : ''}`];
     }
   }
 };
@@ -50,6 +50,10 @@ a.btn {
   cursor: pointer;
   text-decoration: none;
   border-radius: 5px;
+  &.disabled {
+    background-color: #ccc !important;
+    cursor: no-drop;
+  }
   &.default {
     background-color: rgb(93, 207, 212);
     color: #ffffff;
@@ -59,8 +63,5 @@ a.btn {
     color: rgb(93, 207, 212);
     border: 0.5px solid rgba(0, 0, 0, 0.05);
   }
-}
-button[diabled="disabled"] {
-  background-color: #ccc;
 }
 </style>

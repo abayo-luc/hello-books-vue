@@ -5,10 +5,30 @@
         <brand />
       </div>
       <form action method="post" class="signup-form">
-        <input-icon type="text" iconName="user" placeholder="Name" />
-        <input-icon type="email" iconName="email" placeholder="Email" />
-        <input-icon type="password" iconName="lock" placeholder="Password" />
-        <input-icon type="password" iconName="lock" placeholder="Confirm password" />
+        <input-icon
+        type="text"
+        iconName="user"
+        placeholder="Name"
+        value=""
+        :on-change-text="handleInputChange"/>
+        <input-icon
+        type="email"
+        iconName="email"
+        placeholder="Email"
+        value=""
+        :on-change-text="handleInputChange"/>
+        <input-icon
+        type="password"
+        iconName="lock"
+        placeholder="Password"
+        value=""
+        :on-change-text="handleInputChange" />
+        <input-icon
+        type="password"
+        iconName="lock"
+        placeholder="Confirm password"
+        value=""
+        :on-change-text="handleInputChange"/>
         <div class="group-btns">
           <basic-button title="Signup" classes="default" />
         </div>
@@ -34,6 +54,11 @@ export default {
     Brand,
     InputIcon,
     BasicButton
+  },
+  methods: {
+    handleInputChange() {
+      return '';
+    }
   }
 };
 </script>

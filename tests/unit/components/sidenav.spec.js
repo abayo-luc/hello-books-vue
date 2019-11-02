@@ -1,12 +1,12 @@
 import {
-  shallowMount
+  mount
 } from '@vue/test-utils';
 import SideNav from '../../../src/components/navs/SideNav.vue';
 
 const $route = {
   path: '/'
 };
-const wrapper = shallowMount(SideNav, {
+const wrapper = mount(SideNav, {
   mocks: {
     $route
   },

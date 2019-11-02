@@ -20,13 +20,6 @@
               <p class="slogan">We make it easy for everyone to find what interst them to read!</p>
             </div>
             <form method="post" class="login-form" @submit.prevent="handleSubmit()">
-              <div class="errors">
-                <p
-                  v-for="key in Object.keys(auth.errors)"
-                  :key="key"
-                  class="danger"
-                >{{ auth.errors[key] }}</p>
-              </div>
               <input-icon
                 type="email"
                 name="email"
@@ -116,7 +109,7 @@ export default {
     ...mapActions(['handleSubmit']),
     handleInputChange(e) {
       const { value, name } = e.target;
-      this.$store.commit(HANDLE_AUTH_INPUT, { value, name });
+      this.$store.dispatch('handleInputChange', { value, name });
     }
   }
 };
