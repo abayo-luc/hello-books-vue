@@ -18,9 +18,9 @@ export default {
   props: {
     book: {
       type: Object,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

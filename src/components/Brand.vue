@@ -12,14 +12,14 @@ export default {
   props: {
     classes: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   computed: {
     getClass() {
       return this.classes.split('');
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

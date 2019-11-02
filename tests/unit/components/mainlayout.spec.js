@@ -1,5 +1,5 @@
 import {
-  shallowMount,
+  shallowMount
 } from '@vue/test-utils';
 import MainLayout from '../../../src/components/layouts/MainLayout.vue';
 

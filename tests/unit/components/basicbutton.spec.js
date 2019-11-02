@@ -1,5 +1,5 @@
 import {
-  shallowMount,
+  shallowMount
 } from '@vue/test-utils';
 import BasicButton from '../../../src/components/Buttons/BasicButton.vue';
 
@@ -8,8 +8,8 @@ describe('BasicButton.vue', () => {
     const wrapper = shallowMount(BasicButton, {
       propsData: {
         title: 'Login',
-        type: 'submit',
-      },
+        type: 'submit'
+      }
     });
     expect(wrapper).toMatchSnapshot();
   });

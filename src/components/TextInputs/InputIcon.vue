@@ -1,7 +1,13 @@
 <template>
   <div class="input-icon">
     <img :src="icon" class="icon" />
-    <input :type="type" :placeholder="placeholder" :name="name" />
+    <input
+      :type="type"
+      :placeholder="placeholder"
+      :name="name"
+      :value="value"
+      @input="onChangeText"
+    />
   </div>
 </template>
 
@@ -13,26 +19,34 @@ export default {
   props: {
     iconName: {
       type: String,
-      required: true,
+      required: true
     },
     placeholder: {
       type: String,
-      required: true,
+      required: true
     },
     name: {
       type: String,
-      required: false,
+      required: false
     },
     type: {
       type: String,
-      required: true,
+      required: true
     },
+    value: {
+      type: String,
+      required: true
+    },
+    onChangeText: {
+      type: Function,
+      required: true
+    }
   },
   data() {
     return {
-      icon: Icons[this.iconName],
+      icon: Icons[this.iconName]
     };
-  },
+  }
 };
 </script>
 
@@ -43,7 +57,7 @@ export default {
   justify-content: flex-start;
   border: 1px solid #ccc;
   background-color: #ffff;
-  padding: 0px 5px;
+  padding-left: 5px;
   border-radius: 5px;
   align-items: center;
   width: 100%;
@@ -57,11 +71,6 @@ export default {
     font-size: 14px;
     padding-left: 5px;
     width: 100%;
-    &:focus {
-      .input-icon & {
-        border: 1px solid #000;
-      }
-    }
   }
 }
 </style>

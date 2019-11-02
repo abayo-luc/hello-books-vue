@@ -5,16 +5,17 @@ module.exports = {
   verbose: true,
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
-    '!src/main.js',
+    '!src/main.js'
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1'
   },
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
-    '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest',
+    '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest'
   },
   snapshotSerializers: [
-    '<rootDir>/node_modules/jest-serializer-vue',
+    '<rootDir>/node_modules/jest-serializer-vue'
   ],
+  setupFiles: ['<rootDir>/browserMocks.js']
 };

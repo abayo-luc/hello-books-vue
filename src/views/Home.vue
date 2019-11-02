@@ -27,12 +27,12 @@ export default {
   components: {
     DashCards,
     BookCard,
-    ReadingList,
+    ReadingList
   },
   data() {
     return {
       books: [],
-      errors: [],
+      errors: []
     };
   },
   created() {
@@ -46,8 +46,8 @@ export default {
   computed: {
     layout() {
       return this.$route.meta.layout;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

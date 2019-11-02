@@ -1,5 +1,5 @@
 import {
-  shallowMount,
+  shallowMount
 } from '@vue/test-utils';
 import Authors from '../../../src/views/Authors.vue';
 
@@ -8,9 +8,9 @@ describe('Authors.vue', () => {
     const wrapper = shallowMount(Authors, {
       mocks: {
         $route: {
-          meta: 'main-layout',
-        },
-      },
+          meta: 'main-layout'
+        }
+      }
     });
     expect(wrapper).toMatchSnapshot();
   });

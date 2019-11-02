@@ -1,8 +1,7 @@
 import {
-  shallowMount,
+  shallowMount
 } from '@vue/test-utils';
 import Home from '../../../src/views/Home.vue';
-
 
 describe('Home Page', () => {
   it('should match the snapshot', async () => {
@@ -10,9 +9,9 @@ describe('Home Page', () => {
       stubs: ['router-link', 'router-view'],
       mocks: {
         $route: {
-          meta: 'main-layout',
-        },
-      },
+          meta: 'main-layout'
+        }
+      }
     });
     expect(wrapper).toMatchSnapshot();
   });

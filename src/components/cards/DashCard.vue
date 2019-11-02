@@ -17,17 +17,17 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     img: {
       type: String,
-      required: true,
+      required: true
     },
     shortTitle: {
       type: String,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

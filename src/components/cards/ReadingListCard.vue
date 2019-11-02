@@ -16,9 +16,9 @@ export default {
   name: 'ReadingListCard',
   data() {
     return {
-      books: [...Array(5).keys()],
+      books: [...Array(5).keys()]
     };
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

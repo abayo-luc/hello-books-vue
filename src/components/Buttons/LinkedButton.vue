@@ -8,24 +8,24 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     type: {
-      type: String,
+      type: String
     },
     classes: {
       type: String,
-      default: '',
+      default: ''
     },
     to: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     getClass() {
       return [this.classes.split(' ')];
-    },
-  },
+    }
+  }
 };
 </script>

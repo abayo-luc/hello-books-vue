@@ -1,5 +1,10 @@
 <template>
-  <button :type="type" class="btn" :class="getClass()">{{title}}</button>
+  <button
+    :type="type"
+    class="btn"
+    :class="getClass()"
+    :disabled="disabled ? true: false"
+  >{{ title }}</button>
 </template>
 
 <script>
@@ -8,25 +13,29 @@ export default {
   props: {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     type: {
-      type: String,
+      type: String
     },
     classes: {
       type: String,
-      default: '',
+      default: ''
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     getClass() {
-      return [this.classes.split(' ')];
-    },
-  },
+      return [this.classes.split(' '), `${this.disabled ? 'disabled' : ''}`];
+    }
+  }
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 button.btn,
 a.btn {
   width: 100%;
@@ -41,6 +50,10 @@ a.btn {
   cursor: pointer;
   text-decoration: none;
   border-radius: 5px;
+  &.disabled {
+    background-color: #ccc !important;
+    cursor: no-drop;
+  }
   &.default {
     background-color: rgb(93, 207, 212);
     color: #ffffff;
