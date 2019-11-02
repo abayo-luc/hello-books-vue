@@ -17,7 +17,10 @@
                 Welcome to
                 <span>HelloBooks</span>
               </h3>
-              <p class="slogan">We make it easy for everyone to find what interst them to read!</p>
+              <p class="slogan">
+                We make it easy for
+                everyone to find what interst them to read!
+              </p>
             </div>
             <form method="post" class="login-form" @submit.prevent="handleSubmit()">
               <input-icon
@@ -47,7 +50,12 @@
               </div>
               <div class="group-buttons">
                 <div class="col-45">
-                  <basic-button type="submit" title="Login" classes="default" />
+                  <basic-button
+                    type="submit"
+                    title="Login"
+                    classes="default"
+                    :disabled="auth.submitting"
+                  />
                 </div>
                 <div class="col-45">
                   <linked-button title="Signup" classes="basic" to="/signup" />
@@ -67,6 +75,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
 import Brand from '../components/Brand.vue';
@@ -121,14 +130,12 @@ export default {
   width: 100vw;
   overflow: scroll;
 }
-
 .container {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
 }
-
 .left-container {
   background-color: #fff;
   background-image: url("../assets/superdaman.png");
@@ -232,7 +239,6 @@ export default {
     border-bottom: 1.5px solid rgb(93, 207, 212);
   }
 }
-
 .extra-det {
   display: flex;
   justify-content: space-between;
@@ -247,7 +253,6 @@ export default {
       margin-left: 5px;
     }
   }
-
   a.auth-link {
     text-decoration: none;
     color: #666666;
@@ -274,6 +279,17 @@ export default {
     color: #666666;
     &:hover {
       font-style: italic;
+    }
+  }
+  div.errors {
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
+    justify-self: flex-start;
+    align-self: flex-start;
+    p {
+      text-align: left;
+      float: left;
     }
   }
 }

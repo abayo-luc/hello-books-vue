@@ -42,7 +42,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(to, from);
       this.pages = this.pages.map((page) => {
         switch (page.path) {
           case to.path:

@@ -1,7 +1,13 @@
 <template>
   <div class="input-icon">
     <img :src="icon" class="icon" />
-    <input :type="type" :placeholder="placeholder" :name="name" />
+    <input
+      :type="type"
+      :placeholder="placeholder"
+      :name="name"
+      :value="value"
+      @input="onChangeText"
+    />
   </div>
 </template>
 
