@@ -31,7 +31,7 @@ class Fetch {
       case 201:
         return json;
       default:
-        throw new Error(JSON.stringify(json));
+        throw json;
     }
   }
 
@@ -39,6 +39,12 @@ class Fetch {
     this.config.method = 'POST';
     this.url = url;
     this.data = data;
+    return this.request();
+  }
+
+  async get(url) {
+    this.config.method = 'GET';
+    this.url = url;
     return this.request();
   }
 }

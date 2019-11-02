@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import Vuex from 'vuex';
 import Vue from 'vue';
 import {
@@ -13,7 +14,7 @@ import {
 import router from '../../router';
 import notify from '../../utils/notify';
 
-const tokenName = 'qwer-78';
+export const tokenName = 'qwer-78';
 
 Vue.use(Vuex);
 const INITIAL_STATE = {
@@ -26,17 +27,18 @@ const INITIAL_STATE = {
 const state = {
   ...INITIAL_STATE
 };
-const getters = {
+export const getters = {
   authData: allState => ({
     ...allState
   })
 };
-const actions = {
+export const actions = {
   handleInputChange: ({
     commit
   }, data) => commit(HANDLE_AUTH_INPUT, data),
   async handleSubmit({
-    commit
+    commit,
+    state
   }) {
     const {
       email,
@@ -58,12 +60,10 @@ const actions = {
         text: errors[key],
         type: 'error',
         duration: 10000,
-        // (optional)
-        // Overrides default/provided animation speed
         speed: 1000
 
       }));
-      return commit(HANDLE_AUTH_FAILED);
+      return commit(HANDLE_AUTH_FAILED, errors);
     }
     try {
       const {
@@ -76,18 +76,19 @@ const actions = {
       commit(HANDLE_AUTH_SUCCESS);
       return router.push('/');
     } catch (err) {
-      const error = JSON.parse(err.message) || err.message;
-      commit(HANDLE_AUTH_FAILED);
+      commit(HANDLE_AUTH_FAILED, {
+        credentials: err.errors[0]
+      });
       return notify({
-        title: error.message,
-        text: error.errors[0],
+        title: err.message,
+        text: err.errors && err.errors[0],
         type: 'error'
       });
     }
   }
 };
 
-const mutations = {
+export const mutations = {
   [HANDLE_AUTH_INPUT]: (authState, {
     value,
     name
@@ -99,9 +100,9 @@ const mutations = {
   [HANDLE_AUTH_SUBMIT]: (authState, value) => {
     authState.submitting = value;
   },
-  [HANDLE_AUTH_FAILED]: (authState, errors = {}) => {
-    authState.errors = errors;
-    authState.submitting = false;
+  [HANDLE_AUTH_FAILED]: (state, errors = {}) => {
+    state.errors = errors;
+    state.submitting = false;
   },
   [HANDLE_AUTH_SUCCESS]: (authState) => {
     authState.errors = {};

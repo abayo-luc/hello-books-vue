@@ -17,4 +17,8 @@ describe('SideNav.vue', () => {
   it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
   });
+  it('should container all pages', () => {
+    expect(wrapper.vm.$data.pages.length > 2).toBeTruthy();
+    expect(wrapper.vm.$data.pages[0].active).toBeTruthy();
+  });
 });
