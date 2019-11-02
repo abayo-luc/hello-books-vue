@@ -1,4 +1,6 @@
-const BACKEND_URL = 'https://hello-book-dev.herokuapp.com/api/v1';
+const {
+  VUE_APP_BACKEND_URL
+} = process.env;
 const defaultOptions = {
   method: 'POST',
   headers: {
@@ -17,7 +19,7 @@ class Fetch {
   }
 
   async request() {
-    const response = await fetch(`${BACKEND_URL}${this.url}`, {
+    const response = await fetch(`${VUE_APP_BACKEND_URL}${this.url}`, {
       ...this.config,
       body: JSON.stringify(this.data)
 
