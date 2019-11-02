@@ -13,8 +13,8 @@ import DashCard from './cards/DashCard.vue';
 export default {
   name: 'DashCards',
   components: {
-    DashCard,
-  },
+    DashCard
+  }
 };
 </script>
 <style lang="scss" scoped>

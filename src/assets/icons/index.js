@@ -13,5 +13,5 @@ export default {
   email,
   lock,
   user,
-  logoDark,
+  logoDark
 };

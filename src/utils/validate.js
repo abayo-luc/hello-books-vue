@@ -1,5 +1,5 @@
 import {
-  isEmpty,
+  isEmpty
 } from 'lodash';
 
 export const checkEmail = () => true;
@@ -10,6 +10,6 @@ export const validateAuth = (data) => {
   if (isEmpty(data.password)) errors.password = 'Password is required';
   return {
     errors,
-    isValid: isEmpty(errors),
+    isValid: isEmpty(errors)
   };
 };

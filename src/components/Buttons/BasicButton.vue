@@ -1,5 +1,10 @@
 <template>
-  <button :type="type" class="btn" :class="getClass()">{{ title }}</button>
+  <button
+    :type="type"
+    class="btn"
+    :class="getClass()"
+    :disabled="disabled ? true : false"
+  >{{ title }}</button>
 </template>
 
 <script>
@@ -16,6 +21,10 @@ export default {
     classes: {
       type: String,
       default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -50,5 +59,8 @@ a.btn {
     color: rgb(93, 207, 212);
     border: 0.5px solid rgba(0, 0, 0, 0.05);
   }
+}
+button[diabled="disabled"] {
+  background-color: #ccc;
 }
 </style>

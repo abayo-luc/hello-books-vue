@@ -1,5 +1,5 @@
 import {
-  chunk,
+  chunk
 } from 'lodash';
 
 export const D3transform = data => chunk(data, 3);

@@ -19,9 +19,30 @@
               </h3>
               <p class="slogan">We make it easy for everyone to find what interst them to read!</p>
             </div>
-            <form action method="post" class="login-form">
-              <input-icon type="email" name="email" iconName="email" placeholder="Email" />
-              <input-icon type="password" name="password" iconName="lock" placeholder="Password" />
+            <form method="post" class="login-form" @submit.prevent="handleSubmit()">
+              <div class="errors">
+                <p
+                  v-for="key in Object.keys(auth.errors)"
+                  :key="key"
+                  class="danger"
+                >{{ auth.errors[key] }}</p>
+              </div>
+              <input-icon
+                type="email"
+                name="email"
+                icon-name="email"
+                placeholder="Email"
+                :value="auth.email"
+                :on-change-text="handleInputChange"
+              />
+              <input-icon
+                type="password"
+                name="password"
+                icon-name="lock"
+                placeholder="Password"
+                :value="auth.password"
+                :on-change-text="handleInputChange"
+              />
               <div class="extra-det row">
                 <div class="labeled-checkbox">
                   <input type="checkbox" name="remember" />
@@ -41,7 +62,7 @@
               </div>
             </form>
             <div class="social-links">
-              <div class="link" v-for="(link, index) in links" :key="index">
+              <div v-for="(link, index) in links" :key="index" class="link">
                 <a :href="link.to">{{ link.name }}</a>
               </div>
             </div>
@@ -59,7 +80,7 @@ import Brand from '../components/Brand.vue';
 import LinkedButton from '../components/Buttons/LinkedButton.vue';
 
 export default {
-  name: 'login',
+  name: 'Login',
   components: {
     InputIcon,
     BasicButton,
@@ -87,6 +108,16 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    ...mapState(['auth'])
+  },
+  methods: {
+    ...mapActions(['handleSubmit']),
+    handleInputChange(e) {
+      const { value, name } = e.target;
+      this.$store.commit(HANDLE_AUTH_INPUT, { value, name });
+    }
   }
 };
 </script>

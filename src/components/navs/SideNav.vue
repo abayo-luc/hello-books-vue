@@ -21,19 +21,19 @@ export default {
         {
           path: '/',
           name: 'Home',
-          icon: Icons.Home,
+          icon: Icons.Home
         },
         {
           path: '/search',
           name: 'Browse',
-          icon: Icons.Search,
+          icon: Icons.Search
         },
         {
           path: '/authors',
           name: 'Authors',
-          icon: Icons.Avatar,
-        },
-      ],
+          icon: Icons.Avatar
+        }
+      ]
     };
   },
   created() {
@@ -52,8 +52,8 @@ export default {
             return page;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

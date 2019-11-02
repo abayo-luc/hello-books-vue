@@ -33,8 +33,8 @@ export default {
   components: {
     Brand,
     InputIcon,
-    BasicButton,
-  },
+    BasicButton
+  }
 };
 </script>
 

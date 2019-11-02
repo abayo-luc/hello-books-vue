@@ -18,8 +18,8 @@ export default {
   name: 'MainLayout',
   components: {
     TopNav,
-    SideNav,
-  },
+    SideNav
+  }
 };
 </script>
 

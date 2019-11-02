@@ -1,5 +1,5 @@
 import {
-  shallowMount,
+  shallowMount
 } from '@vue/test-utils';
 import InputIcon from '../../../src/components/TextInputs/InputIcon.vue';
 
@@ -10,8 +10,8 @@ describe('InputIcon.vue', () => {
         name: 'email',
         type: 'email',
         placeholder: 'Email',
-        iconName: 'email',
-      },
+        iconName: 'email'
+      }
     });
     expect(wrapper).toMatchSnapshot();
   });

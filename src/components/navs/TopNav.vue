@@ -22,8 +22,8 @@ import Brand from '../Brand.vue';
 export default {
   name: 'TopNav',
   components: {
-    Brand,
-  },
+    Brand
+  }
 };
 </script>
 <style lang="scss" scoped>

@@ -26,6 +26,14 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    value: {
+      type: String,
+      required: true
+    },
+    onChangeText: {
+      type: Function,
+      required: true
     }
   },
   data() {

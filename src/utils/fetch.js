@@ -4,8 +4,8 @@ const defaultOptions = {
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
-    Accept: 'application/json',
-  },
+    Accept: 'application/json'
+  }
 };
 
 
@@ -19,7 +19,7 @@ class Fetch {
   async request() {
     const response = await fetch(`${BACKEND_URL}${this.url}`, {
       ...this.config,
-      body: JSON.stringify(this.data),
+      body: JSON.stringify(this.data)
 
     });
     const json = await response.json();

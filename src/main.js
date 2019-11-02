@@ -10,5 +10,5 @@ Vue.component('main-layout', MainLayout);
 new Vue({
   router,
   store,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app');

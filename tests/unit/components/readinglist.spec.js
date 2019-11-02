@@ -1,5 +1,5 @@
 import {
-  mount,
+  mount
 } from '@vue/test-utils';
 import ReadingList from '../../../src/components/ReadingList.vue';
 

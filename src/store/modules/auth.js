@@ -1,18 +1,16 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
 import Vuex from 'vuex';
 import Vue from 'vue';
 import {
-  validateAuth,
+  validateAuth
 } from '../../utils/validate';
 import fetch from '../../utils/fetch';
 import {
   HANDLE_AUTH_INPUT,
   HANDLE_AUTH_SUBMIT,
   HANDLE_AUTH_FAILED,
-  HANDLE_AUTH_SUCCESS,
+  HANDLE_AUTH_SUCCESS
 } from './mutationTypes';
+import router from '../../router';
 
 const tokenName = 'qwer-78';
 
@@ -22,59 +20,60 @@ const INITIAL_STATE = {
   password: '',
   name: '',
   submitting: false,
-  errors: {},
+  errors: {}
 };
 const state = {
-  ...INITIAL_STATE,
+  ...INITIAL_STATE
 };
 const getters = {
   authData: allState => ({
-    ...allState,
-  }),
+    ...allState
+  })
 };
 const actions = {
   async handleSubmit({
-    commit,
+    commit
   }) {
     const {
       email,
       password,
-      submitting,
+      submitting
     } = state;
     if (submitting) return '';
     commit(HANDLE_AUTH_SUBMIT, true);
     const {
       errors,
-      isValid,
+      isValid
     } = validateAuth({
       email,
-      password,
+      password
     });
     if (!isValid) {
       return commit(HANDLE_AUTH_FAILED, errors);
     }
     try {
       const {
-        token,
+        token
       } = await fetch.post('/users/login', {
         email,
-        password,
+        password
       });
       await localStorage.setItem(tokenName, token);
-      return commit(HANDLE_AUTH_SUCCESS);
+      commit(HANDLE_AUTH_SUCCESS);
+      return router.push('/');
     } catch (err) {
       const error = JSON.parse(err.message);
       return commit(HANDLE_AUTH_FAILED, {
-        backError: error.errors[0],
+        backError: error.errors[0]
       });
     }
-  },
+  }
 };
 
 const mutations = {
   [HANDLE_AUTH_INPUT]: (authState, {
     value,
-    name,
+    name
   }) => {
     authState[name] = value;
     authState.errors = {};
@@ -87,16 +86,15 @@ const mutations = {
     authState.errors = errors;
     authState.submitting = false;
   },
-  [HANDLE_AUTH_SUCCESS]: (state) => {
-    state = {
-      ...INITIAL_STATE,
-    };
-  },
+  [HANDLE_AUTH_SUCCESS]: (authState) => {
+    authState.errors = {};
+    authState.submitting = false;
+  }
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 };

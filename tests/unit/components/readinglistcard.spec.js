@@ -1,5 +1,5 @@
 import {
-  mount,
+  mount
 } from '@vue/test-utils';
 import ReadingListCard from '../../../src/components/cards/ReadingListCard.vue';
 

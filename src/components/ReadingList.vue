@@ -12,8 +12,8 @@ export default {
   name: 'ReadingList',
   components: {
     ListHeader,
-    ReadingListCard,
-  },
+    ReadingListCard
+  }
 };
 </script>
 <style lang="scss" scoped>
