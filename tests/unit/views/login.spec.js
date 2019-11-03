@@ -25,7 +25,7 @@ describe('Login.vue', () => {
       }
     };
     actions = {
-      handleSubmit: jest.fn(),
+      handleLoginSubmit: jest.fn(),
       handleInputChange: jest.fn()
     };
     store = new Vuex.Store({

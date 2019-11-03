@@ -38,6 +38,7 @@ export default {
 <style lang="scss">
 button.btn,
 a.btn {
+  all: unset;
   width: 100%;
   box-shadow: 1px 5px 5px 0 rgba(0, 0, 0, 0.09);
   border: none;

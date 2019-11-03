@@ -22,7 +22,7 @@
                 everyone to find what interst them to read!
               </p>
             </div>
-            <form method="post" class="login-form" @submit.prevent="handleSubmit()">
+            <form method="post" class="login-form" @submit.prevent="handleLoginSubmit()">
               <input-icon
                 type="email"
                 name="email"
@@ -115,7 +115,7 @@ export default {
     ...mapState(['auth'])
   },
   methods: {
-    ...mapActions(['handleSubmit']),
+    ...mapActions(['handleLoginSubmit']),
     handleInputChange(e) {
       const { value, name } = e.target;
       this.$store.dispatch('handleInputChange', { value, name });
@@ -224,7 +224,7 @@ export default {
   }
   p.slogan {
     font-size: 13px;
-    color: #666666;
+    color: #546b81;
     width: 70%;
     letter-spacing: 1px;
     @media (max-width: 320px) {
@@ -244,7 +244,7 @@ export default {
   justify-content: space-between;
   margin: 15px 5px;
   font-size: 12px;
-  color: #666666;
+  color: #546b81;
   align-items: center;
   .labeled-checkbox {
     display: flex;
@@ -255,7 +255,7 @@ export default {
   }
   a.auth-link {
     text-decoration: none;
-    color: #666666;
+    color: #546b81;
     &:hover {
       font-style: italic;
     }
@@ -276,7 +276,7 @@ export default {
   a {
     text-decoration: none;
     text-transform: capitalize;
-    color: #666666;
+    color: #546b81;
     &:hover {
       font-style: italic;
     }

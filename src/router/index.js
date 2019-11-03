@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Authors from '../views/Authors.vue';
 import Login from '../views/Login.vue';
 import Signup from '../views/Signup.vue';
+import Confirmation from '../views/AccountConfirmation.vue';
 
 Vue.use(VueRouter);
 
@@ -31,7 +32,15 @@ export const routes = [{
 {
   path: '/signup',
   name: 'signup',
-  component: Signup
+  component: Signup,
+  meta: {
+    layout: 'auth-layout'
+  }
+},
+{
+  path: '/users/confirmation',
+  name: 'instructions',
+  component: Confirmation
 }
 ];
 

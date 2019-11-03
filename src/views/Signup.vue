@@ -1,109 +1,112 @@
 <template>
-  <div class="signup-page">
-    <div class="content-container">
-      <div class="brand-container">
-        <brand />
+  <div class="signup">
+    <component :is="layout">
+      <div class="auth-message content" v-show="auth.success">
+        <auth-message />
       </div>
-      <form action method="post" class="signup-form">
+      <form
+        method="post"
+        class="signup-form content"
+        @submit.prevent="handleSignupSubmit()"
+        v-show="!auth.success"
+      >
         <input-icon
-        type="text"
-        iconName="user"
-        placeholder="Name"
-        value=""
-        :on-change-text="handleInputChange"/>
+          type="text"
+          name="name"
+          icon-name="user"
+          placeholder="Fullname"
+          :value="auth.name"
+          :on-change-text="handleInputChange"
+        />
         <input-icon
-        type="email"
-        iconName="email"
-        placeholder="Email"
-        value=""
-        :on-change-text="handleInputChange"/>
+          type="email"
+          name="email"
+          icon-name="email"
+          placeholder="Email"
+          :value="auth.email"
+          :on-change-text="handleInputChange"
+        />
         <input-icon
-        type="password"
-        iconName="lock"
-        placeholder="Password"
-        value=""
-        :on-change-text="handleInputChange" />
+          type="password"
+          name="password"
+          icon-name="lock"
+          placeholder="Password"
+          :value="auth.password"
+          :on-change-text="handleInputChange"
+        />
         <input-icon
-        type="password"
-        iconName="lock"
-        placeholder="Confirm password"
-        value=""
-        :on-change-text="handleInputChange"/>
+          type="password"
+          name="passwordConfirmation"
+          icon-name="lock"
+          placeholder="Password confirmation"
+          :value="auth.passwordConfirmation"
+          :on-change-text="handleInputChange"
+        />
         <div class="group-btns">
-          <basic-button title="Signup" classes="default" />
+          <basic-button title="Signup" classes="default" :disabled="auth.submitting" />
         </div>
       </form>
-      <div class="auth-link">
+      <div class="auth-link" v-show="!auth.success">
         <p>
           Already have an account?
           <router-link to="/login" class="link">Login</router-link>
         </p>
       </div>
-    </div>
+    </component>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import Brand from '../components/Brand.vue';
 import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
+import AuthMessage from '../components/AuthMessage.vue';
 
 export default {
   name: 'Signup',
   components: {
     Brand,
     InputIcon,
-    BasicButton
+    BasicButton,
+    AuthMessage
+  },
+  computed: {
+    ...mapState(['auth']),
+    layout() {
+      return this.$route.meta.layout;
+    }
   },
   methods: {
-    handleInputChange() {
-      return '';
+    ...mapActions(['handleSignupSubmit']),
+    handleInputChange(e) {
+      const { value, name } = e.target;
+      this.$store.dispatch('handleInputChange', { value, name });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.signup-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  background-color: #fff;
-  background-image: url("../assets/superdaman.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 .content-container {
-  width: 40%;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  height: 80%;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  background-color: rgba(250, 250, 250, 0.8);
-  padding: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  @media (max-width: 1024px) {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    justify-content: space-around;
-    padding: 5em 2em;
-  }
-  .signup-form {
+  .content {
     width: 60%;
-    @media (max-width: 1024px) {
+  }
+  .auth-message {
+    margin: 5rem;
+  }
+  @media (max-width: 1024px) {
+    .signup-form {
       width: 90%;
+    }
+    .auth-message {
+      width: 80%;
+      justify-content: center;
     }
   }
   .auth-link {
     font-size: 16px;
-    color: #666666;
+    color: #546b81;
     align-items: center;
     a.link {
       text-decoration: none;

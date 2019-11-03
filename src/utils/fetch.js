@@ -42,6 +42,13 @@ class Fetch {
     return this.request();
   }
 
+  async put(url, data) {
+    this.config.method = 'PUT';
+    this.url = url;
+    this.data = data;
+    return this.request();
+  }
+
   async get(url) {
     this.config.method = 'GET';
     this.url = url;

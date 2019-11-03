@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/abayo-luc/hello-books-vue.svg?branch=develop)](https://travis-ci.com/abayo-luc/hello-books-vue) [![Coverage Status](https://coveralls.io/repos/github/abayo-luc/hello-books-vue/badge.svg?branch=develop)](https://coveralls.io/github/abayo-luc/hello-books-vue?branch=develop)
+[![Build Status](https://travis-ci.com/abayo-luc/hello-books-vue.svg?branch=develop)](https://travis-ci.com/abayo-luc/hello-books-vue) [![Coverage Status](https://coveralls.io/repos/github/abayo-luc/hello-books-vue/badge.svg?branch=develop)](https://coveralls.io/github/abayo-luc/hello-books-vue?branch=develop) [![Netlify Status](https://api.netlify.com/api/v1/badges/256659aa-0c4c-4be6-afbe-59a2d3fa63b4/deploy-status)](https://app.netlify.com/sites/hellob-books/deploys)
 
 # hello-books-vue
 
