@@ -85,12 +85,12 @@ export const actions = {
       return router.push('/');
     } catch (err) {
       commit(HANDLE_AUTH_FAILED, {
-        credentials: err.errors[0]
+        credentials: err.errors && err.errors[0]
       });
       return notify({
         title: err.message,
         text: err.errors && err.errors[0],
-        type: 'error',
+        type: err.errors ? 'error' : 'warn',
         speed: 500
       });
     }
