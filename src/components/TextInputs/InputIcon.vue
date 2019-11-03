@@ -67,9 +67,12 @@ export default {
   }
   input {
     border: none;
-    height: 38px;
+    height: 42px;
     font-size: 14px;
     padding-left: 5px;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
     width: 100%;
   }
 }
