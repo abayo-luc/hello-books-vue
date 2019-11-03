@@ -3,12 +3,15 @@ import {
   isEmpty
 } from 'lodash';
 
-export const checkEmail = () => true;
+export const capitalize = value => `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
 
-export const validateAuth = (data = {}) => {
+export const validateAuth = (data = {}, keys = ['email', 'password']) => {
   const errors = {};
-  if (isEmpty(data.email)) errors.email = `Email can't be empty`;
-  if (isEmpty(data.password)) errors.password = `Password can't be empty`;
+  keys.forEach((key) => {
+    if (isEmpty(data[key])) {
+      errors[key] = `${capitalize(key)} can't be empty`;
+    }
+  });
   return {
     errors,
     isValid: isEmpty(errors)

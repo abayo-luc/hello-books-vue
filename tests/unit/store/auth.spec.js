@@ -12,6 +12,7 @@ import {
   HANDLE_AUTH_SUCCESS
 } from '../../../src/store/modules/mutationTypes';
 
+jest.mock('../../../src/utils/clearNotification', () => jest.fn().mockImplementation(() => true));
 jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => true));
 const INITIAL_STATE = {
   email: '',
@@ -97,7 +98,7 @@ describe('Store Auth', () => {
     });
 
     it('should commit HANDLE_AUTH_FAILED  for empty email or password', async () => {
-      await actions.handleSubmit({
+      await actions.handleLoginSubmit({
         commit,
         state
       });
@@ -125,7 +126,7 @@ describe('Store Auth', () => {
         email: 'me@example.com',
         password: 'password'
       };
-      await actions.handleSubmit({
+      await actions.handleLoginSubmit({
         commit,
         state
       });
@@ -154,7 +155,7 @@ describe('Store Auth', () => {
         email: 'me@example.com',
         password: 'password'
       };
-      await actions.handleSubmit({
+      await actions.handleLoginSubmit({
         commit,
         state
       });
@@ -166,7 +167,7 @@ describe('Store Auth', () => {
     });
     it('should not submit if already submitting', async () => {
       state.submitting = true;
-      await actions.handleSubmit({
+      await actions.handleLoginSubmit({
         commit,
         state
       });
