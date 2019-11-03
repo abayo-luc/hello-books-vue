@@ -2,17 +2,18 @@
 
 # hello-books-vue
 
-## Code style
+## Code style & Conventions
 
-The style-guide is ESlint-airbnb, and it uses prettier for frommating code. To enable `VS Code + ESLint + prettier` follow the steps below:
+The style-guide is `@vue/airbnb`, and it uses prettier for frommating code. To enable `VS Code + ESLint + prettier` follow the steps below:
 
 - Text editor [VSCode](https://code.visualstudio.com)
 - In VS Code, `Ctrl + Shift + X`
 - Search and install _ESLint_
 - Search and install _Prettier Code Formatter_
+- Search and install Vue tooling for VS code: _Vetur_
 - Restart VS Code.
 
-### Getting Started
+## Getting Started
 
 ### Clone the latest version of the repository
 
