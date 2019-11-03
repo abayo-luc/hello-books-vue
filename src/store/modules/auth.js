@@ -59,9 +59,7 @@ export const actions = {
         title: 'Validation',
         text: errors[key],
         type: 'error',
-        duration: 10000,
         speed: 1000
-
       }));
       return commit(HANDLE_AUTH_FAILED, errors);
     }
@@ -82,7 +80,8 @@ export const actions = {
       return notify({
         title: err.message,
         text: err.errors && err.errors[0],
-        type: 'error'
+        type: 'error',
+        speed: 1000
       });
     }
   }

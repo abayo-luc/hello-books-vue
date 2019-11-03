@@ -70,15 +70,27 @@ export default {
     height: 10em;
     border-radius: 5px;
   }
-  @media (max-width: 1024px) {
+  @media (min-width: 364px) and (max-width: 1024px) {
     flex-direction: column;
-    width: 9em;
+    width: 10em;
     align-items: center;
-    margin: 10px;
+    margin: 3%;
     position: relative;
     .book-content {
+      display: flex;
       align-items: center;
       justify-content: center;
+      h3.book-title {
+        text-align: center;
+      }
+    }
+  }
+  @media (max-width: 364px) {
+    width: 100%;
+    margin: 10px;
+    height: 7em;
+    img.book-cover {
+      height: 7em;
     }
   }
 }
