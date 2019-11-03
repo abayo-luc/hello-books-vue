@@ -143,7 +143,7 @@ export const actions = {
           type: 'error'
         });
       }
-      return commit(HANDLE_AUTH_FAILED, error.errors);
+      return commit(HANDLE_AUTH_FAILED, error);
     }
   },
   handleConfirmation: async ({

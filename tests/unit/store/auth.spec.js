@@ -11,6 +11,7 @@ import {
   HANDLE_AUTH_FAILED,
   HANDLE_AUTH_SUCCESS
 } from '../../../src/store/modules/mutationTypes';
+import router from '../../../src/router';
 
 jest.mock('../../../src/utils/clearNotification', () => jest.fn().mockImplementation(() => true));
 jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => true));
@@ -19,7 +20,8 @@ const INITIAL_STATE = {
   password: '',
   name: '',
   submitting: false,
-  errors: {}
+  errors: {},
+  success: false
 };
 describe('Store Auth', () => {
   describe('#mutations', () => {
@@ -71,107 +73,279 @@ describe('Store Auth', () => {
       expect(getters.authData(state).password).toEqual('password');
       expect(getters.authData(state).name).toEqual('Me');
     });
+    it('should get confirmation state', () => {
+      state.submitting = true;
+      expect(getters.confirmState(state).errors).toEqual({});
+      expect(getters.confirmState(state).submitting).toBeTruthy();
+      expect(getters.confirmState(state).success).toBeFalsy();
+    });
   });
 
   describe('#actions', () => {
-    let commit;
-    let state;
-    beforeEach(() => {
-      state = {
-        ...INITIAL_STATE
-      };
-      commit = jest.fn();
-    });
-    afterEach(() => {
-      jest.clearAllMocks();
-    });
+    describe('Login', () => {
+      let commit;
+      let state;
+      beforeEach(() => {
+        state = {
+          ...INITIAL_STATE
+        };
+        commit = jest.fn();
+      });
+      afterEach(() => {
+        jest.clearAllMocks();
+      });
 
-    it('should commit HANDLE_AUTH_INPUT mutation', () => {
-      const payload = {
-        value: 'me@example.com',
-        password: 'password'
-      };
-      actions.handleInputChange({
-        commit
-      }, payload);
-      expect(commit).toBeCalledWith(HANDLE_AUTH_INPUT, payload);
-    });
+      it('should commit HANDLE_AUTH_INPUT mutation', () => {
+        const payload = {
+          value: 'me@example.com',
+          password: 'password'
+        };
+        actions.handleInputChange({
+          commit
+        }, payload);
+        expect(commit).toBeCalledWith(HANDLE_AUTH_INPUT, payload);
+      });
 
-    it('should commit HANDLE_AUTH_FAILED  for empty email or password', async () => {
-      await actions.handleLoginSubmit({
-        commit,
-        state
+      it('should commit HANDLE_AUTH_FAILED  for empty email or password', async () => {
+        await actions.handleLoginSubmit({
+          commit,
+          state
+        });
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          [
+            'HANDLE_AUTH_FAILED',
+            {
+              email: "Email can't be empty",
+              password: "Password can't be empty"
+            }
+          ]
+        ]);
       });
-      expect(commit.mock.calls).toEqual([
-        ['HANDLE_AUTH_SUBMIT', true],
-        [
-          'HANDLE_AUTH_FAILED',
-          {
-            email: "Email can't be empty",
-            password: "Password can't be empty"
-          }
-        ]
-      ]);
+      it('should commit HANDLE_AUTH_FAILED for invalid email or password', async () => {
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Action failed',
+            errors: ['Invalid email or password']
+          }),
+          status: 400,
+          ok: false
+        }));
+        state = {
+          email: 'me@example.com',
+          password: 'password'
+        };
+        await actions.handleLoginSubmit({
+          commit,
+          state
+        });
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          [
+            'HANDLE_AUTH_FAILED',
+            {
+              credentials: 'Invalid email or password'
+            }
+          ]
+        ]);
+      });
+      it('should commit HANDLE_AUTH_SUCCESS valid credentials', async () => {
+        localStorage.setItem = jest.fn();
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Success',
+            token: 'hello-token-123456'
+          }),
+          status: 200,
+          ok: true
+        }));
+        state = {
+          ...INITIAL_STATE,
+          email: 'me@example.com',
+          password: 'password'
+        };
+        await actions.handleLoginSubmit({
+          commit,
+          state
+        });
+        expect(localStorage.setItem).toBeCalledWith(tokenName,
+          'hello-token-123456');
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          ['HANDLE_AUTH_SUCCESS']
+        ]);
+      });
+      it('should not submit if already submitting', async () => {
+        state.submitting = true;
+        await actions.handleLoginSubmit({
+          commit,
+          state
+        });
+        expect(commit).not.toHaveBeenCalled();
+      });
     });
-    it('should commit HANDLE_AUTH_FAILED for invalid email or password', async () => {
-      global.fetch = jest.fn().mockImplementation(() => ({
-        json: () => Promise.resolve({
-          message: 'Action failed',
-          errors: ['Invalid email or password']
-        }),
-        status: 400,
-        ok: false
-      }));
-      state = {
-        email: 'me@example.com',
-        password: 'password'
-      };
-      await actions.handleLoginSubmit({
-        commit,
-        state
+    describe('Account Confirmation', () => {
+      let commit;
+      let state;
+      beforeEach(() => {
+        commit = jest.fn();
+        state = {
+          ...state
+        };
       });
-      expect(commit.mock.calls).toEqual([
-        ['HANDLE_AUTH_SUBMIT', true],
-        [
-          'HANDLE_AUTH_FAILED',
-          {
-            credentials: 'Invalid email or password'
-          }
-        ]
-      ]);
+      afterEach(() => {
+        jest.clearAllMocks();
+      });
+
+      it('should respond to confirmation: HANDLE_AUTH_SUCCESS', async () => {
+        router.push('/singup');
+        jest.spyOn(router, 'replace');
+        localStorage.setItem = jest.fn();
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Account verified successfully',
+            token: 'qwerty-123456789'
+          }),
+          status: 200,
+          ok: true
+        }));
+        await actions.handleConfirmation({
+          commit,
+          state
+        }, 'qwer123');
+        expect(commit.mock.calls).toEqual([
+          [HANDLE_AUTH_SUBMIT, true],
+          [HANDLE_AUTH_SUCCESS]
+        ]);
+        expect(localStorage.setItem).toBeCalledWith(tokenName,
+          'qwerty-123456789');
+        expect(router.replace).toBeCalledWith('/');
+      });
+
+      it('should respond to confirmation: HANDLE_AUTH_FAILED', async () => {
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Account verification failed',
+            errors: ['Account already verified']
+          }),
+          status: 400,
+          ok: false
+        }));
+        await actions.handleConfirmation({
+          commit,
+          state
+        }, 'qwerty123');
+        expect(commit.mock.calls).toEqual([
+          [HANDLE_AUTH_SUBMIT, true],
+          [HANDLE_AUTH_FAILED,
+            {
+              errors: [
+                'Account already verified'
+              ],
+              message: 'Account verification failed'
+            }
+          ]
+        ]);
+        expect(localStorage.setItem).not.toBeCalledWith();
+        expect(router.replace).not.toBeCalledWith();
+      });
     });
-    it('should commit HANDLE_AUTH_SUCCESS valid credentials', async () => {
-      localStorage.setItem = jest.fn();
-      global.fetch = jest.fn().mockImplementation(() => ({
-        json: () => Promise.resolve({
-          message: 'Success',
-          token: 'hello-token-123456'
-        }),
-        status: 200,
-        ok: true
-      }));
-      state = {
-        ...INITIAL_STATE,
-        email: 'me@example.com',
-        password: 'password'
-      };
-      await actions.handleLoginSubmit({
-        commit,
-        state
+    describe('Signup', () => {
+      let commit;
+      let state;
+      beforeEach(() => {
+        commit = jest.fn();
+        state = {
+          ...state
+        };
       });
-      expect(localStorage.setItem).toBeCalledWith(tokenName, 'hello-token-123456');
-      expect(commit.mock.calls).toEqual([
-        ['HANDLE_AUTH_SUBMIT', true],
-        ['HANDLE_AUTH_SUCCESS']
-      ]);
-    });
-    it('should not submit if already submitting', async () => {
-      state.submitting = true;
-      await actions.handleLoginSubmit({
-        commit,
-        state
+      afterEach(() => {
+        jest.clearAllMocks();
       });
-      expect(commit).not.toHaveBeenCalled();
+      it('should commit HANDLE_AUTH_FAILED  for empty email or password', async () => {
+        await actions.handleSignupSubmit({
+          commit,
+          state
+        });
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          [
+            'HANDLE_AUTH_FAILED',
+            {
+              email: "Email can't be empty",
+              password: "Password can't be empty",
+              passwordConfirmation: "PasswordConfirmation can't be empty"
+            }
+          ]
+        ]);
+      });
+
+      it('should commit HANDLE_AUTH_FAILED for already existing email', async () => {
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Registration failed',
+            errors: ['Email already taken']
+          }),
+          status: 400,
+          ok: false
+        }));
+        state = {
+          email: 'me@example.com',
+          password: 'password',
+          passwordConfirmation: 'password',
+          name: 'Me'
+        };
+        await actions.handleSignupSubmit({
+          commit,
+          state
+        });
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          [
+            'HANDLE_AUTH_FAILED',
+            {
+              message: 'Registration failed',
+              errors: ['Email already taken']
+            }
+          ]
+        ]);
+      });
+      it('should commit HANDLE_AUTH_SUCCESS for valid user data', async () => {
+        const userInstance = {
+          email: 'me@example.com',
+          first_name: 'Luc',
+          last_name: 'Aba.',
+          password: 'password',
+          id: '1234567',
+          created_at: Date.now().toLocaleString()
+        };
+        localStorage.setItem = jest.fn();
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Success',
+            data: userInstance
+          }),
+          status: 200,
+          ok: true
+        }));
+        state = {
+          passwordConfirmation: 'password',
+          name: 'Luc Ab.',
+          email: 'me@example.com',
+          password: 'password'
+        };
+        await actions.handleSignupSubmit({
+          commit,
+          state
+        });
+        expect(localStorage.setItem).toBeCalledWith('user', JSON.stringify(
+          userInstance
+        ));
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          ['HANDLE_AUTH_SUCCESS']
+        ]);
+      });
     });
   });
 });

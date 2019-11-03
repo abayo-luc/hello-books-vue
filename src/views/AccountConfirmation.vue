@@ -1,11 +1,8 @@
 <template>
   <div class="account-confirmation">
-    <activity-indicator
-      :styleObject="{width: '60px', height: '60px'}"
-      v-show="confirmState.submitting"
-    />
-    <div class="error" v-show="!confirmState.submitting">
-      <h3>{{confirmState.errors.errors && confirmState.errors.errors[0]}} !</h3>
+    <activity-indicator :styleObject="{width: '60px', height: '60px'}" v-show="auth.submitting" />
+    <div class="error" v-show="!auth.submitting">
+      <h3>{{auth.errors.errors && auth.errors.errors[0]}} !</h3>
       <p class="auth-link">
         Go to
         <router-link to="/login">Login</router-link>
@@ -15,7 +12,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ActivityIndicator from '../components/ActivityIndicator.vue';
 
 export default {
@@ -23,7 +20,7 @@ export default {
     ActivityIndicator
   },
   name: 'AccountConfirmation',
-  computed: mapGetters(['confirmState']),
+  computed: mapState(['auth']),
   methods: mapActions(['handleConfirmation']),
   created() {
     const { token } = this.$route.query;
