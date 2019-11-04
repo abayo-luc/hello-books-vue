@@ -78,11 +78,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['handleSignupSubmit']),
+    ...mapActions(['handleSignupSubmit', ' handleClearState']),
     handleInputChange(e) {
       const { value, name } = e.target;
       this.$store.dispatch('handleInputChange', { value, name });
     }
+  },
+  beforeDestroy() {
+    this.$store.dispatch('handleClearState');
   }
 };
 </script>

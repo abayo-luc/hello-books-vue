@@ -21,10 +21,13 @@ export default {
   },
   name: 'AccountConfirmation',
   computed: mapState(['auth']),
-  methods: mapActions(['handleConfirmation']),
+  methods: mapActions(['handleConfirmation', 'handleClearState']),
   created() {
     const { token } = this.$route.query;
     this.handleConfirmation(token);
+  },
+  beforeDestroy() {
+    this.$store.dispatch('handleClearState');
   }
 };
 </script>

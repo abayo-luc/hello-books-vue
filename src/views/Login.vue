@@ -115,11 +115,14 @@ export default {
     ...mapState(['auth'])
   },
   methods: {
-    ...mapActions(['handleLoginSubmit']),
+    ...mapActions(['handleLoginSubmit', 'handleClearState']),
     handleInputChange(e) {
       const { value, name } = e.target;
       this.$store.dispatch('handleInputChange', { value, name });
     }
+  },
+  beforeDestroy() {
+    this.$store.dispatch('handleClearState');
   }
 };
 </script>
