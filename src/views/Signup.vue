@@ -1,12 +1,17 @@
 <template>
-  <div class="signup">
-    <component :is="layout">
-      <div class="auth-message content" v-show="auth.success">
-        <auth-message />
-      </div>
+  <component :is="layout">
+    <div class="auth-message content" v-show="auth.success">
+      <mailer-message
+        title="Account Registered"
+        description="
+        We've sent account confirmation instructions to the primary
+        email address on the account."
+      />
+    </div>
+    <div class="content">
       <form
         method="post"
-        class="signup-form content"
+        class="signup-form"
         @submit.prevent="handleSignupSubmit()"
         v-show="!auth.success"
       >
@@ -46,14 +51,14 @@
           <basic-button title="Signup" classes="default" :disabled="auth.submitting" />
         </div>
       </form>
-      <div class="auth-link" v-show="!auth.success">
+      <div class="auth-link center">
         <p>
           Already have an account?
           <router-link to="/login" class="link">Login</router-link>
         </p>
       </div>
-    </component>
-  </div>
+    </div>
+  </component>
 </template>
 
 <script>
@@ -61,7 +66,7 @@ import { mapState, mapActions } from 'vuex';
 import Brand from '../components/Brand.vue';
 import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
-import AuthMessage from '../components/AuthMessage.vue';
+import MailerMessage from '../components/MailerMessage.vue';
 
 export default {
   name: 'Signup',
@@ -69,7 +74,7 @@ export default {
     Brand,
     InputIcon,
     BasicButton,
-    AuthMessage
+    MailerMessage
   },
   computed: {
     ...mapState(['auth']),
@@ -94,30 +99,45 @@ export default {
 .content-container {
   .content {
     width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    .signup-form {
+      width: 100%;
+    }
   }
   .auth-message {
     margin: 5rem;
   }
   @media (max-width: 1024px) {
-    .signup-form {
+    .content {
       width: 90%;
+    }
+    .signup-form {
+      width: 100%;
     }
     .auth-message {
       width: 80%;
-      justify-content: center;
     }
   }
-  .auth-link {
-    font-size: 16px;
-    color: #546b81;
+  .center {
     align-items: center;
-    a.link {
-      text-decoration: none;
-      color: rgb(93, 207, 212);
-      &:hover {
-        font-style: italic;
-      }
-    }
+    text-align: center;
+    float: center;
   }
+  // .auth-link {
+  //   font-size: 16px;
+  //   color: #546b81;
+  //   align-items: left;
+  //   a.link {
+  //     text-decoration: none;
+  //     color: rgb(93, 207, 212);
+  //     &:hover {
+  //       font-style: italic;
+  //     }
+  //   }
+  // }
 }
 </style>

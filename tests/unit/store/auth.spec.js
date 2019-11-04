@@ -94,6 +94,9 @@ describe('Store Auth', () => {
   });
 
   describe('#actions', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
     describe('Login', () => {
       let commit;
       let state;
@@ -123,6 +126,7 @@ describe('Store Auth', () => {
           commit,
           state
         });
+        jest.runOnlyPendingTimers();
         expect(commit.mock.calls).toEqual([
           ['HANDLE_AUTH_SUBMIT', true],
           [
@@ -271,15 +275,19 @@ describe('Store Auth', () => {
         state = {
           ...state
         };
+        jest.useFakeTimers();
       });
       afterEach(() => {
         jest.clearAllMocks();
+        jest.clearAllTimers();
       });
       it('should commit HANDLE_AUTH_FAILED  for empty email or password', async () => {
         await actions.handleSignupSubmit({
           commit,
           state
         });
+        expect(setTimeout).toHaveBeenCalledTimes(1);
+        jest.runOnlyPendingTimers();
         expect(commit.mock.calls).toEqual([
           ['HANDLE_AUTH_SUBMIT', true],
           [
