@@ -29,7 +29,8 @@ describe('Signup.vue', () => {
     };
     actions = {
       handleSignupSubmit: jest.fn(),
-      handleInputChange: jest.fn()
+      handleInputChange: jest.fn(),
+      handleClearState: jest.fn()
     };
     store = new Vuex.Store({
       state,
@@ -56,6 +57,10 @@ describe('Signup.vue', () => {
   });
   it('should match the snapshot', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+  it('it should clear auth state on destroy', () => {
+    wrapper.destroy();
+    expect(actions.handleClearState).toBeCalled();
   });
   // it('should mount component with initial state', () => {
   //   const input = wrapper.find({

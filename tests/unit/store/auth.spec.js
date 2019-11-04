@@ -9,7 +9,8 @@ import {
   HANDLE_AUTH_INPUT,
   HANDLE_AUTH_SUBMIT,
   HANDLE_AUTH_FAILED,
-  HANDLE_AUTH_SUCCESS
+  HANDLE_AUTH_SUCCESS,
+  HANDLE_CLEAR_AUTH_STATE
 } from '../../../src/store/modules/mutationTypes';
 import router from '../../../src/router';
 
@@ -18,6 +19,7 @@ jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => 
 const INITIAL_STATE = {
   email: '',
   password: '',
+  passwordConfirmation: '',
   name: '',
   submitting: false,
   errors: {},
@@ -54,6 +56,16 @@ describe('Store Auth', () => {
       state.submitting = true;
       mutations[HANDLE_AUTH_SUCCESS](state);
       expect(state.submitting).toBeFalsy();
+    });
+
+    it('should respond to HANDLE_CLEAR_AUTH_STATE', () => {
+      state.email = 'luc';
+      state.submitting = true;
+      state.errors = {
+        email: 'Invalid email'
+      };
+      mutations[HANDLE_CLEAR_AUTH_STATE](state);
+      expect(state).toEqual(INITIAL_STATE);
     });
   });
 
@@ -162,7 +174,8 @@ describe('Store Auth', () => {
         state = {
           ...INITIAL_STATE,
           email: 'me@example.com',
-          password: 'password'
+          password: 'password',
+          passwordConfirmation: 'password'
         };
         await actions.handleLoginSubmit({
           commit,
@@ -344,6 +357,14 @@ describe('Store Auth', () => {
         expect(commit.mock.calls).toEqual([
           ['HANDLE_AUTH_SUBMIT', true],
           ['HANDLE_AUTH_SUCCESS']
+        ]);
+      });
+      it('should commit HANDLE_CLEAR_AUTH_STATE', () => {
+        actions.handleClearState({
+          commit
+        });
+        expect(commit.mock.calls).toEqual([
+          [HANDLE_CLEAR_AUTH_STATE]
         ]);
       });
     });

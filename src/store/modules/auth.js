@@ -10,7 +10,8 @@ import {
   HANDLE_AUTH_INPUT,
   HANDLE_AUTH_SUBMIT,
   HANDLE_AUTH_FAILED,
-  HANDLE_AUTH_SUCCESS
+  HANDLE_AUTH_SUCCESS,
+  HANDLE_CLEAR_AUTH_STATE
 } from './mutationTypes';
 import router from '../../router';
 import notify from '../../utils/notify';
@@ -169,7 +170,10 @@ export const actions = {
         type: 'warn'
       });
     }
-  }
+  },
+  handleClearState: ({
+    commit
+  }) => commit(HANDLE_CLEAR_AUTH_STATE)
 };
 
 export const mutations = {
@@ -193,6 +197,9 @@ export const mutations = {
     authState.errors = {};
     authState.submitting = false;
     authState.success = true;
+  },
+  [HANDLE_CLEAR_AUTH_STATE]: (state) => {
+    Object.assign(state, INITIAL_STATE);
   }
 };
 

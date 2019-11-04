@@ -41,5 +41,34 @@ describe('Validator', () => {
       });
       expect(isValid).toBeTruthy();
     });
+
+    it('should return invalid on password mismatch', () => {
+      const {
+        isValid,
+        errors
+      } = validateAuth({
+        email: 'me@example.com',
+        password: 'password',
+        passwordConfirmation: 'passwordadfa'
+      }, ['email', 'password', 'passwordConfirmation']);
+      expect(isValid).toBeFalsy();
+      expect(errors.passwordConfirmation).toEqual(
+        'Password and password confirmation does not match'
+      );
+    });
+    it('should return invalid email', () => {
+      const {
+        isValid,
+        errors
+      } = validateAuth({
+        email: 'me@',
+        password: 'password',
+        passwordConfirmation: 'password'
+      }, ['email', 'password', 'passwordConfirmation']);
+      expect(isValid).toBeFalsy();
+      expect(errors.email).toEqual(
+        'Invalid email'
+      );
+    });
   });
 });
