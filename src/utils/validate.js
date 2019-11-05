@@ -24,7 +24,7 @@ export const validateAuth = (data = {}, keys = ['email', 'password']) => {
       switch (key) {
         case 'passwordConfirmation':
           if (!checkPwd(data)) {
-            errors[key] = 'Password and password confirmation does not match';
+            errors[key] = 'Provided passwords does not match';
           }
           break;
         case 'email':

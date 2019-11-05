@@ -74,6 +74,10 @@ export default {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     width: 100%;
+    &:focus {
+      outline-color: transparent;
+      outline-style: none;
+    }
   }
 }
 </style>

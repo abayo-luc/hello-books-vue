@@ -52,11 +52,41 @@ body {
 .danger {
   color: #ff704d;
 }
-.vue-notification {
-  background-color: rgb(93, 207, 212);
-  &.error {
-    background-color: #ff704d;
-    color: #fff;
+
+.auth-link p {
+  font-size: 14px;
+  color: #546b81;
+  align-items: center;
+}
+h2.form-title {
+  margin-bottom: 18px;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.5px;
+  font-weight: 600;
+  color: #294661;
+}
+a.link {
+  text-decoration: none;
+  color: rgb(93, 207, 212);
+  &:hover {
+    font-style: italic;
+  }
+}
+.auth-form {
+  width: 60%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  .auth-link {
+    align-self: center;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    width: 70%;
+  }
+  @media (max-width: 767px) {
+    width: 90%;
   }
 }
 </style>

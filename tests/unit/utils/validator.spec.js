@@ -53,7 +53,7 @@ describe('Validator', () => {
       }, ['email', 'password', 'passwordConfirmation']);
       expect(isValid).toBeFalsy();
       expect(errors.passwordConfirmation).toEqual(
-        'Password and password confirmation does not match'
+        'Provided passwords does not match'
       );
     });
     it('should return invalid email', () => {

@@ -45,7 +45,7 @@
                   <span>Remember me</span>
                 </div>
                 <div class="link">
-                  <a href="#" class="auth-link">Forgot password?</a>
+                  <router-link :to="forgetPath" class="auth-link">Forgot password?</router-link>
                 </div>
               </div>
               <div class="group-buttons">
@@ -108,7 +108,8 @@ export default {
           name: 'about',
           to: '#'
         }
-      ]
+      ],
+      forgetPath: '/users/password/reset'
     };
   },
   computed: {

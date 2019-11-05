@@ -1,14 +1,21 @@
 <template>
-  <div class="signup">
-    <component :is="layout">
+  <component :is="layout">
+    <div class="auth-form">
       <div class="auth-message content" v-show="auth.success">
-        <auth-message />
+        <mailer-message
+          title="Account Registered"
+          description="
+        We've sent account confirmation instructions to the primary
+        email address on the account."
+        />
       </div>
+
       <form
         method="post"
-        class="signup-form content"
+        class="signup-form"
         @submit.prevent="handleSignupSubmit()"
         v-show="!auth.success"
+        id="signup-form"
       >
         <input-icon
           type="text"
@@ -16,7 +23,7 @@
           icon-name="user"
           placeholder="Fullname"
           :value="auth.name"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <input-icon
           type="email"
@@ -24,7 +31,7 @@
           icon-name="email"
           placeholder="Email"
           :value="auth.email"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <input-icon
           type="password"
@@ -32,7 +39,7 @@
           icon-name="lock"
           placeholder="Password"
           :value="auth.password"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <input-icon
           type="password"
@@ -40,20 +47,20 @@
           icon-name="lock"
           placeholder="Password confirmation"
           :value="auth.passwordConfirmation"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <div class="group-btns">
           <basic-button title="Signup" classes="default" :disabled="auth.submitting" />
         </div>
       </form>
-      <div class="auth-link" v-show="!auth.success">
+      <div class="auth-link center">
         <p>
           Already have an account?
           <router-link to="/login" class="link">Login</router-link>
         </p>
       </div>
-    </component>
-  </div>
+    </div>
+  </component>
 </template>
 
 <script>
@@ -61,7 +68,7 @@ import { mapState, mapActions } from 'vuex';
 import Brand from '../components/Brand.vue';
 import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
-import AuthMessage from '../components/AuthMessage.vue';
+import MailerMessage from '../components/MailerMessage.vue';
 
 export default {
   name: 'Signup',
@@ -69,7 +76,7 @@ export default {
     Brand,
     InputIcon,
     BasicButton,
-    AuthMessage
+    MailerMessage
   },
   computed: {
     ...mapState(['auth']),
@@ -79,7 +86,7 @@ export default {
   },
   methods: {
     ...mapActions(['handleSignupSubmit', ' handleClearState']),
-    handleInputChange(e) {
+    onChange(e) {
       const { value, name } = e.target;
       this.$store.dispatch('handleInputChange', { value, name });
     }
@@ -89,35 +96,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.content-container {
-  .content {
-    width: 60%;
-  }
-  .auth-message {
-    margin: 5rem;
-  }
-  @media (max-width: 1024px) {
-    .signup-form {
-      width: 90%;
-    }
-    .auth-message {
-      width: 80%;
-      justify-content: center;
-    }
-  }
-  .auth-link {
-    font-size: 16px;
-    color: #546b81;
-    align-items: center;
-    a.link {
-      text-decoration: none;
-      color: rgb(93, 207, 212);
-      &:hover {
-        font-style: italic;
-      }
-    }
-  }
-}
-</style>

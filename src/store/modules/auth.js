@@ -108,13 +108,15 @@ export const actions = {
     } = validateAuth(state, ['passwordConfirmation', 'password', 'email']);
     if (!isValid) {
       clearNotification();
-      setTimeout(() => Object.keys(errors).forEach(key => notify({
-        type: 'error',
-        title: 'Validation',
-        text: errors[key],
-        speed: 500
-      })), 510);
-      return commit(HANDLE_AUTH_FAILED, errors);
+      return setTimeout(() => {
+        Object.keys(errors).forEach(key => notify({
+          type: 'error',
+          title: 'Validation',
+          text: errors[key],
+          speed: 500
+        }));
+        commit(HANDLE_AUTH_FAILED, errors);
+      }, 510);
     }
     try {
       const user = {

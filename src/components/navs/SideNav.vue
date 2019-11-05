@@ -1,7 +1,7 @@
 <template>
   <div class="side-nav">
     <div class="pages">
-      <router-link v-for="(page, index) in pages" :key="index" :to="page.path">
+      <router-link v-for="(page, index) in pages" :key="index" :to="page.path" class="nav-link">
         <div class="single-item" :class="{active: page.active}">
           <img :src="page.icon" class="icon" />
           <span>{{page.name}}</span>

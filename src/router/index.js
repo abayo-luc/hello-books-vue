@@ -5,6 +5,8 @@ import Authors from '../views/Authors.vue';
 import Login from '../views/Login.vue';
 import Signup from '../views/Signup.vue';
 import Confirmation from '../views/AccountConfirmation.vue';
+import PasswordReset from '../views/PasswordReset.vue';
+import PasswordUpdate from '../views/PasswordUpdate.vue';
 
 Vue.use(VueRouter);
 
@@ -41,6 +43,22 @@ export const routes = [{
   path: '/users/confirmation',
   name: 'instructions',
   component: Confirmation
+},
+{
+  path: '/users/password/reset',
+  name: 'passwordReset',
+  component: PasswordReset,
+  meta: {
+    layout: 'auth-layout'
+  }
+},
+{
+  path: '/users/password',
+  name: 'passwordUpdate',
+  component: PasswordUpdate,
+  meta: {
+    layout: 'auth-layout'
+  }
 }
 ];
 
