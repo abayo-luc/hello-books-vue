@@ -4,7 +4,7 @@
       <div class="brand-container">
         <brand />
       </div>
-      <slot />
+      <slot></slot>
     </div>
   </div>
 </template>

@@ -79,6 +79,7 @@ export default {
   computed: {
     ...mapState(['auth']),
     layout() {
+      console.log(this.$route.meta);
       return this.$route.meta.layout;
     }
   },

@@ -215,7 +215,7 @@ describe('Store Auth', () => {
       });
 
       it('should respond to confirmation: HANDLE_AUTH_SUCCESS', async () => {
-        router.push('/singup');
+        router.push('/signup');
         jest.spyOn(router, 'replace');
         localStorage.setItem = jest.fn();
         global.fetch = jest.fn().mockImplementation(() => ({

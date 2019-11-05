@@ -39,7 +39,8 @@ describe('Login.vue', () => {
     });
     wrapper = shallowMount(Login, {
       store,
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
   });
   afterEach(() => {

@@ -49,7 +49,7 @@ const actions = {
             type: 'error',
             speed: 500
           });
-          commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED);
+          commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED, errors);
         }, 510);
       }
       const response = await fetch.post('/users/password', {
@@ -69,7 +69,9 @@ const actions = {
         text: message,
         type: 'error'
       });
-      return commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED);
+      return commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED, {
+        message
+      });
     }
   },
   handleUpdateSubmit: async ({
@@ -102,7 +104,7 @@ const actions = {
               speed: 500
             });
           });
-          return commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED);
+          return commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED, errors);
         }, 510);
       }
       const {
@@ -116,20 +118,25 @@ const actions = {
         text: message,
         type: 'success'
       });
+      commit(HANDLE_PASSWORD_RESET_REQUEST_SUCCESS);
       return router.replace('/login');
     } catch (error) {
       const {
+        message,
         errors
       } = error;
       clearNotify();
       return setTimeout(() => {
         notify({
           title: 'Action failed',
-          text: errors ? errors[0] : error.message,
+          text: errors ? errors[0] : message,
           speed: 510,
           type: 'error'
         });
-        commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED);
+        commit(HANDLE_PASSWORD_RESET_REQUEST_FAILED, {
+          errors,
+          message
+        });
       }, 510);
     }
   }
@@ -138,6 +145,7 @@ const actions = {
 const mutations = {
   [HANDLE_PASSWORD_RESET_REQUEST]: (state) => {
     state.isSubmitting = true;
+    state.errors = {};
   },
   [HANDLE_PASSWORD_RESET_REQUEST_FAILED]: (state, errors = {}) => {
     state.isSubmitting = false;
@@ -147,6 +155,7 @@ const mutations = {
   [HANDLE_PASSWORD_RESET_REQUEST_SUCCESS]: (state) => {
     state.isSubmitting = false;
     state.success = true;
+    state.errors = {};
   }
 };
 
