@@ -52,13 +52,7 @@ body {
 .danger {
   color: #ff704d;
 }
-// .vue-notification {
-//   background-color: rgb(93, 207, 212);
-//   &.error {
-//     background-color: #ff704d;
-//     color: #fff;
-//   }
-// }
+
 .auth-link p {
   font-size: 14px;
   color: #546b81;

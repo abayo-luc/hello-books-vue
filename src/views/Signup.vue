@@ -1,14 +1,15 @@
 <template>
   <component :is="layout">
-    <div class="auth-message content" v-show="auth.success">
-      <mailer-message
-        title="Account Registered"
-        description="
+    <div class="auth-form">
+      <div class="auth-message content" v-show="auth.success">
+        <mailer-message
+          title="Account Registered"
+          description="
         We've sent account confirmation instructions to the primary
         email address on the account."
-      />
-    </div>
-    <div class="content">
+        />
+      </div>
+
       <form
         method="post"
         class="signup-form"
@@ -95,50 +96,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.content-container {
-  .content {
-    width: 60%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    .signup-form {
-      width: 100%;
-    }
-  }
-  .auth-message {
-    margin: 5rem;
-  }
-  @media (max-width: 1024px) {
-    .content {
-      width: 90%;
-    }
-    .signup-form {
-      width: 100%;
-    }
-    .auth-message {
-      width: 80%;
-    }
-  }
-  .center {
-    align-items: center;
-    text-align: center;
-    float: center;
-  }
-  // .auth-link {
-  //   font-size: 16px;
-  //   color: #546b81;
-  //   align-items: left;
-  //   a.link {
-  //     text-decoration: none;
-  //     color: rgb(93, 207, 212);
-  //     &:hover {
-  //       font-style: italic;
-  //     }
-  //   }
-  // }
-}
-</style>

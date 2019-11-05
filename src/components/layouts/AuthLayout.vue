@@ -45,9 +45,6 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  .signup-form {
-    width: 60%;
-  }
   @media (max-width: 1024px) {
     width: 100%;
     height: 100%;
