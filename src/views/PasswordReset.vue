@@ -16,7 +16,12 @@
           your HelloBook account email.
         </p>
       </div>
-      <form action="post" @submit.prevent="onSubmit" v-show="!passwordReset.success">
+      <form
+        action="post"
+        @submit.prevent="onSubmit"
+        v-show="!passwordReset.success"
+        id="reset-form"
+      >
         <input-icon
           name="email"
           type="email"
@@ -48,6 +53,7 @@ import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
 import MailerMessage from '../components/MailerMessage.vue';
 
+const DEFAULT_LAYOUT = 'auth-layout';
 export default {
   name: 'PasswordReset',
   data() {
@@ -63,7 +69,7 @@ export default {
   computed: {
     ...mapState(['passwordReset']),
     layout() {
-      return this.$route.meta.layout;
+      return this.$route.meta.layout || DEFAULT_LAYOUT;
     }
   },
   methods: {

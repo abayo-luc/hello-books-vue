@@ -14,6 +14,7 @@
         class="signup-form"
         @submit.prevent="handleSignupSubmit()"
         v-show="!auth.success"
+        id="signup-form"
       >
         <input-icon
           type="text"
@@ -21,7 +22,7 @@
           icon-name="user"
           placeholder="Fullname"
           :value="auth.name"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <input-icon
           type="email"
@@ -29,7 +30,7 @@
           icon-name="email"
           placeholder="Email"
           :value="auth.email"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <input-icon
           type="password"
@@ -37,7 +38,7 @@
           icon-name="lock"
           placeholder="Password"
           :value="auth.password"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <input-icon
           type="password"
@@ -45,7 +46,7 @@
           icon-name="lock"
           placeholder="Password confirmation"
           :value="auth.passwordConfirmation"
-          :on-change-text="handleInputChange"
+          :on-change-text="onChange"
         />
         <div class="group-btns">
           <basic-button title="Signup" classes="default" :disabled="auth.submitting" />
@@ -84,7 +85,7 @@ export default {
   },
   methods: {
     ...mapActions(['handleSignupSubmit', ' handleClearState']),
-    handleInputChange(e) {
+    onChange(e) {
       const { value, name } = e.target;
       this.$store.dispatch('handleInputChange', { value, name });
     }

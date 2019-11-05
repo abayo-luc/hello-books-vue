@@ -1,7 +1,7 @@
 <template>
   <component :is="layout">
     <div class="auth-form">
-      <form action="post" @submit.prevent="onSubmit">
+      <form action="post" @submit.prevent="onSubmit" id="update-password-form">
         <input-icon
           name="password"
           type="password"

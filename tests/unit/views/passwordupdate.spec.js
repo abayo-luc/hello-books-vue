@@ -35,7 +35,12 @@ describe('PasswordUpdate.vue', () => {
       stubs: ['router-link'],
       mocks: {
         $route: {
-          meta: 'auth-layout'
+          meta: {
+            layout: 'auth-layout'
+          },
+          query: {
+            token: 'qwerty-123456789'
+          }
         }
       }
 
@@ -43,5 +48,26 @@ describe('PasswordUpdate.vue', () => {
   });
   it('should match the snapshot', () => {
     expect(wrapper).toMatchSnapshot();
+    expect(wrapper.vm.layout).toEqual('auth-layout');
+  });
+  it('should respond on text on input change', () => {
+    const spyOnTexChangeHandler = jest.spyOn(wrapper.vm, 'handleInputChange');
+    wrapper.vm.$forceUpdate();
+    const input = wrapper.find({
+      name: 'password'
+    });
+    input.props().onChangeText({
+      target: {
+        value: 'password',
+        name: 'password'
+      }
+    });
+    expect(spyOnTexChangeHandler).toBeCalled();
+    expect(wrapper.vm.$data.password).toEqual('password');
+  });
+  it('should respond on form submit', () => {
+    const resetForm = wrapper.find('#update-password-form');
+    resetForm.trigger('submit');
+    expect(actions.handleUpdateSubmit).toBeCalledTimes(1);
   });
 });
