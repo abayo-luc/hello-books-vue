@@ -7,6 +7,7 @@ import Signup from '../views/Signup.vue';
 import Confirmation from '../views/AccountConfirmation.vue';
 import PasswordReset from '../views/PasswordReset.vue';
 import PasswordUpdate from '../views/PasswordUpdate.vue';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,8 @@ export const routes = [{
   name: 'home',
   component: Home,
   meta: {
-    layout: 'main-layout'
+    layout: 'main-layout',
+    requireAuth: true
   }
 },
 {
@@ -23,7 +25,8 @@ export const routes = [{
   name: 'authors',
   component: Authors,
   meta: {
-    layout: 'main-layout'
+    layout: 'main-layout',
+    requireAuth: true
   }
 },
 {
@@ -67,5 +70,20 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-
-export default router;
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    if (store.getters.isLoggedIn) {
+      return next();
+    }
+    return next('/login');
+  }
+  if (['/login', '/signup'].includes(to.path.trim())) {
+    if (store.getters.isLoggedIn) return next('/');
+    return next();
+  }
+  return next();
+});
+export default {
+  router,
+  store
+};

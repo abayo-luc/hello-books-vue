@@ -12,7 +12,6 @@ import {
   HANDLE_AUTH_SUCCESS,
   HANDLE_CLEAR_AUTH_STATE
 } from '../../../src/store/modules/mutationTypes';
-import router from '../../../src/router';
 
 jest.mock('../../../src/utils/clearNotification', () => jest.fn().mockImplementation(() => true));
 jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => true));
@@ -23,6 +22,7 @@ const INITIAL_STATE = {
   name: '',
   submitting: false,
   errors: {},
+  token: '',
   success: false
 };
 describe('Store Auth', () => {
@@ -181,16 +181,18 @@ describe('Store Auth', () => {
           password: 'password',
           passwordConfirmation: 'password'
         };
+        const navigate = jest.fn();
         await actions.handleLoginSubmit({
           commit,
           state
-        });
+        }, navigate);
         expect(localStorage.setItem).toBeCalledWith(tokenName,
           'hello-token-123456');
         expect(commit.mock.calls).toEqual([
           ['HANDLE_AUTH_SUBMIT', true],
           ['HANDLE_AUTH_SUCCESS']
         ]);
+        expect(navigate).toBeCalled();
       });
       it('should not submit if already submitting', async () => {
         state.submitting = true;
@@ -215,8 +217,6 @@ describe('Store Auth', () => {
       });
 
       it('should respond to confirmation: HANDLE_AUTH_SUCCESS', async () => {
-        router.push('/signup');
-        jest.spyOn(router, 'replace');
         localStorage.setItem = jest.fn();
         global.fetch = jest.fn().mockImplementation(() => ({
           json: () => Promise.resolve({
@@ -226,17 +226,18 @@ describe('Store Auth', () => {
           status: 200,
           ok: true
         }));
+        const replace = jest.fn();
         await actions.handleConfirmation({
           commit,
           state
-        }, 'qwer123');
+        }, 'qwer123', replace);
         expect(commit.mock.calls).toEqual([
           [HANDLE_AUTH_SUBMIT, true],
           [HANDLE_AUTH_SUCCESS]
         ]);
         expect(localStorage.setItem).toBeCalledWith(tokenName,
           'qwerty-123456789');
-        expect(router.replace).toBeCalledWith('/');
+        expect(replace).toBeCalledWith('/');
       });
 
       it('should respond to confirmation: HANDLE_AUTH_FAILED', async () => {
@@ -248,10 +249,11 @@ describe('Store Auth', () => {
           status: 400,
           ok: false
         }));
+        const replace = jest.fn();
         await actions.handleConfirmation({
           commit,
           state
-        }, 'qwerty123');
+        }, 'qwerty123', replace);
         expect(commit.mock.calls).toEqual([
           [HANDLE_AUTH_SUBMIT, true],
           [HANDLE_AUTH_FAILED,
@@ -264,7 +266,7 @@ describe('Store Auth', () => {
           ]
         ]);
         expect(localStorage.setItem).not.toBeCalledWith();
-        expect(router.replace).not.toBeCalledWith();
+        expect(replace).not.toBeCalledWith();
       });
     });
     describe('Signup', () => {

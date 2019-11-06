@@ -12,7 +12,6 @@ import {
 import notify from '../../utils/notify';
 import clearNotify from '../../utils/clearNotification';
 import fetch from '../../utils/fetch';
-import router from '../../router';
 
 Vue.use(Vuex);
 
@@ -119,7 +118,7 @@ const actions = {
         type: 'success'
       });
       commit(HANDLE_PASSWORD_RESET_REQUEST_SUCCESS);
-      return router.replace('/login');
+      return data.navigate();
     } catch (error) {
       const {
         message,

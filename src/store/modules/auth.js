@@ -13,7 +13,6 @@ import {
   HANDLE_AUTH_SUCCESS,
   HANDLE_CLEAR_AUTH_STATE
 } from './mutationTypes';
-import router from '../../router';
 import notify from '../../utils/notify';
 import clearNotification from '../../utils/clearNotification';
 
@@ -27,7 +26,8 @@ const INITIAL_STATE = {
   name: '',
   submitting: false,
   success: false,
-  errors: {}
+  errors: {},
+  token: localStorage.getItem(tokenName) || ''
 };
 const state = {
   ...INITIAL_STATE
@@ -40,7 +40,8 @@ export const getters = {
     submitting: allState.submitting,
     errors: allState.errors,
     success: allState.success
-  })
+  }),
+  isLoggedIn: state => !!state.token
 };
 export const actions = {
   handleInputChange: ({
@@ -49,7 +50,7 @@ export const actions = {
   async handleLoginSubmit({
     commit,
     state
-  }) {
+  }, navigate) {
     const {
       email,
       password,
@@ -83,7 +84,7 @@ export const actions = {
       });
       await localStorage.setItem(tokenName, token);
       commit(HANDLE_AUTH_SUCCESS);
-      return router.push('/');
+      return navigate();
     } catch (err) {
       commit(HANDLE_AUTH_FAILED, {
         credentials: err.errors && err.errors[0]
@@ -151,7 +152,7 @@ export const actions = {
   },
   handleConfirmation: async ({
     commit
-  }, confirmationToken) => {
+  }, confirmationToken, navigate) => {
     commit(HANDLE_AUTH_SUBMIT, true);
     try {
       const {
@@ -159,7 +160,7 @@ export const actions = {
       } = await fetch.put(`/users/confirmation?token=${confirmationToken}`);
       await localStorage.setItem(tokenName, token);
       commit(HANDLE_AUTH_SUCCESS);
-      return router.replace('/');
+      return navigate('/');
     } catch (error) {
       const {
         errors,

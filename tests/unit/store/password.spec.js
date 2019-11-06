@@ -4,7 +4,6 @@ import {
   HANDLE_PASSWORD_RESET_REQUEST_SUCCESS
 } from '../../../src/store/modules/mutationTypes';
 import passwordModule from '../../../src/store/modules/passwordReset';
-import router from '../../../src/router';
 
 jest.mock('../../../src/utils/clearNotification', () => jest.fn().mockImplementation(() => true));
 jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => true));
@@ -171,7 +170,7 @@ describe('Password Vuex Module', () => {
         ]);
       });
       it('should respond with success response', async () => {
-        const spyOnRouting = jest.spyOn(router, 'replace');
+        const navigate = jest.fn();
         global.fetch = jest.fn().mockImplementation(() => ({
           json: () => Promise.resolve({
             message: 'Password updated success'
@@ -185,7 +184,8 @@ describe('Password Vuex Module', () => {
         }, {
           password: 'password',
           passwordConfirmation: 'password',
-          token: 'qwerty-12345678'
+          token: 'qwerty-12345678',
+          navigate
         });
         expect(setTimeout).toBeCalledTimes(0);
         jest.runOnlyPendingTimers();
@@ -193,7 +193,7 @@ describe('Password Vuex Module', () => {
           [HANDLE_PASSWORD_RESET_REQUEST],
           [HANDLE_PASSWORD_RESET_REQUEST_SUCCESS]
         ]);
-        expect(spyOnRouting).toBeCalledWith('/login');
+        expect(navigate).toBeCalled();
       });
 
       it('should do nothing if isSubmitting true', () => {

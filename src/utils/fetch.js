@@ -1,6 +1,7 @@
 const {
   VUE_APP_BACKEND_URL
 } = process.env;
+const tokenName = 'qwer-78';
 const defaultOptions = {
   method: 'POST',
   headers: {
@@ -19,6 +20,8 @@ class Fetch {
   }
 
   async request() {
+    const token = await localStorage.getItem(tokenName);
+    this.config.headers.Authorization = token;
     const response = await fetch(`${VUE_APP_BACKEND_URL}${this.url}`, {
       ...this.config,
       body: JSON.stringify(this.data)

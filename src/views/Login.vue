@@ -22,7 +22,7 @@
                 everyone to find what interst them to read!
               </p>
             </div>
-            <form method="post" class="login-form" @submit.prevent="handleLoginSubmit()">
+            <form method="post" class="login-form" @submit.prevent="onSubmit">
               <input-icon
                 type="email"
                 name="email"
@@ -120,6 +120,9 @@ export default {
     handleInputChange(e) {
       const { value, name } = e.target;
       this.$store.dispatch('handleInputChange', { value, name });
+    },
+    onSubmit() {
+      this.handleLoginSubmit(() => this.$router.replace('/'));
     }
   },
   beforeDestroy() {
