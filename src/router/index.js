@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
@@ -10,14 +11,13 @@ import PasswordUpdate from '../views/PasswordUpdate.vue';
 import store from '../store';
 
 Vue.use(VueRouter);
-
 export const routes = [{
   path: '/',
   name: 'home',
   component: Home,
   meta: {
     layout: 'main-layout',
-    requireAuth: true
+    isProtected: true
   }
 },
 {
@@ -25,8 +25,7 @@ export const routes = [{
   name: 'authors',
   component: Authors,
   meta: {
-    layout: 'main-layout',
-    requireAuth: true
+    layout: 'main-layout'
   }
 },
 {
@@ -70,18 +69,19 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requireAuth)) {
+  if (to.matched.some(record => record.meta.isProtected)) {
     if (store.getters.isLoggedIn) {
-      return next();
+      next();
+      return '';
     }
-    return next('/login');
+    next('/login');
   }
-  if (['/login', '/signup'].includes(to.path.trim())) {
-    if (store.getters.isLoggedIn) return next('/');
-    return next();
+  if (['/login', '/signup'].includes(to.path) && store.getters.isLoggedIn) {
+    next('/');
   }
-  return next();
+  next();
 });
 export default {
   router,

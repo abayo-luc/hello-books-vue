@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import Vuex from 'vuex';
 import Vue from 'vue';
+import dotenv from 'dotenv';
 import {
   validateAuth,
   capitalize
@@ -12,12 +13,14 @@ import {
   HANDLE_AUTH_FAILED,
   HANDLE_AUTH_SUCCESS,
   HANDLE_CLEAR_AUTH_STATE
-} from './mutationTypes';
+} from './constants';
 import notify from '../../utils/notify';
 import clearNotification from '../../utils/clearNotification';
 
-export const tokenName = 'qwer-78';
-
+dotenv.config();
+const {
+  VUE_APP_TOKEN_STORAGE_KEY
+} = process.env;
 Vue.use(Vuex);
 const INITIAL_STATE = {
   email: '',
@@ -26,8 +29,7 @@ const INITIAL_STATE = {
   name: '',
   submitting: false,
   success: false,
-  errors: {},
-  token: localStorage.getItem(tokenName) || ''
+  errors: {}
 };
 const state = {
   ...INITIAL_STATE
@@ -40,8 +42,7 @@ export const getters = {
     submitting: allState.submitting,
     errors: allState.errors,
     success: allState.success
-  }),
-  isLoggedIn: state => !!state.token
+  })
 };
 export const actions = {
   handleInputChange: ({
@@ -82,7 +83,7 @@ export const actions = {
         email,
         password
       });
-      await localStorage.setItem(tokenName, token);
+      await localStorage.setItem(VUE_APP_TOKEN_STORAGE_KEY, token);
       commit(HANDLE_AUTH_SUCCESS);
       return navigate();
     } catch (err) {
@@ -125,10 +126,7 @@ export const actions = {
         email: state.email,
         password: state.password
       };
-      const {
-        data
-      } = await fetch.post('/users', user);
-      await localStorage.setItem('user', JSON.stringify(data));
+      await fetch.post('/users', user);
       return commit(HANDLE_AUTH_SUCCESS);
     } catch (error) {
       const {
@@ -158,7 +156,7 @@ export const actions = {
       const {
         token
       } = await fetch.put(`/users/confirmation?token=${confirmationToken}`);
-      await localStorage.setItem(tokenName, token);
+      await localStorage.setItem(VUE_APP_TOKEN_STORAGE_KEY, token);
       commit(HANDLE_AUTH_SUCCESS);
       return navigate('/');
     } catch (error) {

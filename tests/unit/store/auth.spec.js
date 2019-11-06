@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
+import dotenv from 'dotenv';
 import {
   mutations,
   getters,
-  actions,
-  tokenName
+  actions
 } from '../../../src/store/modules/auth';
 import {
   HANDLE_AUTH_INPUT,
@@ -11,8 +11,12 @@ import {
   HANDLE_AUTH_FAILED,
   HANDLE_AUTH_SUCCESS,
   HANDLE_CLEAR_AUTH_STATE
-} from '../../../src/store/modules/mutationTypes';
+} from '../../../src/store/modules/constants';
 
+dotenv.config();
+const {
+  VUE_APP_TOKEN_STORAGE_KEY
+} = process.env;
 jest.mock('../../../src/utils/clearNotification', () => jest.fn().mockImplementation(() => true));
 jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => true));
 const INITIAL_STATE = {
@@ -186,7 +190,7 @@ describe('Store Auth', () => {
           commit,
           state
         }, navigate);
-        expect(localStorage.setItem).toBeCalledWith(tokenName,
+        expect(localStorage.setItem).toBeCalledWith(VUE_APP_TOKEN_STORAGE_KEY,
           'hello-token-123456');
         expect(commit.mock.calls).toEqual([
           ['HANDLE_AUTH_SUBMIT', true],
@@ -235,7 +239,7 @@ describe('Store Auth', () => {
           [HANDLE_AUTH_SUBMIT, true],
           [HANDLE_AUTH_SUCCESS]
         ]);
-        expect(localStorage.setItem).toBeCalledWith(tokenName,
+        expect(localStorage.setItem).toBeCalledWith(VUE_APP_TOKEN_STORAGE_KEY,
           'qwerty-123456789');
         expect(replace).toBeCalledWith('/');
       });
@@ -361,9 +365,6 @@ describe('Store Auth', () => {
           commit,
           state
         });
-        expect(localStorage.setItem).toBeCalledWith('user', JSON.stringify(
-          userInstance
-        ));
         expect(commit.mock.calls).toEqual([
           ['HANDLE_AUTH_SUBMIT', true],
           ['HANDLE_AUTH_SUCCESS']

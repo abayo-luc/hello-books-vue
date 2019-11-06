@@ -5,7 +5,7 @@ import {
   HANDLE_PASSWORD_RESET_REQUEST,
   HANDLE_PASSWORD_RESET_REQUEST_FAILED,
   HANDLE_PASSWORD_RESET_REQUEST_SUCCESS
-} from './mutationTypes';
+} from './constants';
 import {
   validateAuth
 } from '../../utils/validate';

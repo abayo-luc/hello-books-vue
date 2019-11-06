@@ -2,7 +2,7 @@ import {
   HANDLE_PASSWORD_RESET_REQUEST,
   HANDLE_PASSWORD_RESET_REQUEST_FAILED,
   HANDLE_PASSWORD_RESET_REQUEST_SUCCESS
-} from '../../../src/store/modules/mutationTypes';
+} from '../../../src/store/modules/constants';
 import passwordModule from '../../../src/store/modules/passwordReset';
 
 jest.mock('../../../src/utils/clearNotification', () => jest.fn().mockImplementation(() => true));
