@@ -4,13 +4,33 @@ import {
 import BasicButton from '../../../src/components/Buttons/BasicButton.vue';
 
 describe('BasicButton.vue', () => {
-  it('should match snapshot', () => {
-    const wrapper = shallowMount(BasicButton, {
+  let wrapper;
+  let getClass;
+  beforeEach(() => {
+    getClass = jest.spyOn(BasicButton.methods, 'getClass');
+    wrapper = shallowMount(BasicButton, {
       propsData: {
         title: 'Login',
-        type: 'submit'
+        type: 'submit',
+        classes: 'default'
       }
     });
+  });
+  it('should match snapshot', () => {
     expect(wrapper).toMatchSnapshot();
+    expect(wrapper.props().disabled).toBeFalsy();
+  });
+  it('should get dynamic class', () => {
+    wrapper = shallowMount(BasicButton, {
+      propsData: {
+        title: 'Login',
+        type: 'submit',
+        classes: 'default',
+        disabled: true
+      }
+    });
+    expect(getClass).toBeCalled();
+    expect(wrapper.props().classes).toEqual('default');
+    expect(wrapper.props().disabled).toBeTruthy();
   });
 });

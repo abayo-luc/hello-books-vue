@@ -1,5 +1,6 @@
 const {
-  VUE_APP_BACKEND_URL
+  VUE_APP_BACKEND_URL,
+  VUE_APP_TOKEN_STORAGE_KEY
 } = process.env;
 const defaultOptions = {
   method: 'POST',
@@ -15,14 +16,16 @@ class Fetch {
   constructor() {
     this.config = defaultOptions;
     this.url = '';
-    this.data = {};
+    this.data = null;
   }
 
   async request() {
+    const token = await localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY);
+    this.config.headers.Authorization = token;
+    const body = this.data && JSON.stringify(this.data);
     const response = await fetch(`${VUE_APP_BACKEND_URL}${this.url}`, {
       ...this.config,
-      body: JSON.stringify(this.data)
-
+      body
     });
     const json = await response.json();
     switch (response.status) {

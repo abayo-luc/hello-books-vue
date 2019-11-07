@@ -60,10 +60,12 @@ export default {
     },
     onSubmit() {
       const { token } = this.$route.query;
+      const navigate = () => this.$router.replace('/');
       this.$store.dispatch('handleUpdateSubmit', {
         password: this.password,
         passwordConfirmation: this.passwordConfirmation,
-        token
+        token,
+        navigate
       });
     }
   }

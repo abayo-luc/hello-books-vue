@@ -24,7 +24,7 @@ export default {
   methods: mapActions(['handleConfirmation', 'handleClearState']),
   created() {
     const { token } = this.$route.query;
-    this.handleConfirmation(token);
+    this.handleConfirmation(token, () => this.$router.replace('/login'));
   },
   beforeDestroy() {
     this.$store.dispatch('handleClearState');

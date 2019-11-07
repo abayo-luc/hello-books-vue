@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import Vuex from 'vuex';
 import Vue from 'vue';
+import dotenv from 'dotenv';
 import {
   validateAuth,
   capitalize
@@ -12,13 +13,14 @@ import {
   HANDLE_AUTH_FAILED,
   HANDLE_AUTH_SUCCESS,
   HANDLE_CLEAR_AUTH_STATE
-} from './mutationTypes';
-import router from '../../router';
+} from './constants';
 import notify from '../../utils/notify';
 import clearNotification from '../../utils/clearNotification';
 
-export const tokenName = 'qwer-78';
-
+dotenv.config();
+const {
+  VUE_APP_TOKEN_STORAGE_KEY
+} = process.env;
 Vue.use(Vuex);
 const INITIAL_STATE = {
   email: '',
@@ -49,7 +51,7 @@ export const actions = {
   async handleLoginSubmit({
     commit,
     state
-  }) {
+  }, navigate) {
     const {
       email,
       password,
@@ -81,9 +83,9 @@ export const actions = {
         email,
         password
       });
-      await localStorage.setItem(tokenName, token);
+      await localStorage.setItem(VUE_APP_TOKEN_STORAGE_KEY, token);
       commit(HANDLE_AUTH_SUCCESS);
-      return router.push('/');
+      return navigate();
     } catch (err) {
       commit(HANDLE_AUTH_FAILED, {
         credentials: err.errors && err.errors[0]
@@ -91,7 +93,7 @@ export const actions = {
       return notify({
         title: err.message,
         text: err.errors && err.errors[0],
-        type: err.errors ? 'error' : 'warn',
+        type: 'error',
         speed: 500
       });
     }
@@ -124,17 +126,14 @@ export const actions = {
         email: state.email,
         password: state.password
       };
-      const {
-        data
-      } = await fetch.post('/users', user);
-      await localStorage.setItem('user', JSON.stringify(data));
+      await fetch.post('/users', user);
       return commit(HANDLE_AUTH_SUCCESS);
     } catch (error) {
       const {
         errors = {},
         message
       } = error;
-      if (Object.keys(errors)) {
+      if (Object.keys(errors).length) {
         Object.keys(errors).forEach(key => notify({
           title: message,
           text: `${capitalize(key)} ${errors[key][0]}`,
@@ -142,7 +141,7 @@ export const actions = {
         }));
       } else {
         notify({
-          title: error.message,
+          title: message,
           type: 'error'
         });
       }
@@ -151,15 +150,15 @@ export const actions = {
   },
   handleConfirmation: async ({
     commit
-  }, confirmationToken) => {
+  }, confirmationToken, navigate) => {
     commit(HANDLE_AUTH_SUBMIT, true);
     try {
       const {
         token
       } = await fetch.put(`/users/confirmation?token=${confirmationToken}`);
-      await localStorage.setItem(tokenName, token);
+      await localStorage.setItem(VUE_APP_TOKEN_STORAGE_KEY, token);
       commit(HANDLE_AUTH_SUCCESS);
-      return router.replace('/');
+      return navigate('/');
     } catch (error) {
       const {
         errors,

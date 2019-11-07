@@ -1,12 +1,27 @@
 <template>
   <div id="app">
-    <notifications group="foo" style="width: 300px; top: 5px; right: 0px;" />
-    <router-view />
+    <div class="loaded" v-show="!user.isSubmitting">
+      <notifications group="foo" style="width: 300px; top: 5px; right: 0px;" />
+      <router-view />
+    </div>
+    <div class="loading-indicator" v-show="user.isSubmitting">
+      <activity-indicator :styleObject="{width: '60px', height: '60px'}" />
+    </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+import ActivityIndicator from './components/ActivityIndicator.vue';
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    ActivityIndicator
+  },
+  computed: mapState(['user']),
+  async created() {
+    this.$store.dispatch('checkCurrentUser');
+  }
 };
 </script>
 <style lang="scss" >
@@ -19,6 +34,14 @@ export default {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+}
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 .row {
   display: flex;

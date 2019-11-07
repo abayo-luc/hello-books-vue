@@ -20,7 +20,9 @@ describe('Login.vue', () => {
   let state;
   let wrapper;
   let spayOnChange;
+  let spyOnSubmit;
   beforeEach(() => {
+    spyOnSubmit = jest.spyOn(Login.methods, 'onSubmit');
     spayOnChange = jest.spyOn(Login.methods, 'handleInputChange');
     state = {
       auth: {
@@ -69,5 +71,11 @@ describe('Login.vue', () => {
   it('it should clear auth state on destroy', () => {
     wrapper.destroy();
     expect(actions.handleClearState).toBeCalled();
+  });
+  it('should handle on form submit', () => {
+    const form = wrapper.find('#login-form');
+    form.trigger('submit');
+    expect(spyOnSubmit).toBeCalledTimes(1);
+    expect(actions.handleLoginSubmit).toBeCalledTimes(1);
   });
 });
