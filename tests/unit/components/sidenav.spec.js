@@ -26,8 +26,8 @@ describe('SideNav.vue', () => {
     expect(wrapper.vm.$data.pages.length > 2).toBeTruthy();
     expect(wrapper.vm.$data.pages[0].active).toBeTruthy();
   });
-  it('should navigate on router link click', () => {
-    router.push('/authors');
+  it('should navigate on router link click', async () => {
+    await router.push('/authors');
     const activeRoute = wrapper.vm.$data.pages.find(route => route.path === '/authors');
     expect(wrapper.vm.$data.pages[0].active).toBeFalsy();
     expect(activeRoute.active).toBeTruthy();
