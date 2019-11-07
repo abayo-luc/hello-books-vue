@@ -337,6 +337,34 @@ describe('Store Auth', () => {
           ]
         ]);
       });
+      it('should commit HANDLE_AUTH_FAILED for any other reason', async () => {
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Registration failed'
+          }),
+          status: 400,
+          ok: false
+        }));
+        state = {
+          email: 'me@example.com',
+          password: 'password',
+          passwordConfirmation: 'password',
+          name: 'Me'
+        };
+        await actions.handleSignupSubmit({
+          commit,
+          state
+        });
+        expect(commit.mock.calls).toEqual([
+          ['HANDLE_AUTH_SUBMIT', true],
+          [
+            'HANDLE_AUTH_FAILED',
+            {
+              message: 'Registration failed'
+            }
+          ]
+        ]);
+      });
       it('should commit HANDLE_AUTH_SUCCESS for valid user data', async () => {
         const userInstance = {
           email: 'me@example.com',
@@ -369,6 +397,14 @@ describe('Store Auth', () => {
           ['HANDLE_AUTH_SUBMIT', true],
           ['HANDLE_AUTH_SUCCESS']
         ]);
+      });
+      it('should should not commit any action if already submitting', () => {
+        state.submitting = true;
+        actions.handleSignupSubmit({
+          commit,
+          state
+        });
+        expect(commit).not.toBeCalled();
       });
       it('should commit HANDLE_CLEAR_AUTH_STATE', () => {
         actions.handleClearState({

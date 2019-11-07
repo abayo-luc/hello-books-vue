@@ -93,7 +93,7 @@ export const actions = {
       return notify({
         title: err.message,
         text: err.errors && err.errors[0],
-        type: err.errors ? 'error' : 'warn',
+        type: 'error',
         speed: 500
       });
     }
@@ -133,7 +133,7 @@ export const actions = {
         errors = {},
         message
       } = error;
-      if (Object.keys(errors)) {
+      if (Object.keys(errors).length) {
         Object.keys(errors).forEach(key => notify({
           title: message,
           text: `${capitalize(key)} ${errors[key][0]}`,
@@ -141,7 +141,7 @@ export const actions = {
         }));
       } else {
         notify({
-          title: error.message,
+          title: message,
           type: 'error'
         });
       }

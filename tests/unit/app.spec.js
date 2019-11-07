@@ -34,7 +34,7 @@ describe('App', () => {
     expect(wrapper).toMatchSnapshot();
   });
   it('should render a child component via routing', () => {
-    router.push('/login');
+    wrapper.vm.$router.push('/login');
     expect(wrapper.find(Login).exists()).toBeTruthy();
   });
 });

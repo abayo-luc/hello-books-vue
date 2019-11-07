@@ -53,7 +53,6 @@ import InputIcon from '../components/TextInputs/InputIcon.vue';
 import BasicButton from '../components/Buttons/BasicButton.vue';
 import MailerMessage from '../components/MailerMessage.vue';
 
-const DEFAULT_LAYOUT = 'auth-layout';
 export default {
   name: 'PasswordReset',
   data() {
@@ -69,7 +68,7 @@ export default {
   computed: {
     ...mapState(['passwordReset']),
     layout() {
-      return this.$route.meta.layout || DEFAULT_LAYOUT;
+      return this.$route.meta.layout;
     }
   },
   methods: {

@@ -85,6 +85,27 @@ describe('Password Vuex Module', () => {
           }]
         ]);
       });
+      it('should respond with any unamed error', async () => {
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            error: 'Record not found'
+          }),
+          status: 401,
+          ok: false
+        }));
+        await actions.handleResetSubmit({
+          commit,
+          state
+        }, 'me@example.com');
+        expect(setTimeout).toBeCalledTimes(0);
+        jest.runOnlyPendingTimers();
+        expect(commit.mock.calls).toEqual([
+          [HANDLE_PASSWORD_RESET_REQUEST],
+          [HANDLE_PASSWORD_RESET_REQUEST_FAILED, {
+            message: 'Email provided is not associated to any user account!'
+          }]
+        ]);
+      });
       it('should respond with success response', async () => {
         global.fetch = jest.fn().mockImplementation(() => ({
           json: () => Promise.resolve({
@@ -142,33 +163,36 @@ describe('Password Vuex Module', () => {
         ]);
       });
 
-      it('should respond with error non existing email', async () => {
-        global.fetch = jest.fn().mockImplementation(() => ({
-          json: () => Promise.resolve({
-            message: 'Action failed',
-            errors: ['Invalid or expired token']
-          }),
-          status: 400,
-          ok: false
-        }));
-        await actions.handleUpdateSubmit({
-          commit,
-          state
-        }, {
-          password: 'password',
-          passwordConfirmation: 'password',
-          token: 'qwerty-12345678'
+      [{
+        message: 'Action failed',
+        errors: ['Invalid or expired token']
+      }, {
+        message: 'Action failed'
+
+      }].forEach((error) => {
+        it('should respond with error non existing email', async () => {
+          global.fetch = jest.fn().mockImplementation(() => ({
+            json: () => Promise.resolve(error),
+            status: 400,
+            ok: false
+          }));
+          await actions.handleUpdateSubmit({
+            commit,
+            state
+          }, {
+            password: 'password',
+            passwordConfirmation: 'password',
+            token: 'qwerty-12345678'
+          });
+          expect(setTimeout).toBeCalledTimes(1);
+          jest.runOnlyPendingTimers();
+          expect(commit.mock.calls).toEqual([
+            [HANDLE_PASSWORD_RESET_REQUEST],
+            [HANDLE_PASSWORD_RESET_REQUEST_FAILED, error]
+          ]);
         });
-        expect(setTimeout).toBeCalledTimes(1);
-        jest.runOnlyPendingTimers();
-        expect(commit.mock.calls).toEqual([
-          [HANDLE_PASSWORD_RESET_REQUEST],
-          [HANDLE_PASSWORD_RESET_REQUEST_FAILED, {
-            message: 'Action failed',
-            errors: ['Invalid or expired token']
-          }]
-        ]);
       });
+
       it('should respond with success response', async () => {
         const navigate = jest.fn();
         global.fetch = jest.fn().mockImplementation(() => ({
@@ -217,14 +241,14 @@ describe('Password Vuex Module', () => {
       mutations[HANDLE_PASSWORD_RESET_REQUEST](state);
       expect(state.isSubmitting).toBeTruthy();
     });
-    it('should update state with some errors', () => {
-      mutations[HANDLE_PASSWORD_RESET_REQUEST_FAILED](state, {
-        message: 'Invalid or expired link'
+    [{
+      message: 'Invalid or expired link'
+    }, undefined].forEach((error) => {
+      it('should update state with some errors', () => {
+        mutations[HANDLE_PASSWORD_RESET_REQUEST_FAILED](state, error);
+        expect(state.errors).toEqual(expect.objectContaining(error || {}));
+        expect(state.isSubmitting).toBeFalsy();
       });
-      expect(state.errors).toEqual(expect.objectContaining({
-        message: 'Invalid or expired link'
-      }));
-      expect(state.isSubmitting).toBeFalsy();
     });
     it('should update state on success', () => {
       mutations[HANDLE_PASSWORD_RESET_REQUEST_SUCCESS](state);

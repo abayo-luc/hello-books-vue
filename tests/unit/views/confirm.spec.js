@@ -11,6 +11,7 @@ describe('AccountConfirmation.Vue', () => {
   let actions;
   let store;
   let state;
+  let wrapper;
   beforeEach(() => {
     state = {
       auth: {
@@ -20,15 +21,14 @@ describe('AccountConfirmation.Vue', () => {
       }
     };
     actions = {
-      handleConfirmation: jest.fn()
+      handleConfirmation: jest.fn(),
+      handleClearState: jest.fn()
     };
     store = new Vuex.Store({
       state,
       actions
     });
-  });
-  it('should match the snapshot', () => {
-    const wrapper = mount(AccountConfirmation, {
+    wrapper = mount(AccountConfirmation, {
       store,
       localVue,
       stubs: ['router-link', 'router-view'],
@@ -38,6 +38,15 @@ describe('AccountConfirmation.Vue', () => {
         }
       }
     });
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  it('should match the snapshot', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+  it('should clear state before destroy', () => {
+    wrapper.destroy();
+    expect(actions.handleClearState).toBeCalledTimes(1);
   });
 });
