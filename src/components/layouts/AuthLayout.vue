@@ -28,7 +28,7 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: #fff;
-  background-image: url("../../assets/superdaman.png");
+  background-image: url("../../assets/spiderman.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

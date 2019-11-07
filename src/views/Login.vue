@@ -146,7 +146,7 @@ export default {
 }
 .left-container {
   background-color: #fff;
-  background-image: url("../assets/superdaman.png");
+  background-image: url("../assets/spiderman.png");
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
@@ -190,7 +190,7 @@ export default {
     }
   }
   @media (min-width: 320px) and (max-width: 767px) {
-    background: url("../assets/superdaman.png");
+    background: url("../assets/spiderman.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

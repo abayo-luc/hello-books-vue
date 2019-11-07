@@ -1,6 +1,6 @@
 <template >
   <div class="book-card">
-    <img :src="book.url" class="book-cover" />
+    <img v-lazy="book.url" class="book-cover" />
     <div class="book-content">
       <h2 class="rating">6.8</h2>
       <h3 class="book-title">{{book.title}}</h3>

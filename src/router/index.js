@@ -1,20 +1,14 @@
 /* eslint-disable consistent-return */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import Authors from '../views/Authors.vue';
-import Login from '../views/Login.vue';
-import Signup from '../views/Signup.vue';
-import Confirmation from '../views/AccountConfirmation.vue';
-import PasswordReset from '../views/PasswordReset.vue';
-import PasswordUpdate from '../views/PasswordUpdate.vue';
-import store from '../store';
+import store from '@/store';
 
+const lazyLoad = view => () => import(`@/views/${view}.vue`);
 Vue.use(VueRouter);
 export const routes = [{
   path: '/',
   name: 'home',
-  component: Home,
+  component: lazyLoad('Home'),
   meta: {
     layout: 'main-layout',
     isProtected: true
@@ -23,7 +17,7 @@ export const routes = [{
 {
   path: '/authors',
   name: 'authors',
-  component: Authors,
+  component: lazyLoad('Authors'),
   meta: {
     layout: 'main-layout'
   }
@@ -31,12 +25,12 @@ export const routes = [{
 {
   path: '/login',
   name: 'login',
-  component: Login
+  component: lazyLoad('Login')
 },
 {
   path: '/signup',
   name: 'signup',
-  component: Signup,
+  component: lazyLoad('Signup'),
   meta: {
     layout: 'auth-layout'
   }
@@ -44,12 +38,12 @@ export const routes = [{
 {
   path: '/users/confirmation',
   name: 'instructions',
-  component: Confirmation
+  component: lazyLoad('AccountConfirmation')
 },
 {
   path: '/users/password/reset',
   name: 'passwordReset',
-  component: PasswordReset,
+  component: lazyLoad('PasswordReset'),
   meta: {
     layout: 'auth-layout'
   }
@@ -57,7 +51,7 @@ export const routes = [{
 {
   path: '/users/password',
   name: 'passwordUpdate',
-  component: PasswordUpdate,
+  component: lazyLoad('PasswordUpdate'),
   meta: {
     layout: 'auth-layout'
   }

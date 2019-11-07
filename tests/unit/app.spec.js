@@ -33,8 +33,8 @@ describe('App', () => {
   it('renders a child component via routing', () => {
     expect(wrapper).toMatchSnapshot();
   });
-  it('should render a child component via routing', () => {
-    wrapper.vm.$router.push('/login');
+  it('should render a child component via routing', async () => {
+    await wrapper.vm.$router.push('/login');
     expect(wrapper.find(Login).exists()).toBeTruthy();
   });
 });
