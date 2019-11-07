@@ -5,7 +5,7 @@
       <div class="content">
         <div class="all-books">
           <div class="book-rows">
-            <book-card v-for="book in books" :key="book.id" :book="book" />
+            <book-card v-for="book in allBooks" :key="book.id" :book="book" />
           </div>
         </div>
         <div class="right-reading-list sm-hide">
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapGetters } from 'vuex';
 import DashCards from '../components/DashCards.vue';
 import BookCard from '../components/cards/BookCard.vue';
 import ReadingList from '../components/ReadingList.vue';
@@ -29,21 +29,11 @@ export default {
     BookCard,
     ReadingList
   },
-  data() {
-    return {
-      books: [],
-      errors: []
-    };
-  },
-  created() {
-    axios
-      .get('https://jsonplaceholder.typicode.com/photos?_limit=18')
-      .then((res) => {
-        this.books = res.data;
-      })
-      .catch(err => this.errors.push(err.message));
+  beforeCreate() {
+    this.$store.dispatch('fetchBooks');
   },
   computed: {
+    ...mapGetters(['allBooks']),
     layout() {
       return this.$route.meta.layout;
     }

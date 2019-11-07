@@ -11,19 +11,21 @@
         <img src="../../assets/user.jpg" />
       </div>
       <div class="name">
-        <p>Luc Abayo</p>
+        <p>{{currentUser.name}}</p>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import Brand from '../Brand.vue';
 
 export default {
   name: 'TopNav',
   components: {
     Brand
-  }
+  },
+  computed: mapGetters(['currentUser'])
 };
 </script>
 <style lang="scss" scoped>

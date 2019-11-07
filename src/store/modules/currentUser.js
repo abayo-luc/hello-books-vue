@@ -6,6 +6,7 @@ import {
   CHECKING_CURRENT_USER
 } from './constants';
 import customFetch from '../../utils/fetch';
+import getUsername from '../../utils/getUsername';
 
 dotenv.config();
 const {
@@ -21,7 +22,7 @@ export const state = {
 };
 export const getters = {
   isLoggedIn: state => !!state.token,
-  currentUser: state => state.profile
+  currentUser: state => getUsername(state.profile)
 };
 export const actions = {
   checkCurrentUser: async ({
