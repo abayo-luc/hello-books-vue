@@ -6,6 +6,7 @@ import {
   CHECKING_CURRENT_USER
 } from './constants';
 import customFetch from '../../utils/fetch';
+import transform from '../../utils/transform';
 
 dotenv.config();
 const {
@@ -13,7 +14,7 @@ const {
 } = process.env;
 const INITIAL_STATE = {
   isSubmitting: false,
-  profile: null,
+  profile: {},
   token: localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY) || ''
 };
 export const state = {
@@ -21,7 +22,7 @@ export const state = {
 };
 export const getters = {
   isLoggedIn: state => !!state.token,
-  currentUser: state => state.profile
+  currentUser: state => transform.getUsername(state.profile)
 };
 export const actions = {
   checkCurrentUser: async ({

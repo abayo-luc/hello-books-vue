@@ -7,23 +7,22 @@
       <input type="text" name="search" placeholder="Search by name, genre, etc..." />
     </div>
     <div class="user-profile">
-      <div class="avatar">
-        <img src="../../assets/user.jpg" />
-      </div>
-      <div class="name">
-        <p>Luc Abayo</p>
-      </div>
+      <button class="avatar">
+        <img src="../../assets/icons/menu.svg" />
+      </button>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import Brand from '../Brand.vue';
 
 export default {
   name: 'TopNav',
   components: {
     Brand
-  }
+  },
+  computed: mapGetters(['currentUser'])
 };
 </script>
 <style lang="scss" scoped>
@@ -86,10 +85,14 @@ export default {
     font-size: 0.8em;
     font-weight: bold;
   }
+  button {
+    all: unset;
+    cursor: pointer;
+  }
   .avatar img {
     margin: 0.5em;
-    height: 2.5em;
-    border-radius: 50%;
+    height: 1.6em;
+    // border-radius: 50%;
   }
 }
 </style>

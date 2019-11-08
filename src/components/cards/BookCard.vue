@@ -1,12 +1,12 @@
 <template >
   <div class="book-card">
-    <img v-lazy="book.url" class="book-cover" />
+    <img v-lazy="book.cover_image" class="book-cover" />
     <div class="book-content">
       <h2 class="rating">6.8</h2>
       <h3 class="book-title">{{book.title}}</h3>
       <p class="author">Joanne Ramos</p>
       <div class="category">
-        <p>Novel</p>
+        <p>{{book.language}}</p>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default {
     }
     .category {
       padding: 3px;
-      margin: 5px 0px;
+      margin: 10px 0px;
       width: 70%;
       font-size: 11px;
       background-color: rgba(93, 207, 212, 0.2);
@@ -63,11 +63,11 @@ export default {
     }
   }
   img.book-cover {
-    height: 9em;
+    height: 9rem;
     border-radius: 5px;
   }
   img[lazy="loading"] {
-    height: 10em;
+    height: 10rem;
     border-radius: 5px;
   }
   @media (min-width: 364px) and (max-width: 1024px) {
