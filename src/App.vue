@@ -19,7 +19,7 @@ export default {
     ActivityIndicator
   },
   computed: mapState(['user']),
-  async created() {
+  async beforeCreate() {
     this.$store.dispatch('checkCurrentUser');
   }
 };

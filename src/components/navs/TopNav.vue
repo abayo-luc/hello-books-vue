@@ -7,12 +7,9 @@
       <input type="text" name="search" placeholder="Search by name, genre, etc..." />
     </div>
     <div class="user-profile">
-      <div class="avatar">
-        <img src="../../assets/user.jpg" />
-      </div>
-      <div class="name">
-        <p>{{currentUser.name}}</p>
-      </div>
+      <button class="avatar">
+        <img src="../../assets/icons/menu.svg" />
+      </button>
     </div>
   </div>
 </template>
@@ -88,10 +85,14 @@ export default {
     font-size: 0.8em;
     font-weight: bold;
   }
+  button {
+    all: unset;
+    cursor: pointer;
+  }
   .avatar img {
     margin: 0.5em;
-    height: 2.5em;
-    border-radius: 50%;
+    height: 1.6em;
+    // border-radius: 50%;
   }
 }
 </style>

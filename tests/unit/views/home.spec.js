@@ -16,7 +16,9 @@ describe('Home Page', () => {
   let mutations;
   let store;
   let wrapper;
+  let spyOnScroll;
   beforeEach(async () => {
+    spyOnScroll = jest.spyOn(Home.methods, 'handleScroll');
     state = {
       books: {
         isLoading: false,
@@ -24,10 +26,12 @@ describe('Home Page', () => {
       }
     };
     getters = {
-      allBooks: () => state.data
+      allBooks: () => state.data,
+      isLoadingMoreBook: () => false
     };
     actions = {
-      fetchBooks: jest.fn()
+      fetchBooks: jest.fn(),
+      handleBookPagination: jest.fn()
     };
     store = new Vuex.Store({
       state,
@@ -35,6 +39,21 @@ describe('Home Page', () => {
       getters,
       mutations
     });
+    wrapper = await shallowMount(Home, {
+      localVue,
+      store,
+      attachToDocument: true,
+      stubs: ['router-link', 'router-view'],
+      mocks: {
+        $route: {
+          meta: {
+            layout: 'main-layout'
+          }
+        }
+      }
+    });
+  });
+  it('should match the snapshot', async () => {
     wrapper = await shallowMount(Home, {
       localVue,
       store,
@@ -47,8 +66,17 @@ describe('Home Page', () => {
         }
       }
     });
-  });
-  it('should match the snapshot', async () => {
     expect(wrapper).toMatchSnapshot();
+  });
+  it('should list to on scroll event', () => {
+    window.dispatchEvent(new CustomEvent('scroll'));
+    expect(spyOnScroll).toHaveBeenCalled();
+    expect(actions.handleBookPagination).not.toHaveBeenCalled();
+  });
+  it('should dispatch handle book pagination', () => {
+    window.innerHeight = 0;
+    window.dispatchEvent(new CustomEvent('scroll'));
+    expect(spyOnScroll).toBeCalled();
+    expect(actions.handleBookPagination).toBeCalled();
   });
 });

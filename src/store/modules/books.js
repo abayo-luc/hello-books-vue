@@ -2,20 +2,37 @@
 import {
   FETCHING_ALL_BOOKS,
   FETCHING_ALL_BOOKS_SUCCESS,
-  FETCHING_ALL_BOOKS_FAILED
+  FETCHING_ALL_BOOKS_FAILED,
+  HANDLE_PAGINATION,
+  HANDLE_PAGINATION_ENDED
 } from './constants';
 import lFetch from '../../utils/fetch';
 import notify from '../../utils/notify';
+import transform from '../../utils/transform';
 
 export const state = {
   isLoading: false,
   errors: {},
-  data: []
+  data: {},
+  page: 1,
+  ended: false
 };
 export const getters = {
-  allBooks: state => state.data
+  allBooks: state => Object.values(state.data),
+  isLoadingMoreBook: state => state.isLoading
+    && !transform.isEmpty(state.data)
+    && !state.ended
 };
 export const actions = {
+  handleBookPagination: ({
+    dispatch,
+    commit,
+    state
+  }) => {
+    if (state.isLoading) return '';
+    commit(HANDLE_PAGINATION);
+    return dispatch('fetchBooks');
+  },
   fetchBooks: async ({
     commit,
     state
@@ -25,8 +42,12 @@ export const actions = {
     try {
       const {
         data
-      } = await lFetch.get('/books?limit=50');
-      return commit(FETCHING_ALL_BOOKS_SUCCESS, data);
+      } = await lFetch.get(`/books?limit=30&page=${state.page}`);
+      if (!data.length) {
+        return commit(HANDLE_PAGINATION_ENDED);
+      }
+      const books = transform.arrayToObject(data);
+      return commit(FETCHING_ALL_BOOKS_SUCCESS, books);
     } catch (error) {
       notify({
         title: 'Error while fetching',
@@ -42,11 +63,22 @@ export const mutations = {
     state.isLoading = true;
   },
   FETCHING_ALL_BOOKS_SUCCESS: (state, data) => {
-    Object.assign(state, {
-      ...state,
-      isLoading: false,
-      data: [...new Set([...data, state.data])]
-    });
+    state.isLoading = false;
+    state.data = {
+      ...state.data,
+      ...data
+    };
+  },
+  FETCHING_ALL_BOOKS_FAILED: (state, error) => {
+    state.isLoading = false;
+    state.errors = error;
+  },
+  HANDLE_PAGINATION: (state) => {
+    state.page += 1;
+  },
+  HANDLE_PAGINATION_ENDED: (state) => {
+    state.isLoading = false;
+    state.ended = true;
   }
 };
 

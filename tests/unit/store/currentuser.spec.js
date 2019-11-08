@@ -21,7 +21,7 @@ const profile = {
 };
 const INITIAL_STATE = {
   isSubmitting: false,
-  profile: null,
+  profile: {},
   token: localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY) || ''
 };
 describe('Current User Module', () => {

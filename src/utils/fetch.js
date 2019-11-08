@@ -16,17 +16,12 @@ class Fetch {
   constructor() {
     this.config = defaultOptions;
     this.url = '';
-    this.data = null;
   }
 
   async request() {
     const token = await localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY);
     this.config.headers.Authorization = token;
-    const body = this.data && JSON.stringify(this.data);
-    const response = await fetch(`${VUE_APP_BACKEND_URL}${this.url}`, {
-      ...this.config,
-      body
-    });
+    const response = await fetch(`${VUE_APP_BACKEND_URL}${this.url}`, this.config);
     const json = await response.json();
     switch (response.status) {
       case 200:
@@ -41,20 +36,21 @@ class Fetch {
   async post(url, data) {
     this.config.method = 'POST';
     this.url = url;
-    this.data = data;
+    this.config.body = JSON.stringify(data);
     return this.request();
   }
 
   async put(url, data) {
     this.config.method = 'PUT';
     this.url = url;
-    this.data = data;
+    this.config.body = JSON.stringify(data);
     return this.request();
   }
 
   async get(url) {
     this.config.method = 'GET';
     this.url = url;
+    this.config.body = null;
     return this.request();
   }
 }
