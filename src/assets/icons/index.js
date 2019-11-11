@@ -5,6 +5,10 @@ import email from './email.svg';
 import lock from './lock.svg';
 import user from './user.svg';
 import logoDark from './logo-dark.svg';
+import address from './address.svg';
+import edit from './edit.svg';
+import close from './close.svg';
+import phone from './phone.svg';
 
 export default {
   Home,
@@ -13,5 +17,9 @@ export default {
   email,
   lock,
   user,
-  logoDark
+  logoDark,
+  address,
+  edit,
+  close,
+  phone
 };

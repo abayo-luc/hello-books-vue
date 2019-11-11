@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <div class="loaded" v-show="!user.isSubmitting">
+    <div class="loaded" v-if="!user.isSubmitting">
       <notifications group="foo" style="width: 300px; top: 5px; right: 0px;" />
       <router-view />
     </div>
-    <div class="loading-indicator" v-show="user.isSubmitting">
+    <div class="loading-indicator" v-if="user.isSubmitting">
       <activity-indicator :styleObject="{width: '60px', height: '60px'}" />
     </div>
   </div>
@@ -111,5 +111,8 @@ a.link {
   @media (max-width: 767px) {
     width: 90%;
   }
+}
+.ck-editor__editable_inline {
+  min-height: 300px;
 }
 </style>
