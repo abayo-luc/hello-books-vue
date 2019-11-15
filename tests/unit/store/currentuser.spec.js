@@ -2,7 +2,10 @@ import dotenv from 'dotenv';
 import {
   CHECKING_CURRENT_USER,
   CURRENT_USER_FOUND,
-  CURRENT_USER_NOT_FOUND
+  CURRENT_USER_NOT_FOUND,
+  EDIT_PROFILE_INPUT_CHANGE,
+  EDIT_PROFILE_FAILED,
+  REMOVE_CURRENT_USER
 } from '../../../src/store/modules/constants';
 import {
   getters,
@@ -10,6 +13,7 @@ import {
   mutations
 } from '../../../src/store/modules/currentUser';
 
+jest.mock('../../../src/utils/notify', () => jest.fn().mockImplementation(() => true));
 dotenv.config();
 const {
   VUE_APP_TOKEN_STORAGE_KEY
@@ -105,6 +109,99 @@ describe('Current User Module', () => {
       ]);
       expect(clearLocalStorage).toBeCalledTimes(1);
     });
+    it('should handle profile edit input change', () => {
+      const payload = {
+        name: 'first_name',
+        value: 'Luc'
+      };
+      actions.handleProfileEditing({
+        commit,
+        state
+      }, payload);
+      expect(commit.mock.calls).toEqual([
+        [EDIT_PROFILE_INPUT_CHANGE, payload]
+      ]);
+    });
+    it('should handle sign out action', async () => {
+      const navigate = jest.fn();
+      const clearStorage = jest.spyOn(localStorage, 'clear');
+      await actions.handleSignOut({
+        commit
+      }, navigate);
+      expect(commit.mock.calls).toEqual([
+        [REMOVE_CURRENT_USER]
+      ]);
+      expect(clearStorage).toBeCalled();
+    });
+    describe('update profile action', () => {
+      it('should catch and notify if update profile failed', async () => {
+        const res = {
+          message: 'Action failed',
+          errors: {
+            phone_number: ['is invalid']
+          }
+        };
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve(res),
+          status: 400,
+          ok: false
+        }));
+        const callback = jest.fn();
+        state.profile = {
+          phone_number: '0789277275'
+        };
+        await actions.saveProfile({
+          commit,
+          state
+        }, callback);
+        expect(commit.mock.calls).toEqual([
+          [EDIT_PROFILE_FAILED, res.errors]
+        ]);
+      });
+
+      it('should  unknown error', async () => {
+        const res = {
+          message: 'Action failed'
+        };
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve(res),
+          status: 400,
+          ok: false
+        }));
+        const callback = jest.fn();
+        await actions.saveProfile({
+          commit,
+          state
+        }, callback);
+        expect(commit.mock.calls).toEqual([
+          [EDIT_PROFILE_FAILED, res]
+        ]);
+      });
+
+      it('should catch update profile success', async () => {
+        const res = {
+          ...profile,
+          phone_number: '078345678'
+        };
+        global.fetch = jest.fn().mockImplementation(() => ({
+          json: () => Promise.resolve({
+            message: 'Success',
+            data: res
+          }),
+          status: 200,
+          ok: true
+        }));
+        const callback = jest.fn();
+        await actions.saveProfile({
+          commit,
+          state
+        }, callback);
+        expect(callback).toBeCalled();
+        expect(commit.mock.calls).toEqual([
+          [CURRENT_USER_FOUND, res]
+        ]);
+      });
+    });
   });
   describe('#mutations', () => {
     let state;
@@ -133,6 +230,27 @@ describe('Current User Module', () => {
         ...INITIAL_STATE,
         token: ''
       });
+    });
+    it('should respond to edit profile input change', () => {
+      mutations[EDIT_PROFILE_INPUT_CHANGE](state, {
+        value: 'Luc',
+        name: 'first_name'
+      });
+      expect(state.profile.first_name).toEqual('Luc');
+    });
+
+    it('should update mutate according on edit profile failed', () => {
+      mutations[EDIT_PROFILE_FAILED](state, {
+        message: 'Action failed'
+      });
+      expect(state.errors).toEqual(expect.objectContaining({
+        message: 'Action failed'
+      }));
+    });
+    it('should update state on successfully login', () => {
+      mutations[REMOVE_CURRENT_USER](state);
+      expect(state.token).toEqual('');
+      expect(Object.values(state.profile).length).toBeFalsy();
     });
   });
 });

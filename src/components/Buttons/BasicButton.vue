@@ -4,6 +4,7 @@
     class="btn"
     :class="getClass()"
     :disabled="disabled ? true: false"
+    @click="onClick"
   >{{ title }}</button>
 </template>
 
@@ -25,6 +26,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    onClick: {
+      type: Function,
+      default: () => null
     }
   },
   methods: {
@@ -63,6 +68,12 @@ a.btn {
     background-color: #ffffff;
     color: rgb(93, 207, 212);
     border: 0.5px solid rgba(0, 0, 0, 0.05);
+  }
+  &.simple {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    box-shadow: none;
   }
 }
 </style>

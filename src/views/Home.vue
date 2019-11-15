@@ -1,27 +1,25 @@
 <template>
-  <div class="home">
-    <component :is="layout">
-      <DashCards />
-      <div class="content">
-        <div class="all-books">
-          <div class="book-rows">
-            <book-card v-for="book in allBooks" :key="book.id" :book="book" />
-          </div>
-          <div v-show="isLoadingMoreBook" class="loading-more">
-            <p>
-              Loading
-              <span class="red">.</span>
-              <span class="yellow">.</span>
-              <span class="green">.</span>
-            </p>
-          </div>
+  <component :is="layout">
+    <DashCards />
+    <div class="content">
+      <div class="all-books">
+        <div class="book-rows">
+          <book-card v-for="book in allBooks" :key="book.id" :book="book" />
         </div>
-        <div class="right-reading-list sm-hide">
-          <reading-list />
+        <div v-show="isLoadingMoreBook" class="loading-more">
+          <p>
+            Loading
+            <span class="red">.</span>
+            <span class="yellow">.</span>
+            <span class="green">.</span>
+          </p>
         </div>
       </div>
-    </component>
-  </div>
+      <div class="right-reading-list sm-hide">
+        <reading-list />
+      </div>
+    </div>
+  </component>
 </template>
 
 <script>

@@ -122,7 +122,7 @@ export default {
       this.$store.dispatch('handleInputChange', { value, name });
     },
     onSubmit() {
-      const navigate = () => this.$router.replace('/');
+      const navigate = () => this.$router.go('/');
       this.handleLoginSubmit(navigate);
     }
   },

@@ -55,6 +55,15 @@ export const routes = [{
   meta: {
     layout: 'auth-layout'
   }
+},
+{
+  path: '/profile',
+  name: 'profile',
+  component: lazyLoad('profile'),
+  meta: {
+    layout: 'main-layout',
+    isProtected: true
+  }
 }
 ];
 

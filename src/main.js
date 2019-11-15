@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Notifications from 'vue-notification';
 import VueLazyLoad from 'vue-lazyload';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 import App from './App.vue';
 import routerStore from '@/router';
 import MainLayout from '@/components/layouts/MainLayout.vue';
@@ -20,6 +21,7 @@ Vue.use(VueLazyLoad, {
   preLoad: 1.3,
   loading: LoadingImg
 });
+Vue.use(CKEditor);
 new Vue({
   router,
   store,
