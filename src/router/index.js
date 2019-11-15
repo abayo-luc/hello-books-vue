@@ -61,7 +61,8 @@ export const routes = [{
   name: 'profile',
   component: lazyLoad('profile'),
   meta: {
-    layout: 'main-layout'
+    layout: 'main-layout',
+    isProtected: true
   }
 }
 ];

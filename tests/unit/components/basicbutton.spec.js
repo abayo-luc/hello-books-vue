@@ -6,6 +6,7 @@ import BasicButton from '../../../src/components/Buttons/BasicButton.vue';
 describe('BasicButton.vue', () => {
   let wrapper;
   let getClass;
+  const onClick = () => console.warn('hello world');
   beforeEach(() => {
     getClass = jest.spyOn(BasicButton.methods, 'getClass');
     wrapper = shallowMount(BasicButton, {
@@ -26,7 +27,8 @@ describe('BasicButton.vue', () => {
         title: 'Login',
         type: 'submit',
         classes: 'default',
-        disabled: true
+        disabled: true,
+        onClick
       }
     });
     expect(getClass).toBeCalled();
