@@ -5,7 +5,8 @@ import {
   CURRENT_USER_NOT_FOUND,
   CHECKING_CURRENT_USER,
   REMOVE_CURRENT_USER,
-  EDIT_PROFILE_INPUT_CHANGE
+  EDIT_PROFILE_INPUT_CHANGE,
+  EDIT_PROFILE_FAILED
 } from './constants';
 import customFetch from '../../utils/fetch';
 import notify from '../../utils/notify';
@@ -58,7 +59,7 @@ export const actions = {
   saveProfile: async ({
     commit,
     state
-  }) => {
+  }, toggleEdit) => {
     try {
       const data = {};
       ({
@@ -75,8 +76,29 @@ export const actions = {
         text: response.message,
         type: 'success'
       });
+      toggleEdit();
     } catch (error) {
-      console.log(error);
+      const {
+        errors,
+        message
+      } = error;
+      if (errors) {
+        let message = '';
+        await Object.keys(errors).forEach((key) => {
+          errors[key].forEach((err) => {
+            message += `<p>${key}${err}</p>`;
+          });
+        });
+        notify({
+          title: 'Action failed',
+          text: message,
+          type: 'error'
+        });
+      }
+
+      commit(EDIT_PROFILE_FAILED, errors || {
+        message
+      });
     }
   }
 };
@@ -103,6 +125,9 @@ export const mutations = {
   }),
   [EDIT_PROFILE_INPUT_CHANGE]: (state, data) => {
     state.profile[data.name] = data.value;
+  },
+  [EDIT_PROFILE_FAILED]: (state, errors) => {
+    state.errors = errors;
   }
 };
 export default {

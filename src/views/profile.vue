@@ -21,13 +21,13 @@
             <span>{{new Date(user.profile.updated_at).toDateString()}}</span>
           </h4>
           <div class="edit-toggle">
-            <button class="edit-btn" @click="toggleEdit">
+            <button class="edit-btn" @click="toggleEdit" id="toggle-edit-btn">
               <img :src="icon" class="icon" />
             </button>
           </div>
         </div>
         <div class="section" v-if="editing">
-          <edit-profile :profile="user.profile" />
+          <edit-profile :profile="user.profile" :toggleEdit="toggleEdit" />
         </div>
 
         <div class="section-content" v-else>
@@ -143,6 +143,7 @@ export default {
     .bio {
       margin-top: 15px;
       width: 75%;
+      text-align: justify;
       h4 {
         margin-bottom: 15px;
       }

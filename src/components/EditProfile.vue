@@ -1,5 +1,5 @@
 <template>
-  <form method="post" @submit.prevent="saveProfile">
+  <form method="post" @submit.prevent="saveProfile(toggleEdit)">
     <div class="row spaced-row">
       <div class="input">
         <input-icon
@@ -76,6 +76,9 @@ export default {
   props: {
     profile: {
       type: Object
+    },
+    toggleEdit: {
+      type: Function
     }
   },
   data() {

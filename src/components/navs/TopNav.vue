@@ -7,7 +7,7 @@
       <input type="text" name="search" placeholder="Search by name, genre, etc..." />
     </div>
     <div class="dropdown">
-      <button class="dropdown-btn" @click="toggleDropdown">
+      <button class="dropdown-btn" @click="toggleDropdown" id="nav-dropdown">
         <img src="../../assets/icons/menu.svg" />
       </button>
     </div>
