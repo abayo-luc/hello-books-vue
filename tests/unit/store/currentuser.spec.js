@@ -111,7 +111,7 @@ describe('Current User Module', () => {
     });
     it('should handle profile edit input change', () => {
       const payload = {
-        name: 'first_name',
+        name: 'name',
         value: 'Luc'
       };
       actions.handleProfileEditing({
@@ -234,9 +234,9 @@ describe('Current User Module', () => {
     it('should respond to edit profile input change', () => {
       mutations[EDIT_PROFILE_INPUT_CHANGE](state, {
         value: 'Luc',
-        name: 'first_name'
+        name: 'name'
       });
-      expect(state.profile.first_name).toEqual('Luc');
+      expect(state.profile.name).toEqual('Luc');
     });
 
     it('should update mutate according on edit profile failed', () => {

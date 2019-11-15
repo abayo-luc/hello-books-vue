@@ -63,8 +63,7 @@ export const actions = {
     try {
       const data = {};
       ({
-        first_name: data.first_name,
-        last_name: data.last_name,
+        name: data.name,
         bio: data.bio,
         address: data.address,
         phone_number: data.phone_number
@@ -100,6 +99,17 @@ export const actions = {
         message
       });
     }
+  },
+  updateImage: async ({
+    commit
+  }, url) => {
+    const {
+      data
+    } = await customFetch.put('/profiles/update', {
+      avatar: url
+    });
+    commit(CURRENT_USER_FOUND, data);
+    return data;
   }
 };
 

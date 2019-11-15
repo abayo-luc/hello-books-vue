@@ -122,7 +122,7 @@ export const actions = {
     }
     try {
       const user = {
-        first_name: state.name,
+        name: state.name,
         email: state.email,
         password: state.password
       };

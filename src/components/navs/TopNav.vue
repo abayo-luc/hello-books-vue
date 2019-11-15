@@ -13,9 +13,9 @@
     </div>
     <div class="dropdown-content" v-show="dropdownVisible">
       <div class="user-profile">
-        <img src="../../assets/thumbnail.png" class="user-avatar" />
+        <img :src="currentUser.avatar" class="user-avatar" />
         <div class="user-info">
-          <p class="username">{{currentUser.first_name}} {{currentUser.lastName}}</p>
+          <p class="username">{{currentUser.name}}</p>
           <p class="user-email">{{currentUser.email}}</p>
         </div>
       </div>

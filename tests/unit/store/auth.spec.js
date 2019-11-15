@@ -368,8 +368,7 @@ describe('Store Auth', () => {
       it('should commit HANDLE_AUTH_SUCCESS for valid user data', async () => {
         const userInstance = {
           email: 'me@example.com',
-          first_name: 'Luc',
-          last_name: 'Aba.',
+          name: 'Luc Abayo',
           password: 'password',
           id: '1234567',
           created_at: Date.now().toLocaleString()

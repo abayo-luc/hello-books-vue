@@ -3,20 +3,10 @@
     <div class="row spaced-row">
       <div class="input">
         <input-icon
-          name="first_name"
+          name="name"
           placeholder="First name"
           type="text"
-          :value="user.first_name || ''"
-          iconName="user"
-          :onChangeText="onChangeText"
-        />
-      </div>
-      <div class="input">
-        <input-icon
-          name="last_name"
-          placeholder="Last name"
-          :value="user.last_name || ''"
-          type="text"
+          :value="user.name || ''"
           iconName="user"
           :onChangeText="onChangeText"
         />

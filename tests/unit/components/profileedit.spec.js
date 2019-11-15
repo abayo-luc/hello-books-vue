@@ -47,12 +47,12 @@ describe('Profile Edit', () => {
   it('should respond on text input change', () => {
     const e = {
       target: {
-        name: 'first_name',
+        name: 'name',
         value: 'Luc'
       }
     };
     const input = wrapper.find({
-      name: 'first_name'
+      name: 'name'
     });
     input.props().onChangeText(e);
     expect(spyOnChange).toBeCalledWith(e);

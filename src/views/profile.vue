@@ -6,10 +6,16 @@
           <h3>Personal Information</h3>
         </div>
         <div class="section-content row">
-          <img src="../assets/thumbnail.png" alt="th" class="user-avatar" />
+          <img :src="user.profile.avatar" alt="th" class="user-avatar" />
           <div class="info">
-            <p>{{user.profile.email}}</p>
-            <input type="file" name id="avatar" accept="image/png, image/jpeg" />
+            <p>{{ user.profile.email }}</p>
+            <input
+              type="file"
+              name
+              id="avatar"
+              accept="image/png, image/jpeg"
+              @change="upload($event.target.files)"
+            />
           </div>
         </div>
       </div>
@@ -18,7 +24,7 @@
           <h3>Acount information</h3>
           <h4>
             Update at:
-            <span>{{new Date(user.profile.updated_at).toDateString()}}</span>
+            <span>{{ new Date(user.profile.updated_at).toDateString() }}</span>
           </h4>
           <div class="edit-toggle">
             <button class="edit-btn" @click="toggleEdit" id="toggle-edit-btn">
@@ -34,19 +40,15 @@
           <div class="info">
             <p class="user-info">
               <span>First name:</span>
-              {{user.profile.first_name}}
-            </p>
-            <p class="user-info">
-              <span>Last name:</span>
-              {{user.profile.last_name}}
+              {{ user.profile.name }}
             </p>
             <p class="user-info">
               <span>Phone:</span>
-              {{user.profile.phone_number || '....'}}
+              {{ user.profile.phone_number || '....' }}
             </p>
             <p class="user-info">
               <span>Address</span>
-              {{user.profile.address || '....'}}
+              {{ user.profile.address || '....' }}
             </p>
             <div class="bio">
               <h4>Bio:</h4>
@@ -63,6 +65,7 @@
 import { mapState } from 'vuex';
 import EditProfile from '../components/EditProfile.vue';
 import Icons from '../assets/icons';
+import uploader from '../utils/upload';
 
 export default {
   name: 'Profile',
@@ -85,6 +88,18 @@ export default {
     toggleEdit() {
       this.editing = !this.editing;
       this.icon = this.editing ? Icons.close : Icons.edit;
+    },
+    async upload(file) {
+      try {
+        const { url } = await uploader(file);
+        this.$store.dispatch('updateImage', url);
+      } catch (error) {
+        this.$notify({
+          title: 'Uploading image fialed',
+          text: error.message,
+          type: 'error'
+        });
+      }
     }
   }
 };
