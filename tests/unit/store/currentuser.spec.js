@@ -5,7 +5,8 @@ import {
   CURRENT_USER_NOT_FOUND,
   EDIT_PROFILE_INPUT_CHANGE,
   EDIT_PROFILE_FAILED,
-  REMOVE_CURRENT_USER
+  REMOVE_CURRENT_USER,
+  UPDATING_USER
 } from '../../../src/store/modules/constants';
 import {
   getters,
@@ -24,6 +25,7 @@ const profile = {
   created_at: new Date()
 };
 const INITIAL_STATE = {
+  isSaving: false,
   isSubmitting: false,
   profile: {},
   token: localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY) || ''
@@ -153,8 +155,12 @@ describe('Current User Module', () => {
         await actions.saveProfile({
           commit,
           state
-        }, callback);
+        }, {
+          callback,
+          user: state.profile
+        });
         expect(commit.mock.calls).toEqual([
+          [UPDATING_USER],
           [EDIT_PROFILE_FAILED, res.errors]
         ]);
       });
@@ -172,8 +178,12 @@ describe('Current User Module', () => {
         await actions.saveProfile({
           commit,
           state
-        }, callback);
+        }, {
+          user: {},
+          callback
+        });
         expect(commit.mock.calls).toEqual([
+          [UPDATING_USER],
           [EDIT_PROFILE_FAILED, res]
         ]);
       });
@@ -195,9 +205,13 @@ describe('Current User Module', () => {
         await actions.saveProfile({
           commit,
           state
-        }, callback);
+        }, {
+          user: res,
+          callback
+        });
         expect(callback).toBeCalled();
         expect(commit.mock.calls).toEqual([
+          [UPDATING_USER],
           [CURRENT_USER_FOUND, res]
         ]);
       });

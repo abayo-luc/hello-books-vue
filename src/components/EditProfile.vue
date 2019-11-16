@@ -1,5 +1,5 @@
 <template>
-  <form method="post" @submit.prevent="saveProfile(toggleEdit)">
+  <form method="post" @submit.prevent="onSave">
     <div class="row spaced-row">
       <div class="input">
         <input-icon
@@ -46,14 +46,14 @@
       ></ckeditor>
     </div>
     <div class="buttons">
-      <basic-button title="Submit" classes="simple" type="submit" />
+      <basic-button title="Submit" classes="default" type="submit" :disabled="isSaving" />
     </div>
   </form>
 </template>
 
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import InputIcon from './TextInputs/InputIcon.vue';
 import BasicButton from './Buttons/BasicButton.vue';
 
@@ -85,8 +85,8 @@ export default {
       }
     };
   },
+  computed: mapGetters(['isSaving']),
   methods: {
-    ...mapActions(['saveProfile']),
     onChangeText(e) {
       let name;
       let value;
@@ -96,7 +96,11 @@ export default {
       } else {
         ({ name, value } = e.target);
       }
-      this.$store.dispatch('handleProfileEditing', { name, value });
+      this.user[name] = value;
+    },
+    onSave() {
+      const data = { user: this.user, callback: this.toggleEdit };
+      this.$store.dispatch('saveProfile', data);
     }
   }
 };

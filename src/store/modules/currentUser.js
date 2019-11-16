@@ -6,7 +6,9 @@ import {
   CHECKING_CURRENT_USER,
   REMOVE_CURRENT_USER,
   EDIT_PROFILE_INPUT_CHANGE,
-  EDIT_PROFILE_FAILED
+  EDIT_PROFILE_FAILED,
+  UPDATE_USER_AVATAR,
+  UPDATING_USER
 } from './constants';
 import customFetch from '../../utils/fetch';
 import notify from '../../utils/notify';
@@ -16,6 +18,7 @@ const {
   VUE_APP_TOKEN_STORAGE_KEY
 } = process.env;
 const INITIAL_STATE = {
+  isSaving: false,
   isSubmitting: false,
   profile: {},
   token: localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY) || ''
@@ -25,7 +28,8 @@ export const state = {
 };
 export const getters = {
   isLoggedIn: state => !!state.token,
-  currentUser: state => state.profile
+  currentUser: state => state.profile,
+  isSaving: state => state.isSaving
 };
 export const actions = {
   checkCurrentUser: async ({
@@ -59,15 +63,21 @@ export const actions = {
   saveProfile: async ({
     commit,
     state
-  }, toggleEdit) => {
+  }, params) => {
     try {
+      if (state.isSaving) return '';
+      commit(UPDATING_USER);
+      const {
+        user,
+        callback
+      } = params;
       const data = {};
       ({
         name: data.name,
         bio: data.bio,
         address: data.address,
         phone_number: data.phone_number
-      } = state.profile);
+      } = user);
       const response = await customFetch.put('/profiles/update', data);
       commit(CURRENT_USER_FOUND, response.data);
       notify({
@@ -75,7 +85,7 @@ export const actions = {
         text: response.message,
         type: 'success'
       });
-      toggleEdit();
+      return callback();
     } catch (error) {
       const {
         errors,
@@ -95,7 +105,7 @@ export const actions = {
         });
       }
 
-      commit(EDIT_PROFILE_FAILED, errors || {
+      return commit(EDIT_PROFILE_FAILED, errors || {
         message
       });
     }
@@ -103,6 +113,7 @@ export const actions = {
   updateImage: async ({
     commit
   }, url) => {
+    commit(UPDATE_USER_AVATAR, url);
     const {
       data
     } = await customFetch.put('/profiles/update', {
@@ -136,8 +147,15 @@ export const mutations = {
   [EDIT_PROFILE_INPUT_CHANGE]: (state, data) => {
     state.profile[data.name] = data.value;
   },
+  [UPDATING_USER]: (state) => {
+    state.isSaving = true;
+  },
   [EDIT_PROFILE_FAILED]: (state, errors) => {
     state.errors = errors;
+    state.isSaving = false;
+  },
+  [UPDATE_USER_AVATAR]: (state, url) => {
+    state.profile.avatar = url;
   }
 };
 export default {
