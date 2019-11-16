@@ -119,8 +119,7 @@ export const actions = {
     } = await customFetch.put('/profiles/update', {
       avatar: url
     });
-    commit(CURRENT_USER_FOUND, data);
-    return data;
+    return commit(CURRENT_USER_FOUND, data);
   }
 };
 

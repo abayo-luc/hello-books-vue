@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -15,5 +16,10 @@ export default async (files) => {
     method: 'POST',
     body: formData
   });
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  }
+  throw {
+    message: 'Image upload failed, please try again!'
+  };
 };

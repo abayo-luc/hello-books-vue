@@ -11,8 +11,7 @@
             <p>{{ user.profile.email }}</p>
             <input
               type="file"
-              name
-              id="avatar"
+              id="upload-avatar"
               accept="image/png, image/jpeg"
               @change="upload($event.target.files)"
             />
@@ -40,14 +39,14 @@
           <div class="info">
             <p class="user-info">
               <span>First name:</span>
-              {{ user.profile.name }}
+              {{ user.profile.name || '....'}}
             </p>
             <p class="user-info">
               <span>Phone:</span>
               {{ user.profile.phone_number || '....' }}
             </p>
             <p class="user-info">
-              <span>Address</span>
+              <span>Address:</span>
               {{ user.profile.address || '....' }}
             </p>
             <div class="bio">
