@@ -18,17 +18,25 @@ describe('Profile Page', () => {
   let store;
   let state;
   let wrapper;
+  let actions;
   let spyOnToggle;
+  let spyOnUpload;
+  const notify = jest.fn();
   beforeEach(() => {
     spyOnToggle = jest.spyOn(Profile.methods, 'toggleEdit');
+    spyOnUpload = jest.spyOn(Profile.methods, 'upload');
     state = {
       user: {
         profile,
         isSubmitting: false
       }
     };
+    actions = {
+      updateImage: jest.fn()
+    };
     store = new Vuex.Store({
-      state
+      state,
+      actions
     });
     wrapper = shallowMount(Profile, {
       localVue,
@@ -39,7 +47,8 @@ describe('Profile Page', () => {
           meta: {
             layout: 'main-layout'
           }
-        }
+        },
+        $notify: notify
       }
     });
   });
@@ -62,5 +71,31 @@ describe('Profile Page', () => {
     btn.trigger('click');
     expect(spyOnToggle).toBeCalled();
     expect(wrapper.vm.$data.editing).toBeFalsy();
+  });
+  it('should respond on file input change', () => {
+    global.fetch = jest.fn().mockImplementation(() => ({
+      json: () => Promise.resolve({
+        url: 'https://example.com/sample.png'
+      }),
+      status: 200,
+      ok: true
+    }));
+    wrapper.vm.upload([{
+      type: 'image'
+    }]);
+    expect(spyOnUpload).toBeCalled();
+  });
+  it('should show notification error', () => {
+    global.fetch = jest.fn().mockImplementation(() => ({
+      json: () => Promise.resolve({
+        message: 'Invalid url'
+      }),
+      status: 400,
+      ok: false
+    }));
+    wrapper.vm.upload([{
+      type: 'hello'
+    }]);
+    // expect(notify).toBeCalled();
   });
 });

@@ -18,14 +18,19 @@ describe('Profile Edit', () => {
   let store;
   let actions;
   let spyOnChange;
+  let getters;
   beforeEach(() => {
     spyOnChange = jest.spyOn(ProfileEdit.methods, 'onChangeText');
     actions = {
       saveProfile: jest.fn(),
       handleProfileEditing: jest.fn()
     };
+    getters = {
+      isSaving: () => false
+    };
     store = new Vuex.Store({
-      actions
+      actions,
+      getters
     });
     wrapper = shallowMount(ProfileEdit, {
       propsData: {
@@ -47,22 +52,22 @@ describe('Profile Edit', () => {
   it('should respond on text input change', () => {
     const e = {
       target: {
-        name: 'first_name',
+        name: 'name',
         value: 'Luc'
       }
     };
     const input = wrapper.find({
-      name: 'first_name'
+      name: 'name'
     });
     input.props().onChangeText(e);
     expect(spyOnChange).toBeCalledWith(e);
-    expect(actions.handleProfileEditing).toBeCalled();
+    expect(wrapper.vm.$data.user.name).toEqual('Luc');
   });
   it('should respond on bio input change', () => {
     const editor = wrapper.find('ckeditor-stub');
     editor.vm.$emit('input', '<p>Hello <b>world</b></p>');
     expect(spyOnChange).toBeCalledWith('<p>Hello <b>world</b></p>');
-    expect(actions.handleProfileEditing).toBeCalled();
+    expect(wrapper.vm.$data.user.bio).toEqual('<p>Hello <b>world</b></p>');
   });
   it('should handle on save edit', () => {
     const form = wrapper.find('form');

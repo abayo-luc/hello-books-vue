@@ -5,7 +5,9 @@ import {
   CURRENT_USER_NOT_FOUND,
   EDIT_PROFILE_INPUT_CHANGE,
   EDIT_PROFILE_FAILED,
-  REMOVE_CURRENT_USER
+  REMOVE_CURRENT_USER,
+  UPDATING_USER,
+  UPDATE_USER_AVATAR
 } from '../../../src/store/modules/constants';
 import {
   getters,
@@ -24,6 +26,7 @@ const profile = {
   created_at: new Date()
 };
 const INITIAL_STATE = {
+  isSaving: false,
   isSubmitting: false,
   profile: {},
   token: localStorage.getItem(VUE_APP_TOKEN_STORAGE_KEY) || ''
@@ -47,6 +50,10 @@ describe('Current User Module', () => {
     it('should return current user profile', () => {
       state.profile = profile;
       expect(getters.currentUser(state)).toEqual(expect.objectContaining(profile));
+    });
+    it('should return true on saving', () => {
+      state.isSaving = true;
+      expect(getters.isSaving(state)).toBeTruthy();
     });
   });
   describe('#mutations', () => {
@@ -111,13 +118,14 @@ describe('Current User Module', () => {
     });
     it('should handle profile edit input change', () => {
       const payload = {
-        name: 'first_name',
+        name: 'name',
         value: 'Luc'
       };
       actions.handleProfileEditing({
         commit,
         state
-      }, payload);
+      },
+      payload);
       expect(commit.mock.calls).toEqual([
         [EDIT_PROFILE_INPUT_CHANGE, payload]
       ]);
@@ -127,7 +135,8 @@ describe('Current User Module', () => {
       const clearStorage = jest.spyOn(localStorage, 'clear');
       await actions.handleSignOut({
         commit
-      }, navigate);
+      },
+      navigate);
       expect(commit.mock.calls).toEqual([
         [REMOVE_CURRENT_USER]
       ]);
@@ -153,8 +162,12 @@ describe('Current User Module', () => {
         await actions.saveProfile({
           commit,
           state
-        }, callback);
+        }, {
+          callback,
+          user: state.profile
+        });
         expect(commit.mock.calls).toEqual([
+          [UPDATING_USER],
           [EDIT_PROFILE_FAILED, res.errors]
         ]);
       });
@@ -172,8 +185,12 @@ describe('Current User Module', () => {
         await actions.saveProfile({
           commit,
           state
-        }, callback);
+        }, {
+          user: {},
+          callback
+        });
         expect(commit.mock.calls).toEqual([
+          [UPDATING_USER],
           [EDIT_PROFILE_FAILED, res]
         ]);
       });
@@ -195,12 +212,49 @@ describe('Current User Module', () => {
         await actions.saveProfile({
           commit,
           state
-        }, callback);
+        }, {
+          user: res,
+          callback
+        });
         expect(callback).toBeCalled();
         expect(commit.mock.calls).toEqual([
+          [UPDATING_USER],
           [CURRENT_USER_FOUND, res]
         ]);
       });
+    });
+    it('should update image on successfully upload', async () => {
+      const url = 'https://example.com/sample.png';
+      const data = {
+        ...profile,
+        avatar: url
+      };
+      global.fetch = jest.fn().mockImplementation(() => ({
+        json: () => Promise.resolve({
+          message: 'Success',
+          data
+        }),
+        status: 200,
+        ok: true
+      }));
+      await actions.updateImage({
+        commit,
+        state
+      }, url);
+      expect(commit.mock.calls).toEqual([
+        [UPDATE_USER_AVATAR, url],
+        [CURRENT_USER_FOUND, data]
+      ]);
+    });
+    it('should not do anything if already saving', () => {
+      state.isSaving = true;
+      actions.saveProfile({
+        commit,
+        state
+      }, {
+        name: 'Me'
+      });
+      expect(commit).not.toBeCalled();
     });
   });
   describe('#mutations', () => {
@@ -234,23 +288,33 @@ describe('Current User Module', () => {
     it('should respond to edit profile input change', () => {
       mutations[EDIT_PROFILE_INPUT_CHANGE](state, {
         value: 'Luc',
-        name: 'first_name'
+        name: 'name'
       });
-      expect(state.profile.first_name).toEqual('Luc');
+      expect(state.profile.name).toEqual('Luc');
     });
 
     it('should update mutate according on edit profile failed', () => {
       mutations[EDIT_PROFILE_FAILED](state, {
         message: 'Action failed'
       });
-      expect(state.errors).toEqual(expect.objectContaining({
-        message: 'Action failed'
-      }));
+      expect(state.errors).toEqual(
+        expect.objectContaining({
+          message: 'Action failed'
+        })
+      );
     });
     it('should update state on successfully login', () => {
       mutations[REMOVE_CURRENT_USER](state);
       expect(state.token).toEqual('');
       expect(Object.values(state.profile).length).toBeFalsy();
+    });
+    it('should update state to isSaving true', () => {
+      mutations[UPDATING_USER](state);
+      expect(state.isSaving).toBeTruthy();
+    });
+    it('should update user avatar', () => {
+      mutations[UPDATE_USER_AVATAR](state, 'https://example.com/sample.png');
+      expect(state.profile.avatar).toEqual('https://example.com/sample.png');
     });
   });
 });
