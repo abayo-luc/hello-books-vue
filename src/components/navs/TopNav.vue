@@ -15,20 +15,20 @@
       <div class="user-profile">
         <img :src="currentUser.avatar" class="user-avatar" />
         <div class="user-info">
-          <p class="username">{{currentUser.name}}</p>
-          <p class="user-email">{{currentUser.email}}</p>
+          <p class="username">{{ currentUser.name }}</p>
+          <p class="user-email">{{ currentUser.email }}</p>
         </div>
       </div>
       <div class="links">
         <ul>
           <li>
-            <router-link to="/profile" class="link">Profile</router-link>
+            <router-link to="/profile" class="link" id="profile-link">Profile</router-link>
           </li>
           <li>Account</li>
           <li>Report</li>
         </ul>
       </div>
-      <div class="buttons">
+      <div class="sign_out buttons">
         <basic-button title="Sogn out" classes="simple" :onClick="signoutUser" />
       </div>
     </div>

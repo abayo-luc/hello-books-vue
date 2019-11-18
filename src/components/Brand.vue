@@ -1,5 +1,5 @@
 <template>
-  <div class="brand" :class="getClass">
+  <div class="brand" :class="getClass" id="app-brand">
     <img src="../assets/logo.svg" class="icon" />
     <h1>
       <span>HelloBooks</span>
@@ -33,7 +33,7 @@ export default {
   border-radius: 5px;
   padding: 3px;
   h1 {
-    font-family: "Lobster", cursive;
+    font-family: 'Lobster', cursive;
     padding-right: 3px;
   }
   img.icon {
@@ -53,7 +53,7 @@ export default {
       h1::after {
         margin: 0;
         padding: 0;
-        content: "HB";
+        content: 'HB';
       }
     }
   }

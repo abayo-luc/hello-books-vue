@@ -1,5 +1,5 @@
 <template>
-  <div class="loader" :style="styleObject"></div>
+  <div class="loader" :style="styleObject" id="activity-indicator"></div>
 </template>
 <script>
 export default {

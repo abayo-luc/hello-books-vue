@@ -18,8 +18,7 @@
                 <span>HelloBooks</span>
               </h3>
               <p class="slogan">
-                We make it easy for
-                everyone to find what interst them to read!
+                We make it easy for everyone to find what interst them to read!
               </p>
             </div>
             <form method="post" class="login-form" @submit.prevent="onSubmit" id="login-form">
@@ -45,7 +44,9 @@
                   <span>Remember me</span>
                 </div>
                 <div class="link">
-                  <router-link :to="forgetPath" class="auth-link">Forgot password?</router-link>
+                  <router-link :to="forgetPath" class="auth-link" id="forget-password"
+                    >Forgot password?</router-link
+                  >
                 </div>
               </div>
               <div class="group-buttons">
@@ -146,7 +147,7 @@ export default {
 }
 .left-container {
   background-color: #fff;
-  background-image: url("../assets/spiderman.png");
+  background-image: url('../assets/spiderman.png');
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
@@ -190,7 +191,7 @@ export default {
     }
   }
   @media (min-width: 320px) and (max-width: 767px) {
-    background: url("../assets/spiderman.png");
+    background: url('../assets/spiderman.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -240,7 +241,7 @@ export default {
     }
   }
   &::after {
-    content: " ";
+    content: ' ';
     display: block;
     width: 30%;
     margin-top: 5%;

@@ -1,10 +1,10 @@
 <template>
-  <form method="post" @submit.prevent="onSave">
+  <form method="post" @submit.prevent="onSave" id="edit_profile">
     <div class="row spaced-row">
       <div class="input">
         <input-icon
           name="name"
-          placeholder="First name"
+          placeholder="Name"
           type="text"
           :value="user.name || ''"
           iconName="user"

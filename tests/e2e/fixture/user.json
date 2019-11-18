@@ -1,0 +1,15 @@
+{
+    "message": "Success",
+    "data": {
+        "id": "a7f7367c-9a57-40c2-aa53-4202ebc24db9",
+        "email": "jean.abayo@gmail.com",
+        "created_at": "2019-11-15T15:43:29.428Z",
+        "updated_at": "2019-11-15T17:25:25.612Z",
+        "role": "user",
+        "bio": null,
+        "phone_number": null,
+        "address": "KG 11 Av",
+        "avatar": "https://ui-avatars.com/api/?name=Jean Abayo+&size=800",
+        "name": null
+    }
+}
