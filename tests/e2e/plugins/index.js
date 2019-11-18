@@ -7,7 +7,6 @@
 
 /* eslint-disable import/no-extraneous-dependencies, global-require, arrow-body-style */
 // const webpack = require('@cypress/webpack-preprocessor')
-
 module.exports = (on, config) => {
   const {
     VUE_APP_BACKEND_URL = 'https://testing-hello-book.herokuapp.com/api/v1',
