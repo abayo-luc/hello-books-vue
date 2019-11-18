@@ -40,6 +40,12 @@ export const successAuth = () => ({
   ok: true
 });
 
+export const login = ({
+  success: ({
+    message: 'Success',
+    token: 'qwerty-12345'
+  })
+});
 export const resetPassword = ({
   success: success({
     message: 'Password reset instructions was sent successfully'
