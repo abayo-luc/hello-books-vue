@@ -20,7 +20,7 @@
       </div>
       <div class="account-information">
         <div class="section title">
-          <h3>Acount information</h3>
+          <h3>Account Information</h3>
           <h4>
             Update at:
             <span>{{ new Date(user.profile.updated_at).toDateString() }}</span>
@@ -31,7 +31,7 @@
             </button>
           </div>
         </div>
-        <div class="section" v-if="editing">
+        <div class="section" v-if="editing" id="profile-editing">
           <edit-profile :profile="user.profile" :toggleEdit="toggleEdit" />
         </div>
 
@@ -39,7 +39,7 @@
           <div class="info">
             <p class="user-info">
               <span>First name:</span>
-              {{ user.profile.name || '....'}}
+              {{ user.profile.name || '....' }}
             </p>
             <p class="user-info">
               <span>Phone:</span>

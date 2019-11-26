@@ -8,9 +8,10 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "cy:run": "cypress run --record --key 033b81bc-38ec-461b-a6c3-2f6d9ef6e377",
+    "cy:run": "cypress run --record --key=033b81bc-38ec-461b-a6c3-2f6d9ef6e377",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "dev": "npm run serve"
+    "dev": "npm run serve",
+    "test:cy": "start-server-and-test serve http://localhost:8080 cy:run"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^15.0.0",
@@ -46,6 +47,7 @@
     "jest-serializer-vue": "^2.0.2",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.0",
+    "start-server-and-test": "^1.10.6",
     "vue-template-compiler": "^2.6.10"
   }
 }

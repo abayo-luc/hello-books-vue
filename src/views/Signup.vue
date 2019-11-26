@@ -1,7 +1,7 @@
 <template>
   <component :is="layout">
     <div class="auth-form">
-      <div class="auth-message content" v-show="auth.success">
+      <div class="auth-message content" v-if="auth.success" id="confirmation-instructions">
         <mailer-message
           title="Account Registered"
           description="
@@ -56,7 +56,7 @@
       <div class="auth-link center">
         <p>
           Already have an account?
-          <router-link to="/login" class="link">Login</router-link>
+          <router-link to="/login" class="link" id="to-login">Login</router-link>
         </p>
       </div>
     </div>

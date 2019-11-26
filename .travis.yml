@@ -1,10 +1,20 @@
 language: node_js
 node_js:
   - 'stable'
-before_script:
-  - npm install
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
+cache:
+  npm: true
+  directories:
+    - ~/.cache
+install:
+  - npm ci
 script:
   - npm run test:unit -- -u
+  - npm run test:cy
+  - kill $(jobs -p) || true
 after_success:
   - npm run coveralls
 notifications:

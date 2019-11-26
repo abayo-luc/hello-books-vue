@@ -23,7 +23,7 @@
       <div class="auth-link">
         <p>
           Go to login:
-          <router-link to="/login" class="link">Login</router-link>
+          <router-link to="/login" class="link" id="auth-link">Login</router-link>
         </p>
       </div>
     </div>

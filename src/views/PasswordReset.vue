@@ -1,7 +1,7 @@
 <template>
   <component :is="layout">
     <div class="auth-form">
-      <div class="mailer-message" v-show="passwordReset.success">
+      <div class="mailer-message" v-show="passwordReset.success" id="reset-instructions">
         <mailer-message
           title="Reset Password"
           description="
@@ -12,8 +12,7 @@
       <div class="action-details" v-show="!passwordReset.success">
         <h2 class="form-title">Reset Password</h2>
         <p class="info">
-          To reset your password, please provide
-          your HelloBook account email.
+          To reset your password, please provide your HelloBook account email.
         </p>
       </div>
       <form
@@ -40,7 +39,7 @@
       <div class="auth-link">
         <p>
           Don't have a HelloBook account?
-          <router-link to="/signup" class="link">Sign up now!</router-link>
+          <router-link to="/signup" class="link" id="auth-link">Sign up now!</router-link>
         </p>
       </div>
     </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="account-confirmation">
-    <activity-indicator :styleObject="{width: '60px', height: '60px'}" v-show="auth.submitting" />
+    <activity-indicator :styleObject="{ width: '60px', height: '60px' }" v-show="auth.submitting" />
     <div class="error" v-show="!auth.submitting">
-      <h3>{{auth.errors.errors && auth.errors.errors[0]}} !</h3>
+      <h3 id="confirmation-error">{{ auth.errors.errors && auth.errors.errors[0] }}</h3>
       <p class="auth-link">
         Go to
         <router-link to="/login">Login</router-link>
