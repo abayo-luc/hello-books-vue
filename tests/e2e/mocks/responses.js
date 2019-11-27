@@ -44,8 +44,13 @@ export const login = ({
   success: ({
     message: 'Success',
     token: 'qwerty-12345'
+  }),
+  failed: failed({
+    message: 'Login failed',
+    errors: ['Invalid email or password']
   })
 });
+
 export const resetPassword = ({
   success: success({
     message: 'Password reset instructions was sent successfully'
