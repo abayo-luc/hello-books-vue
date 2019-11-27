@@ -13,7 +13,7 @@ install:
   - npm ci
 script:
   - npm run test:unit -- -u
-  - npm run test:cy
+  # - npm run test:cy
   - kill $(jobs -p) || true
 after_success:
   - npm run coveralls
