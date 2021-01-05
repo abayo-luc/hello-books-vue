@@ -17,7 +17,7 @@
     "@ckeditor/ckeditor5-build-classic": "^15.0.0",
     "@ckeditor/ckeditor5-vue": "^1.0.0",
     "@vue/eslint-config-prettier": "^5.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cloudinary-vue": "^1.0.0-beta3",
     "core-js": "^3.3.2",
     "dotenv": "^8.2.0",
