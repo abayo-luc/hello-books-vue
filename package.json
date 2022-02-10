@@ -47,7 +47,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "istanbul-lib-coverage": "^2.0.5",
     "jest-serializer-vue": "^2.0.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "nyc": "^14.1.1",
     "sass-loader": "^8.0.0",
     "start-server-and-test": "^1.10.6",
